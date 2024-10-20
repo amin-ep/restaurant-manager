@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+  src: url('/public/fonts/DancingScript-Regular.ttf');
+  font-family: 'dancing-script';
+}
+
+@font-face {
+  src: url('/fonts/Quicksand-Regular.ttf');
+  font-family: QuickSand;
+}
+
+:root {
+  --color-pantone: #b99756;
+  --color-navy: #050529;
+  --color-white: #fff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: QuickSand;
+  background-color: var(--color-white);
+}
+
+body {
+  margin: 0;
+}
