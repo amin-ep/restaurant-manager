@@ -17,12 +17,12 @@ function Header() {
         setNavPosition("static");
       }
     });
-  }, []);
+  }, []); // FIXME
 
   return (
     <header
       ref={headerRef}
-      className="h-[100%] bg-fixed"
+      className="min-h-dvh bg-fixed"
       style={{
         background: "url('/public/images/pizza-banner.jpg')",
         backgroundSize: "cover",
@@ -30,7 +30,7 @@ function Header() {
         backgroundAttachment: "fixed",
       }}
     >
-      <div className="grid grid-cols-1 grid-rows-[75px_1fr] bg-black/75 h-full text-white items-center">
+      <div className="grid grid-cols-1 grid-rows-[75px_1fr] bg-black/75 min-h-dvh text-white items-center">
         <HeaderNav position={navPosition} />
         <HeaderSection />
       </div>

@@ -13,7 +13,7 @@ function MealsCard({ meal }: { meal: IMeal }) {
       </div>
       <div className="px-6 grid grid-cols-1 grid-rows-[1fr_auto] justify-between w-full">
         <div className="pt-4 w-full">
-          <h3 className="text-dark-navy font-semibold text-xl">Pizza Name</h3>
+          <h3 className="text-dark-navy font-semibold text-xl">{meal.name}</h3>
           <p className="italic text-stone-800">
             ingredients: {meal.ingredients.join(", ")}
           </p>

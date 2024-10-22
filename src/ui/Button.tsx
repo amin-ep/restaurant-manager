@@ -5,11 +5,15 @@ function Button({
   type = "button",
   variation = "primary",
   extraClasses,
+  onClick,
+  disabled,
 }: {
   children: ReactNode;
   variation?: "primary" | "secondary" | "tertiary";
   type?: "submit" | "button" | "reset";
   extraClasses?: string;
+  onClick?: () => void;
+  disabled?: boolean;
 }) {
   const buttonVariations = {
     primary:
@@ -22,8 +26,10 @@ function Button({
 
   return (
     <button
-      className={`${buttonVariations[variation]} rounded-md transition-all hover:scale-110 py-2 px-5 w-fit border-2 ${extraClasses}`}
+      className={`${buttonVariations[variation]} rounded-md transition-all py-2 px-5 w-fit border-2 disabled:cursor-not-allowed ${extraClasses}`}
+      onClick={onClick}
       type={type}
+      disabled={disabled || false}
     >
       {children}
     </button>
