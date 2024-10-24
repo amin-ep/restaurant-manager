@@ -58,8 +58,10 @@ function LoginForm() {
         label="Phone Number"
       >
         <input
-          type="tel"
+          type="number"
           id="login-phone"
+          inputMode="numeric"
+          pattern="\d"
           className="input"
           {...register("phone", {
             required: {

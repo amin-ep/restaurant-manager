@@ -1,6 +1,6 @@
-import Header from "../features/Header/Header";
+import Header from "../components/header/Header";
 import Main from "../ui/Main";
-import Meals from "../features/Meals/Meals";
+import Meals from "../components/meals/Meals";
 
 function Home() {
   return (

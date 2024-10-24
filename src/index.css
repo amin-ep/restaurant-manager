@@ -22,7 +22,8 @@
 
 :root {
   --color-pantone: #b99756;
-  --color-navy: #050529;
+  --color-dark-navy: #050529;
+  --color-navy: #16163f;
   --color-white: #fff;
   --color-gray-50: #f9fafb;
 }
@@ -33,7 +34,7 @@
 
 html {
   font-family: QuickSand;
-  background-color: var(--color-white);
+  background-color: var(--color-gray-50);
 }
 
 body {

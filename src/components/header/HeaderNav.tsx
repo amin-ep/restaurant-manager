@@ -9,8 +9,17 @@ import NavItem from "./NavItem";
 import styles from "./HeaderNav.module.css";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
+import { useEffect, useState } from "react";
+import { useCart } from "@/hooks/useCart";
 
 function HeaderNav({ position }: { position: "static" | "fixed" }) {
+  const [cartQuantity, setCartQuantity] = useState<number>(0);
+  const { cartTotalQuantity } = useCart();
+
+  useEffect(() => {
+    setCartQuantity(cartTotalQuantity());
+  }, [cartTotalQuantity]);
+
   const { isLoggedIn, logout } = useAuth();
 
   const handleLogout = () => {
@@ -22,7 +31,7 @@ function HeaderNav({ position }: { position: "static" | "fixed" }) {
     <nav
       className={`flex justify-around ${position} ${
         position === "fixed" &&
-        `${styles["fixed-nav"]} text-pantone font-semibold`
+        `${styles["fixed-nav"]} text-pantone font-semibold z-30`
       }`}
     >
       <Link
@@ -38,7 +47,10 @@ function HeaderNav({ position }: { position: "static" | "fixed" }) {
         </NavItem>
         {isLoggedIn ? (
           <>
-            <NavItem to="cart" title="Cart" position={position}>
+            <NavItem to="/cart" title="Cart" position={position}>
+              <span className="absolute bottom-0 z-50 right-0 bg-red-600 w-4 h-4 text-sm flex items-center justify-center rounded-full text-white">
+                {cartQuantity}
+              </span>
               <HiOutlineShoppingBag size={28} />
             </NavItem>
             <NavItem onClick={handleLogout} title="Logout" position={position}>

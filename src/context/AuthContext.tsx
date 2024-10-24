@@ -18,7 +18,9 @@ function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   const login = async (token: string) => {
-    Cookies.set("token", token);
+    Cookies.set("token", token, {
+      expires: 10,
+    });
     setIsLoggedIn(true);
   };
 

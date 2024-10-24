@@ -22,7 +22,7 @@ function NavItem({
           <button
             className={`${
               position === "fixed" && "text-pantone hover:text-dark-pantone"
-            } hover:text-pantone hover:scale-125 transition-all duration-300 w-7 h-7 rounded-full flex items-center justify-center`}
+            } hover:text-pantone hover:scale-125 transition-all duration-300 w-7 h-7 rounded-full flex items-center justify-center relative`}
             onClick={onClick}
           >
             {children}
@@ -42,7 +42,7 @@ function NavItem({
           <NavLink
             className={`${
               position === "fixed" && "text-pantone hover:text-dark-pantone"
-            } hover:text-pantone hover:scale-125 transition-all duration-300 w-7 h-7 rounded-full`}
+            } hover:text-pantone hover:scale-125 transition-all duration-300 w-7 h-7 rounded-full relative`}
             to={to}
           >
             {children}

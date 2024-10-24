@@ -1,6 +1,6 @@
 import { Container } from "@mui/material";
-import AuthSection from "../features/auth/AuthSection";
-import AuthTab from "../features/auth/AuthTab";
+import AuthSection from "../components/auth/AuthSection";
+import AuthTab from "../components/auth/AuthTab";
 
 function Signup() {
   return (
