@@ -1,0 +1,37 @@
+.form {
+    max-width: 100%;
+    gap: 1rem;
+    margin: 1rem 0;
+    padding: 0 0.75rem;
+}
+
+.error {
+    color: red;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.label {
+    color: var(--color-stone-700);
+}
+
+.ingredients-input-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    position: relative;
+    row-gap: 0.5rem;
+    column-gap: 1rem;
+}
+
+.ingredient-input {
+    width: 100%;
+}
+
+.ingredients-input-wrapper>button {
+    width: 40px;
+    height: 40px;
+}
