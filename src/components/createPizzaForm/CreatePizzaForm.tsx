@@ -6,20 +6,13 @@ import { CreatePizzaPayload } from "../../types/PizzaTypes";
 import styles from "./CreatePizzaForm.module.css";
 import FileInput from "../../ui/FileInput";
 import LinkButton from "../../ui/LinkButton";
-import styled from "styled-components";
 import Input from "../../ui/Input";
 import { ChangeEvent, useState } from "react";
 import { usePizza } from "../../hooks/usePizza";
 import IconButtonLink from "../../ui/IconButtonLink";
 import { HiPlus } from "react-icons/hi2";
 
-const InputBox = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-`;
-
-function CreatePizzaForm() {
+function CreatePizzaForm({ close }: { close: () => void }) {
   const [ingredientInputs, setIngredientInputs] = useState<
     { value: string; index: number }[]
   >([{ value: "", index: 0 }]);
@@ -31,7 +24,6 @@ function CreatePizzaForm() {
     formState: { errors },
     getValues,
     handleSubmit,
-    reset,
   } = useForm<CreatePizzaPayload>({
     defaultValues: {
       discount: 0,
@@ -65,21 +57,34 @@ function CreatePizzaForm() {
         payload.append(key, value);
       }
       for (let i = 0; ingredientsDataArr.length > i; i++) {
-        payload.append(`ingredients`, ingredientsDataArr[i]);
+        payload.append("ingredients", ingredientsDataArr[i]);
       }
 
       createPizzaMutation(payload);
-      reset();
       setIngredientInputs([{ value: "", index: 0 }]);
+      close();
     }
   }
 
   return (
-    <Form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+    <>
       <header className={styles.header}>
         <h1>Create Pizza</h1>
       </header>
-      <InputBox>
+      <Form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles["file-input-container"]}>
+          <FileInput
+            id="image-url"
+            name="imageUrl"
+            register={register}
+            validation={{
+              required: {
+                value: false,
+                message: "You have to provide an image for your pizza",
+              },
+            }}
+          />
+        </div>
         <FormControl
           label="Name*"
           errorMessage={errors.name?.message}
@@ -124,8 +129,7 @@ function CreatePizzaForm() {
           }}
           name="unitPrice"
         />
-      </InputBox>
-      <InputBox>
+
         <FormControl
           label="Discount*"
           errorMessage={errors.discount?.message}
@@ -140,70 +144,39 @@ function CreatePizzaForm() {
           name="discount"
         />
 
-        <FormControl
-          label="Inventory*"
-          errorMessage={errors.inventory?.message}
-          inputId="inventory"
-          type="number"
-          register={register}
-          validation={{
-            required: {
-              value: true,
-              message: "Inventory is required",
-            },
-          }}
-          name="inventory"
-        />
-      </InputBox>
-      <InputBox>
-        <div className={styles["ingredients-input-wrapper"]}>
-          {ingredientInputs.map((item, index) => (
-            <Input
-              type="text"
-              value={item.value}
-              onChange={(e) => {
-                handleIngredientInputChange(e, index);
-              }}
-              key={index}
-              className={styles["ingredient-input"]}
-              name={`ingredient-${index + 1}`}
-            />
-          ))}
-          <IconButtonLink
-            onClick={() => {
-              setIngredientInputs([
-                ...ingredientInputs,
-                {
-                  value: "",
-                  index:
-                    ingredientInputs[ingredientInputs.length - 1].index + 1,
-                },
-              ]);
+        {ingredientInputs.map((item, index) => (
+          <Input
+            type="text"
+            value={item.value}
+            onChange={(e) => {
+              handleIngredientInputChange(e, index);
             }}
-          >
-            <HiPlus size={28} />
-          </IconButtonLink>
-        </div>
-        <div className={styles["file-input-container"]}>
-          <FileInput
-            id="image-url"
-            name="imageUrl"
-            register={register}
-            validation={{
-              required: {
-                value: false,
-                message: "You have to provide an image for your pizza",
-              },
-            }}
+            key={index}
+            className={styles["ingredient-input"]}
+            name={`ingredient-${index + 1}`}
           />
+        ))}
+        <IconButtonLink
+          onClick={() => {
+            setIngredientInputs([
+              ...ingredientInputs,
+              {
+                value: "",
+                index: ingredientInputs[ingredientInputs.length - 1].index + 1,
+              },
+            ]);
+          }}
+        >
+          <HiPlus size={28} />
+        </IconButtonLink>
+
+        <div className={styles["form-actions"]}>
+          <LinkButton type="submit">
+            {isCreating ? "Creating..." : "Add pizza"}
+          </LinkButton>
         </div>
-      </InputBox>
-      <div className={styles["form-actions"]}>
-        <LinkButton type="submit">
-          {isCreating ? "Creating..." : "Add pizza"}
-        </LinkButton>
-      </div>
-    </Form>
+      </Form>
+    </>
   );
 }
 

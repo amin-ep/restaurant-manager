@@ -42,10 +42,12 @@ export function usePizza() {
     },
   });
 
+  // Delete Pizza
   const { mutate: deletePizzaMutation, isLoading: isDeleting } = useMutation({
     mutationKey: ["pizza"],
     mutationFn: deletePizza,
     onSuccess() {
+      toast.success("Item deleted successfully");
       queryClient.invalidateQueries({
         queryKey: ["pizza"],
       });

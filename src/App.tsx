@@ -10,7 +10,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Menu from "./pages/Menu";
 import Orders from "./pages/Orders";
-import CreatePizzaForm from "./components/createPizzaForm/CreatePizzaForm";
 import Pizza from "./pages/Pizza";
 import { DarkModeProvider } from "./contexts/DarkModeContext";
 
@@ -40,9 +39,7 @@ function App() {
             <Routes>
               <Route element={<Layout />}>
                 <Route path="/" element={<Home />} />
-                <Route path="menu" element={<Menu />}>
-                  <Route path="create-pizza" element={<CreatePizzaForm />} />
-                </Route>
+                <Route path="menu" element={<Menu />} />
                 <Route path="orders" element={<Orders />} />
                 <Route path="menu/:id" element={<Pizza />} />
               </Route>

@@ -23,18 +23,20 @@ const LinkButtonBasicStyles = css`
   background: transparent;
   color: var(--color-gray-9);
   width: 100%;
-  padding: 0.75rem 0.75rem;
+  padding: 0.75rem 1.5rem;
   border: none;
   outline: none;
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 0.5rem;
   text-decoration: none;
 
   & > span {
     font-size: 15px;
+    text-align: left;
+    width: 100%;
   }
   &:hover {
     background: var(--color-gray-2);
@@ -67,11 +69,11 @@ function PizzaItemActions({
           deletePizzaMutation(id);
         }}
       >
-        <HiOutlineTrash size={22} />
+        <HiOutlineTrash size={30} />
         <span>Delete</span>
       </StyledButton>
       <StyledLink to={`/menu/${id}`}>
-        <HiOutlineInformationCircle size={24} />
+        <HiOutlineInformationCircle size={30} />
         <span>More Info</span>
       </StyledLink>
     </StyledDiv>

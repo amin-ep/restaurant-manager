@@ -3,10 +3,10 @@ import styled from "styled-components";
 const Input = styled.input`
   background: transparent;
   outline: none;
-  border: 2px solid var(--color-gray-2);
+  border: 1px solid var(--color-gray-2);
   padding: 0.75rem 1rem;
   transition: all 0.3s;
-  border-radius: 999px;
+  border-radius: 6px;
   max-width: 100%;
   color: var(--color-gray-8);
 

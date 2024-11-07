@@ -6,7 +6,6 @@ export interface IPizza {
   discount: number;
   imageUrl: string;
   ingredients: string[];
-  inventory: number;
   unitPrice: number;
   finalPrice: number;
   updatedAt: Date;
@@ -30,7 +29,6 @@ export interface CreatePizzaPayload extends FieldValues {
   discount?: number;
   imageUrl: string;
   ingredients: string[];
-  inventory: number;
 }
 
 export type OnePizzaResponseData = {

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import { OnePizzaResponseData } from "../types/PizzaTypes";
@@ -6,6 +6,7 @@ import { getPizza } from "../services/pizzaApi";
 import styles from "./Pizza.module.css";
 import { FILE_URL } from "../utils/helpers";
 import LinkButton from "../ui/LinkButton";
+import { usePizza } from "../hooks/usePizza";
 
 function Pizza() {
   const { id } = useParams();
@@ -15,6 +16,9 @@ function Pizza() {
     queryFn: () => getPizza(id!),
     queryKey: ["pizza"],
   });
+
+  const { deletePizzaMutation, isDeleting } = usePizza();
+  const navigate = useNavigate();
 
   const pizza = data?.data.data.doc;
 
@@ -32,7 +36,15 @@ function Pizza() {
             </div>
             <div className={styles["details-actions"]}>
               <LinkButton type="button">Update</LinkButton>
-              <LinkButton type="button">Delete</LinkButton>
+              <LinkButton
+                onClick={() => {
+                  deletePizzaMutation(pizza._id);
+                  navigate(-1);
+                }}
+                type="button"
+              >
+                Delete
+              </LinkButton>
             </div>
           </div>
         </div>
