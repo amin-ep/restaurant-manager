@@ -31,6 +31,7 @@ const StyledDiv = styled.div.attrs<{
 const Container = styled.div`
   position: relative;
   padding: 0;
+  overflow-y: scroll;
 `;
 
 function Layout() {
@@ -56,7 +57,13 @@ function Layout() {
 
   return (
     <StyledDiv $sidebarPosition={sidebarPosition} $sidebar={sidebarIsOpen}>
-      <Sidebar sidebarPosition={sidebarPosition} sidebar={sidebarIsOpen} />
+      <Sidebar
+        onClose={() => {
+          setSidebarIsOpen(false);
+        }}
+        sidebarPosition={sidebarPosition}
+        sidebar={sidebarIsOpen}
+      />
       <Container>
         <Header
           onToggleSidebar={() => {

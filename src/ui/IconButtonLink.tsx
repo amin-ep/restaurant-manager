@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 const Styles = css`
-  background-color: transparent;
+  background-color: var(--color-gray-0);
   width: 45px;
   height: 45px;
   display: flex;
@@ -11,13 +11,17 @@ const Styles = css`
   justify-content: center;
   padding: 0.2rem;
   border: none;
-  outline: none;
   border-radius: 6px;
-  color: var(--color-stone-900);
+  color: var(--color-gray-8);
   cursor: pointer;
 
   &:hover {
-    background: var(--color-stone-200);
+    background: var(--color-lime);
+  }
+
+  &:focus,
+  &:active {
+    outline: 2px solid var(--color-green-1);
   }
 `;
 

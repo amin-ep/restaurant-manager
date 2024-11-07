@@ -5,27 +5,36 @@ import { PizzasResponseData } from "../types/PizzaTypes";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import { AxiosDataErrorProps } from "../types/AxiosTypes";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 export function usePizza() {
-  const queryClient = useQueryClient();
-  const KEY = ["pizza"];
+  const [queryString, setQueryString] = useState("");
+  const [searchParams] = useSearchParams();
 
-  // Get All Pizzas
-  const { data: pizzaData, isLoading: isLoadingPizza } = useQuery<
+  const queryClient = useQueryClient();
+  const page = searchParams.get("page") || "1";
+
+  const { data: pizzaData, isLoading: isLoadingPizzas } = useQuery<
     AxiosResponse<PizzasResponseData>
   >({
-    queryFn: getAllPizzas,
-    queryKey: KEY,
+    queryFn: () => getAllPizzas({ queryStr: queryString, page: page! }),
+    queryKey: ["pizza", queryString, page],
   });
+
+  useEffect(() => {
+    const paramsValue = searchParams.get("discount") || "";
+    setQueryString(paramsValue!);
+  }, [searchParams, queryClient]);
 
   // Create pizza
   const { mutate: createPizzaMutation, isLoading: isCreating } = useMutation({
-    mutationKey: KEY,
+    mutationKey: ["pizza"],
     mutationFn: createPizza,
     onSuccess() {
       toast.success("Your new pizza added successfully");
       queryClient.invalidateQueries({
-        queryKey: KEY,
+        queryKey: ["pizza"],
       });
     },
     onError(err: AxiosError<AxiosDataErrorProps>) {
@@ -34,11 +43,11 @@ export function usePizza() {
   });
 
   const { mutate: deletePizzaMutation, isLoading: isDeleting } = useMutation({
-    mutationKey: KEY,
+    mutationKey: ["pizza"],
     mutationFn: deletePizza,
     onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: KEY,
+        queryKey: ["pizza"],
       });
     },
     onError(err: AxiosError<AxiosDataErrorProps>) {
@@ -48,7 +57,7 @@ export function usePizza() {
 
   return {
     pizzaData,
-    isLoadingPizza,
+    isLoadingPizzas,
     createPizzaMutation,
     isCreating,
     deletePizzaMutation,

@@ -12,6 +12,7 @@ import Menu from "./pages/Menu";
 import Orders from "./pages/Orders";
 import CreatePizzaForm from "./components/createPizzaForm/CreatePizzaForm";
 import Pizza from "./pages/Pizza";
+import { DarkModeProvider } from "./contexts/DarkModeContext";
 
 function App() {
   const queryClient = new QueryClient({
@@ -22,7 +23,7 @@ function App() {
     },
   });
   return (
-    <>
+    <DarkModeProvider>
       <ToastContainer
         limit={4}
         draggable="touch"
@@ -43,14 +44,14 @@ function App() {
                   <Route path="create-pizza" element={<CreatePizzaForm />} />
                 </Route>
                 <Route path="orders" element={<Orders />} />
-                <Route path="pizza/:id" element={<Pizza />} />
+                <Route path="menu/:id" element={<Pizza />} />
               </Route>
               <Route path="login" element={<Login />} />
             </Routes>
           </AuthProvider>
         </BrowserRouter>
       </QueryClientProvider>
-    </>
+    </DarkModeProvider>
   );
 }
 

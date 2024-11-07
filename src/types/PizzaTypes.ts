@@ -19,6 +19,7 @@ export type PizzasResponseData = {
     docs: IPizza[];
   };
   result: number;
+  dataNum: number;
   status: string;
   totalPages: number;
 };
@@ -31,3 +32,10 @@ export interface CreatePizzaPayload extends FieldValues {
   ingredients: string[];
   inventory: number;
 }
+
+export type OnePizzaResponseData = {
+  status: string;
+  data: {
+    doc: IPizza;
+  };
+};

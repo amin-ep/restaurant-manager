@@ -17,14 +17,14 @@ const StyledDiv = styled.div`
 const Label = styled.label.attrs<{ $focused: boolean }>((props) => ({
   $focused: props.$focused,
 }))`
-  color: var(--color-stone-800);
+  color: var(--color-gray-9);
 
   transition: all 0.3s;
   /* transform: ${(props) =>
     props.$focused === false
       ? "translate(1rem, 2rem)"
       : "translate(1rem, 0.5rem)"}; */
-  background-color: white;
+  background-color: var(--color-gray-0);
   width: fit-content;
   padding: 0 2px;
   position: absolute;

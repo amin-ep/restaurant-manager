@@ -4,7 +4,7 @@
     align-items: center;
     height: 100%;
     padding: 0 0.5rem;
-    border-bottom: 1px solid var(--color-stone-300);
+    border-bottom: 1px solid var(--color-gray-2);
 }
 
 .item-col-1 {
@@ -18,10 +18,17 @@
 .item-details {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    gap: 0;
+    line-height: 0.1;
+}
+
+.name {
+    color: var(--color-gray-8);
 }
 
 .item-number {
-    color: var(--color-stone-600);
+    color: var(--color-gray-4);
     font-weight: bold;
     font-style: italic;
 }
@@ -39,4 +46,28 @@
     justify-content: center;
     gap: 0.5rem;
     position: relative;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-gray-8);
+}
+
+.final-price {
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--color-green-1);
+}
+
+.unit-price {
+    font-size: 15px;
+    font-weight: 200;
+    text-decoration: line-through;
+    color: var(--color-gray-8);
+}
+
+.inventory {
+    color: var(--color-gray-8);
 }

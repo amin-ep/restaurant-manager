@@ -6,8 +6,10 @@ import {
   HiBars3,
   HiOutlineUserCircle,
   HiOutlineMoon,
+  HiOutlineSun,
 } from "react-icons/hi2";
 import { useAuth } from "../../contexts/AuthContext";
+import { useDarkMode } from "../../contexts/DarkModeContext";
 
 const List = styled.ul`
   display: flex;
@@ -22,10 +24,12 @@ const List = styled.ul`
 const Items = styled.div`
   display: grid;
   grid-template-columns: repeat(3, auto);
+  gap: 0.4rem;
 `;
 
 function HeaderList({ onToggleSidebar }: { onToggleSidebar: () => void }) {
   const { logout } = useAuth();
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   return (
     <List>
@@ -40,12 +44,12 @@ function HeaderList({ onToggleSidebar }: { onToggleSidebar: () => void }) {
         >
           <HiOutlineUserCircle size={27} />
         </IconButtonLink>
-        <IconButtonLink
-          onClick={() => {
-            console.log("sss");
-          }}
-        >
-          <HiOutlineMoon size={27} />
+        <IconButtonLink onClick={toggleDarkMode}>
+          {isDarkMode ? (
+            <HiOutlineSun size={27} />
+          ) : (
+            <HiOutlineMoon size={27} />
+          )}
         </IconButtonLink>
         <IconButtonLink onClick={logout}>
           <HiArrowRightOnRectangle size={27} />

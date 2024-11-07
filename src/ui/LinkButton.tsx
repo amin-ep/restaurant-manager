@@ -5,8 +5,8 @@ import styled, { css } from "styled-components";
 const BasicStyles = css`
   background: linear-gradient(
     to bottom right,
-    var(--color-sky-600),
-    var(--color-sky-800)
+    var(--color-green-1),
+    var(--color-green-2)
   );
   border: 0;
   border-radius: 12px;
@@ -28,14 +28,14 @@ const BasicStyles = css`
 
   &:not([disabled]):focus {
     box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
-      -0.125rem -0.125rem 1rem rgba(239, 71, 101, 0.5),
-      0.125rem 0.125rem 1rem rgba(255, 154, 90, 0.5);
+      -0.125rem -0.125rem 1rem var(--color-lime),
+      0.125rem 0.125rem 1rem var(--color-lime);
   }
 
   &:not([disabled]):hover {
     box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
-      -0.125rem -0.125rem 1rem var(--color-sky-600),
-      0.125rem 0.125rem 1rem var(--color-sky-700);
+      -0.125rem -0.125rem 1rem var(--color-green-1),
+      0.125rem 0.125rem 1rem var(--color-green-2);
   }
 `;
 

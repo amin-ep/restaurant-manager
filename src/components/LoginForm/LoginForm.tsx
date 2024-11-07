@@ -11,12 +11,7 @@ import { LoginPayload } from "../../types/AuthTypes";
 import { useAuth } from "../../contexts/AuthContext";
 
 const LoginWrapper = styled.div`
-  /* background-image: linear-gradient(
-    154deg,
-    var(--color-amber-500) 50%,
-    var(--color-amber-700) 50%
-  ); */
-  background: var(--color-sky-200);
+  background: var(--color-gray-1);
   width: 100%;
   height: 100vh;
   backdrop-filter: blur(3px);

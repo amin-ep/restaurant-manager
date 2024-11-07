@@ -9,20 +9,9 @@ const StyledHeader = styled.header.attrs<{
   $sidebar: props.$sidebar,
   $sidebarPosition: props.$sidebarPosition,
 }))`
-  background: var(--color-white);
-  border-bottom: 1px solid var(--color-stone-200);
-  position: fixed;
+  background: transparent;
   top: 0;
   right: 0;
-  height: 70px;
-  left: ${(props) =>
-    props.$sidebarPosition === "absolute"
-      ? "0"
-      : props.$sidebarPosition === "static" && props.$sidebar === true
-      ? "300px"
-      : props.$sidebarPosition === "static" && props.$sidebar === false
-      ? "0"
-      : ""};
   display: grid;
   grid-template-columns: 1fr min-content;
   align-items: center;

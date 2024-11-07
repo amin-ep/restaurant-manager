@@ -19,13 +19,13 @@ function Logo({ size = "small" }: { size?: Size }) {
   if (location.pathname !== "/login")
     return (
       <Link to="/">
-        <Image src="/public/images/pizza-icon.png" alt="logo" $size={size} />
+        <Image src="/public/images/logo.avif" alt="logo" $size={size} />
       </Link>
     );
   else
     return (
       <div>
-        <Image src="/public/images/pizza-icon.png" alt="logo" $size={size} />
+        <Image src="/public/images/logo.avif" alt="logo" $size={size} />
       </div>
     );
 }

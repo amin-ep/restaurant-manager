@@ -33,7 +33,7 @@ const Overlay = styled.div`
 `;
 
 const StyledModal = styled.div`
-  background-color: var(--color-white);
+  background-color: var(--color-gray-0);
   transition: all 0.5s;
   box-shadow: 10px 20px 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;

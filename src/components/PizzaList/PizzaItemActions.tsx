@@ -9,19 +9,19 @@ const StyledDiv = styled.div`
   flex-direction: column;
   position: absolute;
   right: 100px;
-  background: var(--color-white);
+  background: var(--color-gray-0);
   width: 160px;
   z-index: 20;
   right: 20px;
   top: 45px;
-  border: 2px solid var(--color-stone-200);
+  border: 2px solid var(--color-gray-2);
   border-radius: 6px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 `;
 
 const LinkButtonBasicStyles = css`
   background: transparent;
-  color: var(--color-stone-700);
+  color: var(--color-gray-9);
   width: 100%;
   padding: 0.75rem 0.75rem;
   border: none;
@@ -37,7 +37,7 @@ const LinkButtonBasicStyles = css`
     font-size: 15px;
   }
   &:hover {
-    background: var(--color-stone-300);
+    background: var(--color-gray-2);
   }
 `;
 
@@ -70,7 +70,7 @@ function PizzaItemActions({
         <HiOutlineTrash size={22} />
         <span>Delete</span>
       </StyledButton>
-      <StyledLink to={`/pizza/${id}`}>
+      <StyledLink to={`/menu/${id}`}>
         <HiOutlineInformationCircle size={24} />
         <span>More Info</span>
       </StyledLink>

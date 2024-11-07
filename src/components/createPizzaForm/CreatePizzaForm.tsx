@@ -32,7 +32,11 @@ function CreatePizzaForm() {
     getValues,
     handleSubmit,
     reset,
-  } = useForm<CreatePizzaPayload>();
+  } = useForm<CreatePizzaPayload>({
+    defaultValues: {
+      discount: 0,
+    },
+  });
 
   const handleIngredientInputChange = (
     e: ChangeEvent<HTMLInputElement>,
@@ -63,10 +67,10 @@ function CreatePizzaForm() {
       for (let i = 0; ingredientsDataArr.length > i; i++) {
         payload.append(`ingredients`, ingredientsDataArr[i]);
       }
-      console.log(Object.fromEntries(payload));
 
       createPizzaMutation(payload);
       reset();
+      setIngredientInputs([{ value: "", index: 0 }]);
     }
   }
 
@@ -129,7 +133,7 @@ function CreatePizzaForm() {
           type="number"
           register={register}
           validation={{
-            validate: (val) =>
+            validate: (val: number) =>
               val <= getValues().unitPrice ||
               "Discount must be equal or less than unit price",
           }}

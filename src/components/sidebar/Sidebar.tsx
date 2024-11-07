@@ -10,8 +10,7 @@ const Aside = styled.aside.attrs<{
   $sidebar: props.$sidebar,
   $sidebarPosition: props.$sidebarPosition,
 }))`
-  background-color: var(--color-white);
-  border-right: 1px solid var(--color-stone-200);
+  background-color: var(--color-gray-0);
   position: ${(props) =>
     props.$sidebarPosition === "absolute" ? "absolute" : "static"};
   display: ${(props) => (props.$sidebar === true ? "grid" : "none")};
@@ -27,7 +26,6 @@ const Aside = styled.aside.attrs<{
     props.$sidebarPosition === "absolute" && props.$sidebar === true
       ? "0"
       : "none"};
-  transition: 0.5s all;
   grid-template-columns: auto;
   grid-template-rows: 200px 1fr;
 `;
@@ -35,13 +33,15 @@ const Aside = styled.aside.attrs<{
 function Sidebar({
   sidebar,
   sidebarPosition,
+  onClose,
 }: {
   sidebar: boolean;
   sidebarPosition: SidebarPositionType;
+  onClose: () => void;
 }) {
   return (
     <Aside $sidebarPosition={sidebarPosition} $sidebar={sidebar}>
-      <SidebarHeading />
+      <SidebarHeading onClose={onClose} />
       <SidebarList />
     </Aside>
   );

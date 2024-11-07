@@ -12,31 +12,20 @@ const NavLink = styled(BaseNavLink)`
   flex-direction: row;
   align-items: center;
   gap: 0.85rem;
-  padding: 0.7rem;
-  border-radius: 999px;
-  color: var(--color-stone-900);
+  padding: 0.7rem 2.5rem;
+  color: var(--color-gray-9);
   height: 60px;
   transition: 0.5s all;
+  border-right: 4px solid transparent;
   &:hover {
-    background: var(--color-sky-200);
-  }
-
-  & > span {
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 999px;
+    color: var(--color-green-1);
+    gap: 1.5rem;
   }
 
   &.active {
-    background: var(--color-sky-200);
-    color: var(--color-sky-800);
-    & > span {
-      color: var(--color-white);
-      background-color: var(--color-sky-950);
-    }
+    background: var(--color-gray-1);
+    border-right: 4px solid var(--color-green-1);
+    color: var(--color-green-2);
   }
 `;
 

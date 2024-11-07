@@ -17,20 +17,21 @@ function PizzaItem({ pizza, number }: { pizza: IPizza; number: number }) {
         <span className={styles["item-number"]}>#{number}</span>
         <img src={`${FILE_URL}/${imageUrl}`} alt={name} />
         <div className={styles["item-details"]}>
-          <p>{name}</p>
-          <p>
+          <p className={styles.name}>{name}</p>
+          <p className={styles.price}>
             {discount > 1 ? (
               <>
-                <span>{unitPrice}</span> <span>{finalPrice}</span>
+                <span className={styles["final-price"]}>${finalPrice}</span>
+                <span className={styles["unit-price"]}>${unitPrice}</span>
               </>
             ) : (
-              <span>{finalPrice}</span>
+              <span className={styles["final-price"]}>${finalPrice}</span>
             )}
           </p>
         </div>
       </div>
       <div className={styles["item-col-2"]}>
-        <span>{inventory}</span>
+        <span className={styles.inventory}>{inventory}</span>
         <IconButtonLink
           onClick={() => {
             setOpenActions((open) => !open);

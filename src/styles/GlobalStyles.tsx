@@ -1,34 +1,52 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
+@font-face {
+    font-family: RubikWetPaint;
+    src: url('/fonts/RubikWetPaint-Regular.ttf');
+}
+
+@font-face {
+    font-family: ubuntu;
+    src: url('/fonts/Ubuntu-Regular.ttf');
+}
+
 :root {
-    --color-black: #000;
-    --color-white: #fff;
+    &.light-mode {
+        --color-gray-0: #ffffff;
+        --color-gray-1: #e9e9e9;
+        --color-gray-2: #cacaca;
+        --color-gray-3:#a0a0a0 ;
+        --color-gray-4: #707070;
+        --color-gray-5: #606060;
+        --color-gray-6: #505050;
+        --color-gray-7: #404040;
+        --color-gray-8: #303030;
+        --color-gray-9: #202020;
+        --color-lime: #d0f38b;
+        --color-green-1: #059d3c;
+        --color-green-2: #036b29;
+        --color-orange-1: #fa7a09;
+        --color-orange-2: #b65603;
+    }
 
-    --color-stone-50: #fafaf9;
-    --color-stone-100: #f5f5f4;
-    --color-stone-200: #e7e5e4;
-    --color-stone-300: #d6d3d1;
-    --color-stone-400: #a8a29e;
-    --color-stone-500: #78716c;
-    --color-stone-600: #57534e;
-    --color-stone-700: #44403c;
-    --color-stone-800: #292524;
-    --color-stone-900: #1c1917;
-    --color-stone-950: #0c0a09;
-
-    --color-sky-50:  #f0f9ff; 
-    --color-sky-100: #e0f2fe; 
-    --color-sky-200: #bae6fd; 
-    --color-sky-300: #7dd3fc; 
-    --color-sky-400: #38bdf8; 
-    --color-sky-500: #0ea5e9; 
-    --color-sky-600: #0284c7; 
-    --color-sky-700: #0369a1; 
-    --color-sky-800: #075985; 
-    --color-sky-900: #0c4a6e; 
-    --color-sky-950: #082f49;
-
+    &.dark-mode {
+        --color-gray-0: #1b1b1b;
+        --color-gray-1: #252525;
+        --color-gray-2: #2e2e2e;
+        --color-gray-3:#353535 ;
+        --color-gray-4: #444444;
+        --color-gray-5: #505050;
+        --color-gray-6: #606060;
+        --color-gray-7: #727272;
+        --color-gray-8: #dddddd;
+        --color-gray-9: #dfdfdf;
+        --color-lime: #036b29;
+        --color-green-1: #059d3c;
+        --color-green-2: #036b29;
+        --color-orange-1: #fa7a09;
+        --color-orange-2: #b65603;
+    }
 }
 
 
@@ -37,7 +55,9 @@ const GlobalStyles = createGlobalStyle`
 }
 
 html {
-    font-family: sans-serif;
+    font-family: ubuntu;
+    background: var(--color-gray-1);
+
 }
 
 body {
@@ -45,7 +65,7 @@ body {
 }
 
 h1,h2,h3,h4,h5,h6 {
-    color: var(--color-stone-800);
+    color: var(--color-gray-8);
 }
 
 ul {
