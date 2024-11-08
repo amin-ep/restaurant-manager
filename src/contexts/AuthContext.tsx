@@ -7,7 +7,7 @@ import {
 } from "react";
 import { AuthResponseData, LoginPayload } from "../types/AuthTypes";
 import Cookies from "js-cookie";
-import { JWT_TOKEN_KEY } from "../utils/helpers";
+import { JWT_TOKEN_KEY } from "../utils/constants";
 import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "../services/authApi";
 import { toast } from "react-toastify";

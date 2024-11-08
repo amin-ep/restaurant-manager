@@ -1,5 +1,5 @@
 import { IPizza } from "../../types/PizzaTypes";
-import { FILE_URL } from "../../utils/helpers";
+import { FILE_URL } from "../../utils/constants";
 import styles from "./PizzaItem.module.css";
 import { HiOutlineEllipsisVertical } from "react-icons/hi2";
 import PizzaItemActions from "./PizzaItemActions";

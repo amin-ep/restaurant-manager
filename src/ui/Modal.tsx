@@ -66,6 +66,11 @@ const ModalHeader = styled.div`
   justify-content: flex-end;
 `;
 
+const Button = styled.button`
+  all: unset;
+  cursor: pointer;
+`;
+
 export default function Modal({
   children,
   onClose,
@@ -78,9 +83,9 @@ export default function Modal({
     <Overlay>
       <StyledModal ref={ref}>
         <ModalHeader>
-          <button onClick={onClose}>
+          <Button onClick={onClose}>
             <HiXMark size={30} />
-          </button>
+          </Button>
         </ModalHeader>
         {children}
       </StyledModal>

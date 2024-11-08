@@ -4,7 +4,6 @@ import FormControl from "../../ui/FormControl";
 import { useForm } from "react-hook-form";
 import styles from "./LoginForm.module.css";
 import LoginHeader from "./LoginHeader";
-import Logo from "../../ui/Logo";
 import LoginImage from "./LoginImage";
 import LinkButton from "../../ui/LinkButton";
 import { LoginPayload } from "../../types/AuthTypes";
@@ -43,7 +42,6 @@ function LoginForm() {
         <Form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <LoginHeader>
             <div className={styles["logo-wrapper"]}>
-              <Logo size="small" />
               <h1>Pizza Passion</h1>
             </div>
             <h2>Log into your account</h2>

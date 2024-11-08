@@ -4,7 +4,7 @@ import { AxiosResponse } from "axios";
 import { OnePizzaResponseData } from "../types/PizzaTypes";
 import { getPizza } from "../services/pizzaApi";
 import styles from "./Pizza.module.css";
-import { FILE_URL } from "../utils/helpers";
+import { FILE_URL } from "../utils/constants";
 import LinkButton from "../ui/LinkButton";
 import { usePizza } from "../hooks/usePizza";
 

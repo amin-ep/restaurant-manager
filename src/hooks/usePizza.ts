@@ -5,12 +5,12 @@ import { PizzasResponseData } from "../types/PizzaTypes";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import { AxiosDataErrorProps } from "../types/AxiosTypes";
-import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useFilter } from "./useFilter";
 
 export function usePizza() {
-  const [queryString, setQueryString] = useState("");
   const [searchParams] = useSearchParams();
+  const queryString = useFilter("discount");
 
   const queryClient = useQueryClient();
   const page = searchParams.get("page") || "1";
@@ -22,10 +22,10 @@ export function usePizza() {
     queryKey: ["pizza", queryString, page],
   });
 
-  useEffect(() => {
-    const paramsValue = searchParams.get("discount") || "";
-    setQueryString(paramsValue!);
-  }, [searchParams, queryClient]);
+  // useEffect(() => {
+  //   const paramsValue = searchParams.get("discount") || "";
+  //   setQueryString(paramsValue!);
+  // }, [searchParams]);
 
   // Create pizza
   const { mutate: createPizzaMutation, isLoading: isCreating } = useMutation({

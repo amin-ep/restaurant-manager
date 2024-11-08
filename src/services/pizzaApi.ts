@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL, JWT_TOKEN_KEY } from "../utils/helpers";
+import { BASE_URL, JWT_TOKEN_KEY } from "../utils/constants";
 import Cookies from "js-cookie";
 
 export async function getAllPizzas({

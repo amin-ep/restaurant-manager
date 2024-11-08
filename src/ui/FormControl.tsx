@@ -14,24 +14,22 @@ const StyledDiv = styled.div`
   width: 100%;
 `;
 
-const Label = styled.label.attrs<{ $focused: boolean }>((props) => ({
-  $focused: props.$focused,
-}))`
+const Label = styled.label<{ focused: boolean }>`
   color: var(--color-gray-9);
 
   transition: all 0.3s;
   /* transform: ${(props) =>
-    props.$focused === false
+    props.focused === false
       ? "translate(1rem, 2rem)"
       : "translate(1rem, 0.5rem)"}; */
   background-color: var(--color-gray-0);
   width: fit-content;
   padding: 0 2px;
   position: absolute;
-  top: ${(props) => (props.$focused === false ? "0.75rem" : "-0.25rem")};
+  top: ${(props) => (props.focused === false ? "0.75rem" : "-0.25rem")};
   left: 1rem;
 
-  font-size: ${(props) => (props.$focused === false ? "16px" : "13px")};
+  font-size: ${(props) => (props.focused === false ? "16px" : "13px")};
   z-index: 10;
 `;
 
@@ -71,7 +69,7 @@ function FormControl<TFormValues extends FieldValues>({
   return (
     <StyledDiv>
       {label && (
-        <Label $focused={inputIsFocused} htmlFor={inputId}>
+        <Label focused={inputIsFocused} htmlFor={inputId}>
           {label}
         </Label>
       )}

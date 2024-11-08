@@ -11,15 +11,13 @@ const StyledFilter = styled.div`
   border-radius: 6px;
 `;
 
-const FilterButton = styled.button.attrs<{ $active: boolean }>((props) => ({
-  $active: props.$active,
-}))`
+const FilterButton = styled.button<{ active: boolean }>`
   background: transparent;
   border: none;
   cursor: pointer;
   color: var(--color-gray-8);
   ${(props) =>
-    props.$active &&
+    props.active &&
     css`
       background-color: var(--color-green-1);
       color: var(--color-gray-0);
@@ -72,7 +70,7 @@ export default function Filter({
             handleClick(option.value);
           }}
           key={option.value}
-          $active={currentFilter === option.value}
+          active={currentFilter === option.value}
           disabled={currentFilter === option.value}
         >
           {option.label}
