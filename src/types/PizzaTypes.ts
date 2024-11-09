@@ -10,6 +10,8 @@ export interface IPizza {
   finalPrice: number;
   updatedAt: Date;
   _id: string;
+  ratings: { user: string; rate: number }[] | undefined;
+  ratingsAverage: number | undefined;
 }
 
 export type PizzasResponseData = {

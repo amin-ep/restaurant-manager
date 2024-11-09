@@ -22,12 +22,6 @@ export function usePizza() {
     queryKey: ["pizza", queryString, page],
   });
 
-  // useEffect(() => {
-  //   const paramsValue = searchParams.get("discount") || "";
-  //   setQueryString(paramsValue!);
-  // }, [searchParams]);
-
-  // Create pizza
   const { mutate: createPizzaMutation, isLoading: isCreating } = useMutation({
     mutationKey: ["pizza"],
     mutationFn: createPizza,

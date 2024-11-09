@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 const StyledFilter = styled.div`
   background-color: transparent;
@@ -11,17 +11,13 @@ const StyledFilter = styled.div`
   border-radius: 6px;
 `;
 
-const FilterButton = styled.button<{ active: boolean }>`
-  background: transparent;
+const FilterButton = styled.button<{ active: "true" | "false" }>`
+  background: ${(props) =>
+    props.active === "false" ? "transparent" : "var(--color-green-1)"};
   border: none;
   cursor: pointer;
-  color: var(--color-gray-8);
-  ${(props) =>
-    props.active &&
-    css`
-      background-color: var(--color-green-1);
-      color: var(--color-gray-0);
-    `}
+  color: ${(props) =>
+    props.active === "false" ? "var(--color-gray-8)" : "var(--color-gray-0)"};
 
   border-radius: 6px;
   font-weight: 500;
@@ -70,7 +66,9 @@ export default function Filter({
             handleClick(option.value);
           }}
           key={option.value}
-          active={currentFilter === option.value}
+          active={
+            (currentFilter === option.value).toString() as "true" | "false"
+          }
           disabled={currentFilter === option.value}
         >
           {option.label}

@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 
 const Overlay = styled.div`
-  background: rgba(182, 182, 182, 0.337);
+  background: transparent;
   backdrop-filter: blur(10px);
   overflow-y: auto;
   position: fixed;
@@ -21,12 +21,10 @@ const Overlay = styled.div`
 
   @keyframes overlayAnimation {
     from {
-      background: transparent;
       backdrop-filter: blur(0);
     }
 
     to {
-      background: rgba(182, 182, 182, 0.337);
       backdrop-filter: blur(10px);
     }
   }
@@ -69,6 +67,7 @@ const ModalHeader = styled.div`
 const Button = styled.button`
   all: unset;
   cursor: pointer;
+  color: var(--color-gray-8);
 `;
 
 export default function Modal({

@@ -4,6 +4,7 @@ import Table from "../../ui/Table";
 import { FILE_URL } from "../../utils/constants";
 import styled from "styled-components";
 import { HiOutlineInformationCircle, HiOutlineTrash } from "react-icons/hi2";
+import { IOrder } from "../../types/OrderTypes";
 
 const StyledImg = styled.img`
   width: 35px;
@@ -15,12 +16,32 @@ const StyledSpan = styled.span`
   width: 35px;
   height: 35px;
   font-size: 30px;
-  color: var(--color-gray-8);
+  color: var(--color-gray-9);
   display: flex;
   align-items: center;
   justify-content: center;
   align-content: center;
   padding: 0;
+`;
+
+const Status = styled.span<{ status: IOrder["status"] }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 1rem;
+  background: ${(props) =>
+    props.status === "waiting"
+      ? "#FFA726"
+      : props.status === "accepted"
+      ? "#66BB6A"
+      : props.status === "posted"
+      ? "#42A5F5"
+      : props.status === "received"
+      ? "#757575"
+      : ""};
+  color: var(--color-gray-0);
+  border-radius: 999px;
+  width: 100%;
 `;
 
 function OrderTableBody() {
@@ -44,7 +65,9 @@ function OrderTableBody() {
             <Table.BodyCell>{order.customer.fullName}</Table.BodyCell>
             <Table.BodyCell>{order.createdAt.toString()}</Table.BodyCell>
             <Table.BodyCell>{order.phone}</Table.BodyCell>
-            <Table.BodyCell>{order.status}</Table.BodyCell>
+            <Table.BodyCell>
+              <Status status={order.status}>{order.status}</Status>
+            </Table.BodyCell>
             <Table.BodyCell>
               <Menus>
                 <Menus.Button id={order._id} />

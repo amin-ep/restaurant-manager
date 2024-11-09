@@ -37,3 +37,10 @@ export type OrdersResponseData = {
   status: string;
   totalPages: number;
 };
+
+export type OrderResponseData = {
+  status: string;
+  data: {
+    doc: IOrder;
+  };
+};

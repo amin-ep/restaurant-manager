@@ -1,24 +1,12 @@
-import styled from "styled-components";
 import Form from "../../ui/Form";
 import FormControl from "../../ui/FormControl";
 import { useForm } from "react-hook-form";
 import styles from "./LoginForm.module.css";
 import LoginHeader from "./LoginHeader";
-import LoginImage from "./LoginImage";
 import LinkButton from "../../ui/LinkButton";
 import { LoginPayload } from "../../types/AuthTypes";
 import { useAuth } from "../../contexts/AuthContext";
-
-const LoginWrapper = styled.div`
-  background: var(--color-gray-1);
-  width: 100%;
-  height: 100vh;
-  backdrop-filter: blur(3px);
-  overflow-y: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+import { Container } from "@mui/material";
 
 function LoginForm() {
   const {
@@ -36,60 +24,67 @@ function LoginForm() {
   };
 
   return (
-    <LoginWrapper>
-      <div className={styles.container}>
-        <LoginImage />
-        <Form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-          <LoginHeader>
-            <div className={styles["logo-wrapper"]}>
-              <h1>Pizza Passion</h1>
-            </div>
-            <h2>Log into your account</h2>
-          </LoginHeader>
-          <FormControl<LoginPayload>
-            errorMessage={errors.email?.message}
-            inputId="email"
-            name="email"
-            register={register}
-            validation={{
-              required: {
-                value: true,
-                message: "Please tell us your email!",
-              },
-              validate: (val) =>
-                val.includes("@") || "Please input a valid email",
-            }}
-            type="text"
-            label="Email*"
-          />
-          <FormControl<LoginPayload>
-            errorMessage={errors.password?.message}
-            inputId="password"
-            name="password"
-            register={register}
-            validation={{
-              required: {
-                value: true,
-                message: "Please write your password!",
-              },
-              minLength: {
-                value: 8,
-                message: "Password should be at least 8 characters",
-              },
-              maxLength: {
-                value: 12,
-                message: "Password should be 12 characters or less",
-              },
-            }}
-            type="password"
-            label="Password*"
-          ></FormControl>
-          <LinkButton type="submit" className={styles["form-submit"]}>
-            Login
-          </LinkButton>
-        </Form>
-      </div>
-    </LoginWrapper>
+    <Container
+      maxWidth="xs"
+      sx={{
+        background: "var(--color-gray-0)",
+        margin: "6rem auto",
+        display: "flex",
+        alignItems: "center",
+        padding: "1rem 2.5rem",
+        position: "relative",
+      }}
+    >
+      <span className={`${styles.border} ${styles["border-top"]}`}></span>
+      <span className={`${styles.border} ${styles["border-right"]}`}></span>
+      <span className={`${styles.border} ${styles["border-bottom"]}`}></span>
+      <span className={`${styles.border} ${styles["border-left"]}`}></span>
+      <Form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <LoginHeader />
+        <FormControl<LoginPayload>
+          errorMessage={errors.email?.message}
+          inputId="email"
+          name="email"
+          register={register}
+          validation={{
+            required: {
+              value: true,
+              message: "Please tell us your email!",
+            },
+            validate: (val) =>
+              val.includes("@") || "Please input a valid email",
+          }}
+          type="text"
+          label="Email*"
+        />
+        <FormControl<LoginPayload>
+          errorMessage={errors.password?.message}
+          inputId="password"
+          name="password"
+          register={register}
+          validation={{
+            required: {
+              value: true,
+              message: "Please write your password!",
+            },
+            minLength: {
+              value: 8,
+              message: "Password should be at least 8 characters",
+            },
+            maxLength: {
+              value: 12,
+              message: "Password should be 12 characters or less",
+            },
+          }}
+          type="password"
+          label="Password*"
+        ></FormControl>
+        <LinkButton type="submit" className={styles["form-submit"]}>
+          Login
+        </LinkButton>
+      </Form>
+    </Container>
+    // </LoginWrapper>
   );
 }
 

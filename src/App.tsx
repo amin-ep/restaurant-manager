@@ -12,6 +12,7 @@ import Menu from "./pages/Menu";
 import Orders from "./pages/Orders";
 import Pizza from "./pages/Pizza";
 import { DarkModeProvider } from "./contexts/DarkModeContext";
+import Order from "./pages/Order";
 
 function App() {
   const queryClient = new QueryClient({
@@ -40,8 +41,9 @@ function App() {
               <Route element={<Layout />}>
                 <Route path="/" element={<Home />} />
                 <Route path="menu" element={<Menu />} />
-                <Route path="orders" element={<Orders />} />
                 <Route path="menu/:id" element={<Pizza />} />
+                <Route path="orders" element={<Orders />} />
+                <Route path="order/:id" element={<Order />} />
               </Route>
               <Route path="login" element={<Login />} />
             </Routes>

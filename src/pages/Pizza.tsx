@@ -7,6 +7,7 @@ import styles from "./Pizza.module.css";
 import { FILE_URL } from "../utils/constants";
 import LinkButton from "../ui/LinkButton";
 import { usePizza } from "../hooks/usePizza";
+import { HiStar } from "react-icons/hi2";
 
 function Pizza() {
   const { id } = useParams();
@@ -31,7 +32,13 @@ function Pizza() {
           </div>
           <div className={styles.details}>
             <div className={styles["details-texts"]}>
-              <h1>{pizza.name}</h1>
+              <div className={styles["details-texts-header"]}>
+                <h1>{pizza.name}</h1>
+                <span className={styles.rate}>
+                  <HiStar size={30} color="yellow" />
+                  {pizza.ratingsAverage ? pizza.ratingsAverage : 0}
+                </span>
+              </div>
               <p>Ingredients: {pizza.ingredients.join(", ")}</p>
             </div>
             <div className={styles["details-actions"]}>

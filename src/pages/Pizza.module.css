@@ -27,3 +27,16 @@
     gap: 0.5rem;
     justify-content: flex-end;
 }
+
+.details-texts-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.rate {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: 22px;
+}

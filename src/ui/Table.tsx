@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useEffect, useRef } from "react";
+import { createContext, ReactNode, useContext } from "react";
 import styled from "styled-components";
 
 interface Props {
@@ -64,14 +64,9 @@ function Table({
   children: ReactNode;
   columns: string;
 }) {
-  const ref = useRef<HTMLTableElement | null>(null);
-
-  useEffect(() => {
-    console.log(ref.current?.offsetWidth);
-  }, []);
   return (
     <TableContext.Provider value={{ columns }}>
-      <StyledTable ref={ref}>{children}</StyledTable>
+      <StyledTable>{children}</StyledTable>
     </TableContext.Provider>
   );
 }

@@ -1,15 +1,26 @@
 import { IPizza } from "../../types/PizzaTypes";
 import { FILE_URL } from "../../utils/constants";
 import styles from "./PizzaItem.module.css";
-import { HiOutlineEllipsisVertical } from "react-icons/hi2";
-import PizzaItemActions from "./PizzaItemActions";
-import IconButtonLink from "../../ui/IconButtonLink";
-import { useState } from "react";
+import {
+  HiStar,
+  HiOutlineTrash,
+  HiOutlineInformationCircle,
+} from "react-icons/hi2";
+import Menus from "../../ui/Menus";
+import { usePizza } from "../../hooks/usePizza";
 
 function PizzaItem({ pizza, number }: { pizza: IPizza; number: number }) {
-  const [openActions, setOpenActions] = useState<boolean>(false);
-  const { discount, finalPrice, imageUrl, inventory, name, unitPrice, _id } =
-    pizza;
+  const {
+    discount,
+    finalPrice,
+    imageUrl,
+    name,
+    unitPrice,
+    _id: id,
+    ratingsAverage,
+  } = pizza;
+
+  const { deletePizzaMutation } = usePizza();
 
   return (
     <div className={styles.item}>
@@ -31,22 +42,27 @@ function PizzaItem({ pizza, number }: { pizza: IPizza; number: number }) {
         </div>
       </div>
       <div className={styles["item-col-2"]}>
-        <span className={styles.inventory}>{inventory}</span>
-        <IconButtonLink
-          onClick={() => {
-            setOpenActions((open) => !open);
-          }}
-        >
-          <HiOutlineEllipsisVertical size={26} />
-        </IconButtonLink>
-        {openActions && (
-          <PizzaItemActions
-            onClose={() => {
-              setOpenActions(false);
-            }}
-            id={_id}
-          />
-        )}
+        <span className={styles.inventory}>
+          <HiStar size={20} color="yellow" />
+          {ratingsAverage ? ratingsAverage : 0}
+        </span>
+        <Menus>
+          <Menus.Button id={id} />
+          <Menus.List id={id}>
+            <Menus.Item
+              icon={<HiOutlineTrash size={30} />}
+              label="Delete"
+              onClick={() => {
+                deletePizzaMutation(id);
+              }}
+            />
+            <Menus.Item
+              icon={<HiOutlineInformationCircle size={30} />}
+              label="More Info"
+              to={`/menu/${id}`}
+            />
+          </Menus.List>
+        </Menus>
       </div>
     </div>
   );
