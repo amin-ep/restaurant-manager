@@ -13,6 +13,9 @@ import Orders from "./pages/Orders";
 import Pizza from "./pages/Pizza";
 import { DarkModeProvider } from "./contexts/DarkModeContext";
 import Order from "./pages/Order";
+import { Suspense } from "react";
+import PageLoader from "./ui/PageLoader";
+import Account from "./pages/Account";
 
 function App() {
   const queryClient = new QueryClient({
@@ -36,18 +39,21 @@ function App() {
         <ReactQueryDevtools initialIsOpen={true} />
         <GlobalStyles />
         <BrowserRouter>
-          <AuthProvider>
-            <Routes>
-              <Route element={<Layout />}>
-                <Route path="/" element={<Home />} />
-                <Route path="menu" element={<Menu />} />
-                <Route path="menu/:id" element={<Pizza />} />
-                <Route path="orders" element={<Orders />} />
-                <Route path="orders/:id" element={<Order />} />
-              </Route>
-              <Route path="login" element={<Login />} />
-            </Routes>
-          </AuthProvider>
+          <Suspense fallback={<PageLoader />}>
+            <AuthProvider>
+              <Routes>
+                <Route element={<Layout />}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="menu" element={<Menu />} />
+                  <Route path="menu/:id" element={<Pizza />} />
+                  <Route path="orders" element={<Orders />} />
+                  <Route path="orders/:id" element={<Order />} />
+                  <Route path="account" element={<Account />} />
+                </Route>
+                <Route path="login" element={<Login />} />
+              </Routes>
+            </AuthProvider>
+          </Suspense>
         </BrowserRouter>
       </QueryClientProvider>
     </DarkModeProvider>

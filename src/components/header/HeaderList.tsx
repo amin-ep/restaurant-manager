@@ -37,11 +37,7 @@ function HeaderList({ onToggleSidebar }: { onToggleSidebar: () => void }) {
         <HiBars3 size={27} />
       </IconButtonLink>
       <Items>
-        <IconButtonLink
-          onClick={() => {
-            console.log("sss");
-          }}
-        >
+        <IconButtonLink to="account">
           <HiOutlineUserCircle size={27} />
         </IconButtonLink>
         <IconButtonLink onClick={toggleDarkMode}>

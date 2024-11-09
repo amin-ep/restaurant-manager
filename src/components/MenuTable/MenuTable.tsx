@@ -10,6 +10,7 @@ import {
 } from "react-icons/hi2";
 import Pagination from "../../ui/Pagination";
 import Filter from "../../ui/Filter";
+import Spinner from "../../ui/Spinner";
 
 const Img = styled.img`
   width: 100%;
@@ -35,7 +36,7 @@ const StyledSpan = styled.span`
 `;
 
 function MenuTable() {
-  const { pizzaData, deletePizzaMutation } = usePizza();
+  const { pizzaData, isLoadingPizzas, deletePizzaMutation } = usePizza();
 
   const calculateDiscountPercentage: (
     price: number,
@@ -48,6 +49,7 @@ function MenuTable() {
       return `%${discountPercentage}`;
     }
   };
+
   return (
     <div>
       <Row>
@@ -61,6 +63,7 @@ function MenuTable() {
           ]}
         />
       </Row>
+
       <Table columns="110px 140px 120px 150px 150px 100px 80px">
         <Table.Header>
           <Table.HeadingCell></Table.HeadingCell>
@@ -71,44 +74,53 @@ function MenuTable() {
           <Table.HeadingCell>Rate</Table.HeadingCell>
           <Table.HeadingCell></Table.HeadingCell>
         </Table.Header>
-        {pizzaData?.data.data.docs.map((pizza) => (
-          <Table.Body key={pizza._id}>
-            <Table.BodyCell>
-              <Img src={`${FILE_URL}/${pizza.imageUrl}`} alt={pizza.name} />
-            </Table.BodyCell>
-            <Table.BodyCell>{pizza.name}</Table.BodyCell>
-            <Table.BodyCell>${pizza.unitPrice}</Table.BodyCell>
-            <Table.BodyCell>${pizza.finalPrice}</Table.BodyCell>
-            <Table.BodyCell>
-              <StyledSpan>
-                {calculateDiscountPercentage(pizza.unitPrice, pizza.discount)}
-              </StyledSpan>
-            </Table.BodyCell>
-            <Table.BodyCell>
-              <HiStar color="yellow" size={25} />
-              {pizza.ratingsAverage ?? "0"}
-            </Table.BodyCell>
-            <Table.BodyCell>
-              <Menus>
-                <Menus.Button id={pizza._id} />
-                <Menus.List id={pizza._id}>
-                  <Menus.Item
-                    icon={<HiOutlineTrash size={30} />}
-                    label="Delete"
-                    onClick={() => {
-                      deletePizzaMutation(pizza._id);
-                    }}
-                  />
-                  <Menus.Item
-                    icon={<HiOutlineInformationCircle size={30} />}
-                    label="More Info"
-                    to={`/menu/${pizza._id}`}
-                  />
-                </Menus.List>
-              </Menus>
-            </Table.BodyCell>
-          </Table.Body>
-        ))}
+        {isLoadingPizzas ? (
+          <Spinner />
+        ) : (
+          <>
+            {pizzaData?.data.data.docs.map((pizza) => (
+              <Table.Body key={pizza._id}>
+                <Table.BodyCell>
+                  <Img src={`${FILE_URL}/${pizza.imageUrl}`} alt={pizza.name} />
+                </Table.BodyCell>
+                <Table.BodyCell>{pizza.name}</Table.BodyCell>
+                <Table.BodyCell>${pizza.unitPrice}</Table.BodyCell>
+                <Table.BodyCell>${pizza.finalPrice}</Table.BodyCell>
+                <Table.BodyCell>
+                  <StyledSpan>
+                    {calculateDiscountPercentage(
+                      pizza.unitPrice,
+                      pizza.discount
+                    )}
+                  </StyledSpan>
+                </Table.BodyCell>
+                <Table.BodyCell>
+                  <HiStar color="yellow" size={25} />
+                  {pizza.ratingsAverage ?? "0"}
+                </Table.BodyCell>
+                <Table.BodyCell>
+                  <Menus>
+                    <Menus.Button id={pizza._id} />
+                    <Menus.List id={pizza._id}>
+                      <Menus.Item
+                        icon={<HiOutlineTrash size={30} />}
+                        label="Delete"
+                        onClick={() => {
+                          deletePizzaMutation(pizza._id);
+                        }}
+                      />
+                      <Menus.Item
+                        icon={<HiOutlineInformationCircle size={30} />}
+                        label="More Info"
+                        to={`/menu/${pizza._id}`}
+                      />
+                    </Menus.List>
+                  </Menus>
+                </Table.BodyCell>
+              </Table.Body>
+            ))}
+          </>
+        )}
       </Table>
       {pizzaData && (
         <Pagination

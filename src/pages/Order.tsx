@@ -4,17 +4,24 @@ import { getOrderById } from "../services/orderApi";
 import { AxiosResponse } from "axios";
 import { OrderResponseData } from "../types/OrderTypes";
 import OrderCartList from "../components/orderCartList/OrderCartList";
+import Spinner from "../ui/Spinner";
 
 function Order() {
   const { id } = useParams();
-  const { data: order } = useQuery<AxiosResponse<OrderResponseData>>({
-    queryKey: ["order"],
-    queryFn: () => getOrderById(id!),
-  });
+  const { data: order, isLoading } = useQuery<AxiosResponse<OrderResponseData>>(
+    {
+      queryKey: ["order"],
+      queryFn: () => getOrderById(id!),
+    }
+  );
 
   return (
     <div>
-      <OrderCartList items={order?.data.data.doc.cart.cartItems} />
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <OrderCartList items={order?.data.data.doc.cart.cartItems} />
+      )}
     </div>
   );
 }
