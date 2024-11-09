@@ -75,7 +75,7 @@ function OrderTableBody() {
                   <Menus.Item
                     icon={<HiOutlineInformationCircle size={30} />}
                     label="More info"
-                    to={`/order/${order._id}`}
+                    to={`/orders/${order._id}`}
                   />
                   <Menus.Item
                     icon={<HiOutlineTrash size={30} />}

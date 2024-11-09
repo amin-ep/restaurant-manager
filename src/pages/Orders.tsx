@@ -1,5 +1,5 @@
 import MainHeading from "../ui/MainHeading";
-import OrderTable from "../components/OrderTable/OrderTable";
+import OrderTable from "../components/orderTable/OrderTable";
 import Filter from "../ui/Filter";
 
 export default function Orders() {

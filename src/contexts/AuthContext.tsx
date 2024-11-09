@@ -55,8 +55,9 @@ function AuthProvider({ children }: { children: ReactNode }) {
       setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);
+      navigate("/login");
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, navigate]);
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, login, logout, isLoading }}>

@@ -35,6 +35,7 @@ const Label = styled.label<{ focused: boolean }>`
 
 const ErrorParagraph = styled.p`
   color: red;
+  font-size: 14px;
 `;
 
 function FormControl<TFormValues extends FieldValues>({

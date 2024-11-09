@@ -3,6 +3,12 @@ import { IPizza } from "./PizzaTypes";
 
 export type Address = { postalCode: string; street: string; text: string };
 
+export interface OrderCartItem {
+  pizza: IPizza;
+  quantity: number;
+  _id: string;
+}
+
 export interface IOrder {
   address: {
     street: string;
@@ -11,11 +17,7 @@ export interface IOrder {
   };
   canceled: boolean;
   cart: {
-    cartItems: {
-      pizza: IPizza;
-      quantity: number;
-      _id: string;
-    }[];
+    cartItems: OrderCartItem[];
   };
   createdAt: Date;
   customer: ICustomer;

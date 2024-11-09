@@ -1,6 +1,6 @@
 .item {
     display: grid;
-    grid-template-columns: 1fr 80px;
+    grid-template-columns: 1fr 100px;
     align-items: center;
     height: 100%;
     padding: 0 0.5rem;
@@ -27,7 +27,7 @@
     color: var(--color-gray-8);
 }
 
-.item-number {
+.item-quantity {
     color: var(--color-gray-4);
     font-weight: bold;
     font-style: italic;
@@ -43,7 +43,7 @@
 .item-col-2 {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: 0.5rem;
     position: relative;
 }
@@ -68,7 +68,7 @@
     color: var(--color-gray-8);
 }
 
-.inventory {
+.ratings-average {
     color: var(--color-gray-8);
     display: flex;
     flex-direction: row;
