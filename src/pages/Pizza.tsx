@@ -28,7 +28,7 @@ function Pizza() {
     queryKey: ["pizza"],
   });
 
-  const { deletePizzaMutation, isDeleting } = usePizza();
+  const { deletePizzaMutation } = usePizza();
   const navigate = useNavigate();
 
   const pizza = data?.data.data.doc;

@@ -27,6 +27,7 @@ p>span {
 
 .actions {
     padding: 1.2rem 1rem;
+    justify-content: space-between;
 }
 
 .status {
@@ -43,4 +44,10 @@ p>span {
 .posted {
     background-color: #42A5F5;
     color: var(--color-gray-0);
+}
+
+@media (max-width: 470px) {
+    .actions {
+        justify-content: center;
+    }
 }

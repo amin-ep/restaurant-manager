@@ -1,8 +1,11 @@
+import { useOrder } from "../../hooks/useOrder";
 import { IOrder } from "../../types/OrderTypes";
 import LinkButton from "../../ui/LinkButton";
 import styles from "./OrderInformation.module.css";
 import cls from "classnames";
+
 function OrderInformation({ order }: { order: IOrder | undefined }) {
+  const { updateOrderMutation } = useOrder();
   return (
     <div className={styles.container}>
       <div className={styles.row}>
@@ -14,6 +17,12 @@ function OrderInformation({ order }: { order: IOrder | undefined }) {
           <span>Order Status: </span>
           {order?.status}
         </p>
+        {order?.deliveryTime && (
+          <p className={cls(styles.info)}>
+            <span>Delivery Time: </span>
+            {order?.deliveryTime.toLocaleString()}
+          </p>
+        )}
       </div>
       <div className={styles.row}>
         <p className={cls(styles.info, styles.recipient)}>
@@ -29,7 +38,7 @@ function OrderInformation({ order }: { order: IOrder | undefined }) {
           {order?.address.text}
         </p>
       </div>
-      <div className={styles.actions}>
+      <div className={cls(styles.row, styles.actions)}>
         <p className={cls(styles.info, styles.price)}>
           <span>Total Price: </span>${order?.cart.totalPrice}
         </p>
@@ -47,7 +56,10 @@ function OrderInformation({ order }: { order: IOrder | undefined }) {
           {order?.status === "waiting" && (
             <LinkButton
               onClick={() => {
-                console.log("status");
+                updateOrderMutation({
+                  id: order._id,
+                  payload: { status: "accepted" },
+                });
               }}
             >
               Accept Order
@@ -56,7 +68,10 @@ function OrderInformation({ order }: { order: IOrder | undefined }) {
           {order?.status === "accepted" && (
             <LinkButton
               onClick={() => {
-                console.log("status");
+                updateOrderMutation({
+                  id: order._id,
+                  payload: { status: "posted" },
+                });
               }}
             >
               Post Order

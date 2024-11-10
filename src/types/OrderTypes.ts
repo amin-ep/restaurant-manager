@@ -48,3 +48,14 @@ export type OrderResponseData = {
     doc: IOrder;
   };
 };
+
+export interface UpdateOrderPayloadOptions {
+  status: string;
+}
+
+export type UpdateOrderResponseData = {
+  status: string;
+  data: {
+    doc: IOrder;
+  };
+};
