@@ -51,12 +51,14 @@ function CreatePizzaForm({ close }: { close: () => void }) {
     if (ingredientsDataArr.length === 0) {
       return;
     } else {
+      console.log(ingredientsDataArr);
       const payload = new FormData();
 
       for (const [key, value] of Object.entries(data)) {
         payload.append(key, value);
       }
-      for (let i = 0; ingredientsDataArr.length > i; i++) {
+
+      for (let i = -1; ingredientsDataArr.length > i; i++) {
         payload.append("ingredients", ingredientsDataArr[i]);
       }
 

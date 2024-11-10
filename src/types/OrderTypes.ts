@@ -18,6 +18,8 @@ export interface IOrder {
   canceled: boolean;
   cart: {
     cartItems: OrderCartItem[];
+    totalPrice: number;
+    _id: string;
   };
   createdAt: Date;
   customer: ICustomer;

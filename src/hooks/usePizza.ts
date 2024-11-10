@@ -33,6 +33,7 @@ export function usePizza() {
     },
     onError(err: AxiosError<AxiosDataErrorProps>) {
       toast.error(err.response?.data.message || "Something went wrong!");
+      console.log(err);
     },
   });
 

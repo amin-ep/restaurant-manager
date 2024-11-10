@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import { OnePizzaResponseData } from "../types/PizzaTypes";
 import { getPizza } from "../services/pizzaApi";
@@ -8,9 +8,19 @@ import { FILE_URL } from "../utils/constants";
 import LinkButton from "../ui/LinkButton";
 import { usePizza } from "../hooks/usePizza";
 import { HiStar } from "react-icons/hi2";
+import Spinner from "../ui/Spinner";
+import { useEffect } from "react";
 
 function Pizza() {
   const { id } = useParams();
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    queryClient.removeQueries({
+      queryKey: ["pizza"],
+    });
+  }, [queryClient]);
+
   const { data, isLoading: isLoadingPizza } = useQuery<
     AxiosResponse<OnePizzaResponseData>
   >({
@@ -25,7 +35,8 @@ function Pizza() {
 
   return (
     <>
-      {pizza && (
+      {isLoadingPizza && <Spinner />}
+      {pizza && !isLoadingPizza && (
         <div className={styles.container}>
           <div className={styles["image-wrapper"]}>
             <img src={`${FILE_URL}/${pizza?.imageUrl}`} alt={pizza.name} />

@@ -120,7 +120,7 @@ function Item({
     );
   } else if (onClick) {
     return (
-      <Button type="button">
+      <Button onClick={onClick} type="button">
         {icon}
         <span>{label}</span>
       </Button>

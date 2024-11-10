@@ -103,16 +103,17 @@ function MenuTable() {
                     <Menus.Button id={pizza._id} />
                     <Menus.List id={pizza._id}>
                       <Menus.Item
+                        icon={<HiOutlineInformationCircle size={30} />}
+                        label="More Info"
+                        to={`/menu/${pizza._id}`}
+                      />
+                      <Menus.Item
                         icon={<HiOutlineTrash size={30} />}
                         label="Delete"
                         onClick={() => {
                           deletePizzaMutation(pizza._id);
+                          console.log("delete");
                         }}
-                      />
-                      <Menus.Item
-                        icon={<HiOutlineInformationCircle size={30} />}
-                        label="More Info"
-                        to={`/menu/${pizza._id}`}
                       />
                     </Menus.List>
                   </Menus>
