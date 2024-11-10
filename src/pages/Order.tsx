@@ -5,6 +5,7 @@ import { AxiosResponse } from "axios";
 import { OrderResponseData } from "../types/OrderTypes";
 import OrderCartList from "../components/orderCartList/OrderCartList";
 import Spinner from "../ui/Spinner";
+import OrderInformation from "../components/OrderInformation/OrderInformation";
 
 function Order() {
   const { id } = useParams();
@@ -20,7 +21,10 @@ function Order() {
       {isLoading ? (
         <Spinner />
       ) : (
-        <OrderCartList items={order?.data.data.doc.cart.cartItems} />
+        <>
+          <OrderCartList items={order?.data.data.doc.cart.cartItems} />
+          <OrderInformation order={order?.data.data.doc} />
+        </>
       )}
     </div>
   );

@@ -14,9 +14,9 @@ export async function getAllPizzas({
   let queryString: string;
 
   if (queryStr === "with-discount") {
-    queryString = "discount[eq]=0";
-  } else if (queryStr === "no-discount") {
     queryString = "discount[gt]=0";
+  } else if (queryStr === "no-discount") {
+    queryString = "discount[eq]=0";
   } else {
     queryString = "";
   }

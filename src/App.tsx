@@ -1,21 +1,29 @@
 import Layout from "./layout/Layout";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 import GlobalStyles from "./styles/GlobalStyles";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
+// import Login from "./pages/Login";
 import { AuthProvider } from "./contexts/AuthContext";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Menu from "./pages/Menu";
-import Orders from "./pages/Orders";
-import Pizza from "./pages/Pizza";
+// import Menu from "./pages/Menu";
+// import Orders from "./pages/Orders";
+// import Pizza from "./pages/Pizza";
 import { DarkModeProvider } from "./contexts/DarkModeContext";
-import Order from "./pages/Order";
-import { Suspense } from "react";
+// import Order from "./pages/Order";
+import { lazy, Suspense } from "react";
 import PageLoader from "./ui/PageLoader";
-import Account from "./pages/Account";
+// import Account from "./pages/Account";
+
+const Home = lazy(() => import("./pages/Home"));
+const Login = lazy(() => import("./pages/Login"));
+const Menu = lazy(() => import("./pages/Menu"));
+const Orders = lazy(() => import("./pages/Orders"));
+const Pizza = lazy(() => import("./pages/Pizza"));
+const Order = lazy(() => import("./pages/Order"));
+const Account = lazy(() => import("./pages/Account"));
 
 function App() {
   const queryClient = new QueryClient({
@@ -39,8 +47,8 @@ function App() {
         <ReactQueryDevtools initialIsOpen={true} />
         <GlobalStyles />
         <BrowserRouter>
-          <Suspense fallback={<PageLoader />}>
-            <AuthProvider>
+          <AuthProvider>
+            <Suspense fallback={<PageLoader />}>
               <Routes>
                 <Route element={<Layout />}>
                   <Route path="/" element={<Home />} />
@@ -52,8 +60,8 @@ function App() {
                 </Route>
                 <Route path="login" element={<Login />} />
               </Routes>
-            </AuthProvider>
-          </Suspense>
+            </Suspense>
+          </AuthProvider>
         </BrowserRouter>
       </QueryClientProvider>
     </DarkModeProvider>

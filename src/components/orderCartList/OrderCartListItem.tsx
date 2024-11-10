@@ -11,7 +11,6 @@ function OrderCartListItem({
   pizza: IPizza;
   quantity: number;
 }) {
-  console.log(pizza);
   return (
     <div className={styles.item}>
       <div className={styles["item-col-1"]}>

@@ -10,6 +10,7 @@ const StyledDiv = styled.div`
 function OrderCartList({ items }: { items: OrderCartItem[] | undefined }) {
   return (
     <StyledDiv>
+      <h1>Items</h1>
       {items?.map((pizza) => (
         <OrderCartListItem
           key={pizza.pizza._id}

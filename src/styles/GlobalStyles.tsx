@@ -47,6 +47,7 @@ const GlobalStyles = createGlobalStyle`
         --color-orange-1: #fa7a09;
         --color-orange-2: #b65603;
     }
+
 }
 
 
