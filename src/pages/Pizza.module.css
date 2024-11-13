@@ -1,20 +1,50 @@
 .container {
     display: grid;
     grid-template-columns: 250px 1fr;
-    height: 300px;
+    height: 250px;
 }
 
 .image-wrapper {
     width: 100%;
-    height: 100%;
+    height: max-content;
+    position: relative;
 }
 
 .image-wrapper img {
     width: 100%;
     border-radius: 6px;
-    height: 100%;
+    height: fit-content;
     object-fit: cover;
 }
+
+
+.discount-label {
+    z-index: 10;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: transparent;
+    position: absolute;
+    overflow: hidden;
+}
+
+.discount-label>span {
+    position: absolute;
+    top: 0.75rem;
+    left: -2.5rem;
+    background-color: var(--color-lime);
+    font-weight: 600;
+    padding: 0.5rem 2.5rem;
+    font-size: 15px;
+    border: 2px dashed var(--color-gray-8);
+    transform: rotate(-45deg);
+    outline: 5px solid var(--color-lime);
+    outline-offset: 0px;
+    color: var(--color-gray-8);
+}
+
+
 
 .details {
     color: var(--color-gray-8);
@@ -23,11 +53,37 @@
     grid-template-rows: 1fr auto;
 }
 
-.details-actions {
+.details-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.details-action-buttons {
     display: flex;
     gap: 0.5rem;
     justify-content: flex-end;
 }
+
+.details-discounted-price {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.details-discounted-price>.unit-price {
+    text-decoration: line-through;
+    font-size: 14px;
+}
+
+.final-price {
+    background-color: var(--color-lime);
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    font-size: 17px;
+}
+
 
 .details-texts-header {
     display: flex;
@@ -40,4 +96,40 @@
     align-items: center;
     gap: 0.2rem;
     font-size: 22px;
+}
+
+@media (max-width: 700px) {
+    .container {
+        grid-template-columns: auto;
+        height: auto;
+        grid-template-rows: 200px auto;
+    }
+
+    .image-wrapper {
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .image-wrapper img {
+        height: 200px;
+        width: 200px;
+    }
+}
+
+@media (max-width:436px) {
+    .details-action {
+        align-items: baseline;
+    }
+
+    .details-action-buttons {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 388px) {
+    .image-wrapper img {
+        width: 100%;
+    }
 }

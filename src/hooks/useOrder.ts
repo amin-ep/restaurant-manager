@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getOrders } from "../services/orderApi";
+import { deleteOrderById, getOrders } from "../services/orderApi";
 import { AxiosResponse, AxiosError } from "axios";
 import { OrdersResponseData } from "../types/OrderTypes";
 import { useFilter } from "./useFilter";
@@ -31,5 +31,25 @@ export function useOrder() {
         toast.error(err.response?.data.message || "Something went wrong!");
       },
     });
-  return { orders, isLoadingOrders, updateOrderMutation, isUpdatingOrder };
+
+  const { mutate: mutateDeleteOrder, isLoading: isDeleting } = useMutation({
+    mutationKey: ["order"],
+    mutationFn: deleteOrderById,
+    onSuccess() {
+      toast.success("Order deleted successfully");
+      queryClient.invalidateQueries(["order"]);
+    },
+    onError(err: AxiosError<AxiosDataErrorProps>) {
+      toast.error(err.response?.data.message || "Something went wrong!");
+    },
+  });
+
+  return {
+    orders,
+    isLoadingOrders,
+    updateOrderMutation,
+    isUpdatingOrder,
+    mutateDeleteOrder,
+    isDeleting,
+  };
 }

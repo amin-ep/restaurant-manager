@@ -12,6 +12,7 @@ import Spinner from "../ui/Spinner";
 import { useEffect, useState } from "react";
 import Modal from "../ui/Modal";
 import UpdatePizzaForm from "../components/updatePizzaForm/UpdatePizzaForm";
+import { calculateDiscountPercentage } from "../utils/helpers";
 
 function Pizza() {
   const { id } = useParams();
@@ -44,6 +45,18 @@ function Pizza() {
       {pizza && !isLoadingPizza && (
         <div className={styles.container}>
           <div className={styles["image-wrapper"]}>
+            {pizza.discount > 0 && (
+              <div className={styles["discount-label"]}>
+                <span>
+                  {calculateDiscountPercentage(
+                    pizza.unitPrice,
+                    pizza.discount
+                  ) +
+                    " " +
+                    "free"}
+                </span>
+              </div>
+            )}
             <img src={`${FILE_URL}/${pizza?.imageUrl}`} alt={pizza.name} />
           </div>
           <div className={styles.details}>
@@ -57,16 +70,18 @@ function Pizza() {
               </div>
               <p>Ingredients: {pizza.ingredients.join(", ")}</p>
             </div>
-            <div>
+            <div className={styles["details-action"]}>
               {pizza.discount > 0 ? (
-                <>
-                  <p>{pizza.unitPrice}</p>
-                  <p>{pizza.finalPrice}</p>
-                </>
+                <div className={styles["details-discounted-price"]}>
+                  <p className={styles["final-price"]}>${pizza.finalPrice}</p>
+                  <p className={styles["unit-price"]}>${pizza.unitPrice}</p>
+                </div>
               ) : (
-                <p>{pizza.finalPrice}</p>
+                <div className={styles["details-price"]}>
+                  <p className={styles["final-price"]}>${pizza.finalPrice}</p>
+                </div>
               )}
-              <div className={styles["details-actions"]}>
+              <div className={styles["details-action-buttons"]}>
                 <LinkButton type="button" onClick={() => setModalIsOpen(true)}>
                   Update
                 </LinkButton>

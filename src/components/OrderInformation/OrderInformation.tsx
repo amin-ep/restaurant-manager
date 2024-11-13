@@ -1,6 +1,7 @@
 import { useOrder } from "../../hooks/useOrder";
 import { IOrder } from "../../types/OrderTypes";
 import LinkButton from "../../ui/LinkButton";
+import { calculatePastTime } from "../../utils/helpers";
 import styles from "./OrderInformation.module.css";
 import cls from "classnames";
 
@@ -11,7 +12,7 @@ function OrderInformation({ order }: { order: IOrder | undefined }) {
       <div className={styles.row}>
         <p className={cls(styles.info)}>
           <span>Order Date: </span>
-          {order?.createdAt.toLocaleString()}
+          {calculatePastTime(order!.createdAt)}
         </p>
         <p className={cls(styles.info)}>
           <span>Order Status: </span>

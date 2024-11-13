@@ -165,6 +165,7 @@ function CreatePizzaForm({ close }: { close: () => void }) {
           />
         ))}
         <IconButtonLink
+          title="Add Ingredient"
           onClick={() => {
             setIngredientInputs([
               ...ingredientInputs,

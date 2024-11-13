@@ -11,6 +11,7 @@ import {
 import Pagination from "../../ui/Pagination";
 import Filter from "../../ui/Filter";
 import Spinner from "../../ui/Spinner";
+import { calculateDiscountPercentage } from "../../utils/helpers";
 
 const Img = styled.img`
   width: 100%;
@@ -37,18 +38,6 @@ const StyledSpan = styled.span`
 
 function MenuTable() {
   const { pizzaData, isLoadingPizzas, deletePizzaMutation } = usePizza();
-
-  const calculateDiscountPercentage: (
-    price: number,
-    discount: number
-  ) => number | string = (price, discount) => {
-    const discountPercentage = ((discount * 100) / price).toFixed(0);
-    if (Number(discountPercentage) == 0) {
-      return "-";
-    } else {
-      return `%${discountPercentage}`;
-    }
-  };
 
   return (
     <div>
@@ -112,7 +101,6 @@ function MenuTable() {
                         label="Delete"
                         onClick={() => {
                           deletePizzaMutation(pizza._id);
-                          console.log("delete");
                         }}
                       />
                     </Menus.List>

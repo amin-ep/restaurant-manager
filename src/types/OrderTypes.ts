@@ -21,13 +21,13 @@ export interface IOrder {
     totalPrice: number;
     _id: string;
   };
-  createdAt: Date;
+  createdAt: string;
   customer: ICustomer;
-  deliveryTime: Date | null;
+  deliveryTime: string | null | Date;
   phone: string;
   status: "waiting" | "accepted" | "posted" | "received";
   text: string;
-  updatedAt: Date;
+  updatedAt: string;
   _id: string;
 }
 

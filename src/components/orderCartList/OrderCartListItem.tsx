@@ -38,7 +38,7 @@ function OrderCartListItem({
           {pizza.ratingsAverage ?? 0}
         </span>
 
-        <IconButtonLink to={`/menu/${pizza._id}`}>
+        <IconButtonLink title="options" to={`/menu/${pizza._id}`}>
           <HiOutlineInformationCircle size={30} />
         </IconButtonLink>
       </div>

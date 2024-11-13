@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { HiOutlineInformationCircle, HiOutlineTrash } from "react-icons/hi2";
 import { IOrder } from "../../types/OrderTypes";
 import Spinner from "../../ui/Spinner";
-
+import { calculatePastTime } from "../../utils/helpers";
 const StyledImg = styled.img`
   width: 35px;
   height: 35px;
@@ -46,7 +46,7 @@ const Status = styled.span<{ status: IOrder["status"] }>`
 `;
 
 function OrderTableBody() {
-  const { orders, isLoadingOrders } = useOrder();
+  const { orders, isLoadingOrders, mutateDeleteOrder } = useOrder();
 
   return (
     <>
@@ -58,6 +58,7 @@ function OrderTableBody() {
         <>
           {orders?.data.data.docs.map((order) => (
             <Table.Body key={order._id}>
+              {/* {console.log(typeof )} */}
               <>
                 <Table.BodyCell>
                   {order.cart.cartItems.slice(0, 3).map((cart) => (
@@ -72,7 +73,9 @@ function OrderTableBody() {
                   )}
                 </Table.BodyCell>
                 <Table.BodyCell>{order.customer.fullName}</Table.BodyCell>
-                <Table.BodyCell>{order.createdAt.toString()}</Table.BodyCell>
+                <Table.BodyCell>
+                  {calculatePastTime(order.createdAt)}
+                </Table.BodyCell>
                 <Table.BodyCell>{order.phone}</Table.BodyCell>
                 <Table.BodyCell>
                   <Status status={order.status}>{order.status}</Status>
@@ -90,7 +93,7 @@ function OrderTableBody() {
                         icon={<HiOutlineTrash size={30} />}
                         label="Delete"
                         onClick={() => {
-                          console.log("delete");
+                          mutateDeleteOrder(order._id);
                         }}
                       />
                     </Menus.List>

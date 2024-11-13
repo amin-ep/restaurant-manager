@@ -1,3 +1,4 @@
+import { Tooltip as BaseTooltip } from "@mui/material";
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
@@ -33,11 +34,23 @@ const StyledButton = styled.button`
   ${Styles}
 `;
 
+const Tooltip = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: ReactNode;
+}) => {
+  return <BaseTooltip title={title}>{children}</BaseTooltip>;
+};
+
 function HeaderListItem({
+  title,
   onClick,
   to,
   children,
 }: {
+  title: string;
   onClick?: () => void;
   to?: string;
   children: ReactNode;
@@ -45,9 +58,11 @@ function HeaderListItem({
   if (onClick) {
     return (
       <li style={{ listStyle: "none" }}>
-        <StyledButton onClick={onClick} type="button">
-          {children}
-        </StyledButton>
+        <Tooltip title={title}>
+          <StyledButton onClick={onClick} type="button">
+            {children}
+          </StyledButton>
+        </Tooltip>
       </li>
     );
   }
@@ -55,7 +70,9 @@ function HeaderListItem({
   if (to) {
     return (
       <li style={{ listStyle: "none" }}>
-        <StyledLink to={to}>{children}</StyledLink>
+        <Tooltip title={title}>
+          <StyledLink to={to}>{children}</StyledLink>
+        </Tooltip>
       </li>
     );
   }

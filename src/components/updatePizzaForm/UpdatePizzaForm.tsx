@@ -195,6 +195,7 @@ function UpdatePizzaForm({
           />
         ))}
         <IconButtonLink
+          title="Add Ingredient"
           onClick={() => {
             setIngredientInputs([
               ...ingredientInputs,

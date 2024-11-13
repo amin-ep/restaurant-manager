@@ -33,21 +33,24 @@ function HeaderList({ onToggleSidebar }: { onToggleSidebar: () => void }) {
 
   return (
     <List>
-      <IconButtonLink onClick={onToggleSidebar}>
+      <IconButtonLink title="list" onClick={onToggleSidebar}>
         <HiBars3 size={27} />
       </IconButtonLink>
       <Items>
-        <IconButtonLink to="account">
+        <IconButtonLink title="Account" to="account">
           <HiOutlineUserCircle size={27} />
         </IconButtonLink>
-        <IconButtonLink onClick={toggleDarkMode}>
+        <IconButtonLink
+          title={isDarkMode ? "Light mode" : "Dark mode"}
+          onClick={toggleDarkMode}
+        >
           {isDarkMode ? (
             <HiOutlineSun size={27} />
           ) : (
             <HiOutlineMoon size={27} />
           )}
         </IconButtonLink>
-        <IconButtonLink onClick={logout}>
+        <IconButtonLink title="Logout" onClick={logout}>
           <HiArrowRightOnRectangle size={27} />
         </IconButtonLink>
       </Items>

@@ -47,13 +47,22 @@ export async function updateOrderById({
   id: string;
   payload: UpdateOrderPayloadOptions;
 }) {
-  console.log(id);
-  console.log(payload);
   const token = Cookies.get(JWT_TOKEN_KEY);
   const response = await axios.patch(`${BASE_URL}/order/${id}`, payload, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
+    },
+  });
+
+  return response;
+}
+
+export async function deleteOrderById(id: string) {
+  const token = Cookies.get(JWT_TOKEN_KEY);
+  const response = await axios.delete(`${BASE_URL}/order/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
   });
 

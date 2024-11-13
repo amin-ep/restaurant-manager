@@ -1,11 +1,11 @@
 export interface ICustomer {
-  createdAt: Date;
+  createdAt: string;
   email: string;
   fullName: string;
   password: string;
   phone: null | string;
   role: "customer";
-  updatedAt: Date;
+  updatedAt: string;
   __v: number;
   _id: string;
 }
