@@ -14,6 +14,7 @@ function LoginForm() {
     register,
     handleSubmit,
     getValues,
+    watch,
   } = useForm<LoginPayload>();
 
   const { login } = useAuth();
@@ -42,6 +43,7 @@ function LoginForm() {
       <Form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <LoginHeader />
         <FormControl<LoginPayload>
+          watch={watch}
           errorMessage={errors.email?.message}
           inputId="email"
           name="email"
@@ -58,6 +60,7 @@ function LoginForm() {
           label="Email*"
         />
         <FormControl<LoginPayload>
+          watch={watch}
           errorMessage={errors.password?.message}
           inputId="password"
           name="password"
@@ -84,7 +87,6 @@ function LoginForm() {
         </LinkButton>
       </Form>
     </Container>
-    // </LoginWrapper>
   );
 }
 

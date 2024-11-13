@@ -9,11 +9,14 @@ import LinkButton from "../ui/LinkButton";
 import { usePizza } from "../hooks/usePizza";
 import { HiStar } from "react-icons/hi2";
 import Spinner from "../ui/Spinner";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Modal from "../ui/Modal";
+import UpdatePizzaForm from "../components/updatePizzaForm/UpdatePizzaForm";
 
 function Pizza() {
   const { id } = useParams();
   const queryClient = useQueryClient();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     queryClient.removeQueries({
@@ -32,6 +35,8 @@ function Pizza() {
   const navigate = useNavigate();
 
   const pizza = data?.data.data.doc;
+
+  const handleCloseModal = () => setModalIsOpen(false);
 
   return (
     <>
@@ -52,17 +57,44 @@ function Pizza() {
               </div>
               <p>Ingredients: {pizza.ingredients.join(", ")}</p>
             </div>
-            <div className={styles["details-actions"]}>
-              <LinkButton type="button">Update</LinkButton>
-              <LinkButton
-                onClick={() => {
-                  deletePizzaMutation(pizza._id);
-                  navigate(-1);
-                }}
-                type="button"
-              >
-                Delete
-              </LinkButton>
+            <div>
+              {pizza.discount > 0 ? (
+                <>
+                  <p>{pizza.unitPrice}</p>
+                  <p>{pizza.finalPrice}</p>
+                </>
+              ) : (
+                <p>{pizza.finalPrice}</p>
+              )}
+              <div className={styles["details-actions"]}>
+                <LinkButton type="button" onClick={() => setModalIsOpen(true)}>
+                  Update
+                </LinkButton>
+                <LinkButton
+                  onClick={() => {
+                    deletePizzaMutation(pizza._id);
+                    navigate(-1);
+                  }}
+                  type="button"
+                >
+                  Delete
+                </LinkButton>
+              </div>
+              {modalIsOpen && (
+                <Modal onClose={handleCloseModal}>
+                  <UpdatePizzaForm
+                    close={handleCloseModal}
+                    id={id!}
+                    defaultValues={{
+                      name: pizza.name,
+                      discount: pizza.discount,
+                      ingredients: pizza.ingredients,
+                      unitPrice: pizza.unitPrice,
+                      imageUrl: pizza.imageUrl,
+                    }}
+                  />
+                </Modal>
+              )}
             </div>
           </div>
         </div>

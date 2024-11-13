@@ -1,7 +1,18 @@
-import { FormEvent, HTMLInputTypeAttribute, ReactNode, useState } from "react";
+import {
+  FormEvent,
+  HTMLInputTypeAttribute,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
 import styled from "styled-components";
 import Input from "./Input";
-import { UseFormRegister, RegisterOptions, Path } from "react-hook-form";
+import {
+  UseFormRegister,
+  RegisterOptions,
+  Path,
+  UseFormWatch,
+} from "react-hook-form";
 
 export type FieldValues = {
   [key: string]: string;
@@ -14,27 +25,24 @@ const StyledDiv = styled.div`
   width: 100%;
 `;
 
-const Label = styled.label<{ focused: boolean }>`
+const Label = styled.label<{ focused: "true" | "false" }>`
   color: var(--color-gray-9);
 
   transition: all 0.3s;
-  /* transform: ${(props) =>
-    props.focused === false
-      ? "translate(1rem, 2rem)"
-      : "translate(1rem, 0.5rem)"}; */
+
   background-color: var(--color-gray-0);
   width: fit-content;
   padding: 0 2px;
   position: absolute;
-  top: ${(props) => (props.focused === false ? "0.75rem" : "-0.25rem")};
+  top: ${(props) => (props.focused === "false" ? "0.75rem" : "-0.25rem")};
   left: 1rem;
 
-  font-size: ${(props) => (props.focused === false ? "16px" : "13px")};
+  font-size: ${(props) => (props.focused === "false" ? "16px" : "13px")};
   z-index: 10;
 `;
 
 const ErrorParagraph = styled.p`
-  color: red;
+  color: #f11b1b;
   font-size: 14px;
 `;
 
@@ -47,8 +55,9 @@ function FormControl<TFormValues extends FieldValues>({
   register,
   validation,
   children,
+  watch,
 }: {
-  name?: Path<TFormValues>;
+  name: Path<TFormValues>;
   type: HTMLInputTypeAttribute;
   label?: string;
   errorMessage?: string;
@@ -56,6 +65,7 @@ function FormControl<TFormValues extends FieldValues>({
   register: UseFormRegister<TFormValues>;
   validation: RegisterOptions<TFormValues, Path<TFormValues>> | undefined;
   children?: ReactNode | undefined;
+  watch: UseFormWatch<TFormValues>;
 }) {
   const [inputIsFocused, setInputIsFocused] = useState<boolean>(false);
 
@@ -67,10 +77,21 @@ function FormControl<TFormValues extends FieldValues>({
     }
   };
 
+  useEffect(() => {
+    if (watch(name)?.length > 0) {
+      setInputIsFocused(true);
+    } else {
+      setInputIsFocused(false);
+    }
+  }, [name, watch]);
+
   return (
     <StyledDiv>
       {label && (
-        <Label focused={inputIsFocused} htmlFor={inputId}>
+        <Label
+          focused={inputIsFocused === true ? "true" : "false"}
+          htmlFor={inputId}
+        >
           {label}
         </Label>
       )}

@@ -1,35 +1,46 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useForm } from "react-hook-form";
 import Form from "../../ui/Form";
 import FormControl from "../../ui/FormControl";
-import { CreatePizzaPayload } from "../../types/PizzaTypes";
-import styles from "./CreatePizzaForm.module.css";
-import FileInput from "../../ui/FileInput";
-import LinkButton from "../../ui/LinkButton";
-import Input from "../../ui/Input";
-import { ChangeEvent, useState } from "react";
-import { usePizza } from "../../hooks/usePizza";
+import { UpdatePizzaPayload } from "../../types/PizzaTypes";
+import { useState, ChangeEvent, useEffect } from "react";
 import IconButtonLink from "../../ui/IconButtonLink";
+import Input from "../../ui/Input";
 import { HiPlus } from "react-icons/hi2";
+import LinkButton from "../../ui/LinkButton";
+import styles from "./UpdatePizzaForm.module.css";
+import { toast } from "react-toastify";
+import { usePizza } from "../../hooks/usePizza";
+import UpdatePizzaFileInput from "./UpdatePizzaFileInput";
 
-function CreatePizzaForm({ close }: { close: () => void }) {
+function UpdatePizzaForm({
+  defaultValues,
+  id,
+  close,
+}: {
+  defaultValues: UpdatePizzaPayload;
+  id: string;
+  close: () => void;
+}) {
   const [ingredientInputs, setIngredientInputs] = useState<
     { value: string; index: number }[]
-  >([{ value: "", index: 0 }]);
+  >([]);
+  const [selectedImage, setSelectedImage] = useState<
+    string | Blob | MediaSource
+  >("");
 
-  const { isCreating, createPizzaMutation } = usePizza();
+  const { updatePizzaMutation, isUpdatingPizza } = usePizza();
 
-  const {
-    register,
-    formState: { errors },
-    getValues,
-    handleSubmit,
-    watch,
-  } = useForm<CreatePizzaPayload>({
-    defaultValues: {
-      discount: 0,
-    },
-  });
+  useEffect(() => {
+    if (defaultValues && defaultValues.ingredients) {
+      const ingredientDefaultValues = Array(defaultValues.ingredients.length)
+        .fill(null)
+        .map((_, index) => ({
+          value: defaultValues.ingredients![index],
+          index: index,
+        }));
+      setIngredientInputs(ingredientDefaultValues);
+    }
+  }, [defaultValues]);
 
   const handleIngredientInputChange = (
     e: ChangeEvent<HTMLInputElement>,
@@ -43,65 +54,87 @@ function CreatePizzaForm({ close }: { close: () => void }) {
     setIngredientInputs(newIngredientInputs);
   };
 
-  function onSubmit(data: CreatePizzaPayload) {
-    const ingredientsDataArr: string[] = ingredientInputs.map(
-      (item) => item.value
-    );
-    data.imageUrl = data.imageUrl[0];
+  const {
+    formState: { errors },
+    register,
+    watch,
+    handleSubmit,
+  } = useForm<UpdatePizzaPayload>({
+    defaultValues: defaultValues,
+  });
 
-    if (ingredientsDataArr.length === 0) {
-      return;
+  const onSubmit = (data: UpdatePizzaPayload) => {
+    data.ingredients = ingredientInputs.map((item) => item.value);
+    data.ingredients.forEach((el, index) => {
+      if (el === "") {
+        data.ingredients?.splice(index, index + 1);
+      }
+    });
+
+    data.imageUrl =
+      selectedImage === "" ? defaultValues.imageUrl : selectedImage;
+
+    let sumDataChanges = 0;
+    for (let i = 0; Object.values(defaultValues).length > i; i++) {
+      if (Object.values(data)[i] !== Object.values(defaultValues)[i]) {
+        const changedValueKey = Object.keys(data)[i];
+        if (changedValueKey !== "ingredients") {
+          sumDataChanges++;
+        }
+
+        if (
+          changedValueKey === "ingredients" &&
+          data.ingredients.toString() !== defaultValues.ingredients?.toString()
+        ) {
+          sumDataChanges++;
+        }
+      }
+    }
+
+    if (sumDataChanges === 0) {
+      toast.error("change some values to update this pizza");
     } else {
       const payload = new FormData();
-
       for (const [key, value] of Object.entries(data)) {
+        if (key === "ingredients") {
+          continue;
+        }
         payload.append(key, value);
       }
 
-      ingredientsDataArr.forEach((el, index) => {
-        if (el === "") {
-          data.ingredients?.splice(index, index + 1);
-        }
+      data.ingredients.forEach((el, index) => {
         payload.append(`ingredients[${index}]`, el);
       });
 
-      createPizzaMutation(payload);
-      setIngredientInputs([{ value: "", index: 0 }]);
+      updatePizzaMutation({ id: id, payload: payload });
       close();
     }
-  }
+  };
 
   return (
     <>
-      <header className={styles.header}>
-        <h1>Create Pizza</h1>
-      </header>
+      <div>
+        <h1>Update {defaultValues.name}</h1>
+      </div>
       <Form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles["file-input-container"]}>
-          <FileInput
-            id="image-url"
-            name="imageUrl"
-            register={register}
-            validation={{
-              required: {
-                value: false,
-                message: "You have to provide an image for your pizza",
-              },
-            }}
-          />
-        </div>
+        <UpdatePizzaFileInput
+          defaultValue={
+            typeof defaultValues.imageUrl === "string"
+              ? defaultValues.imageUrl
+              : ""
+          }
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
+        />
         <FormControl
           watch={watch}
-          label="Name*"
           errorMessage={errors.name?.message}
+          label="Name"
+          name="name"
           inputId="name"
-          type="text"
           register={register}
+          type="text"
           validation={{
-            required: {
-              value: true,
-              message: "Please provide a name for your pizza",
-            },
             minLength: {
               value: 5,
               message: "Pizza name must contain at least 5 characters",
@@ -111,7 +144,6 @@ function CreatePizzaForm({ close }: { close: () => void }) {
               message: "Pizza name must be 25 characters or less",
             },
           }}
-          name="name"
         />
         <FormControl
           watch={watch}
@@ -122,7 +154,7 @@ function CreatePizzaForm({ close }: { close: () => void }) {
           register={register}
           validation={{
             required: {
-              value: true,
+              value: false,
               message: "Please provide a unit price for your pizza",
             },
             min: {
@@ -136,7 +168,6 @@ function CreatePizzaForm({ close }: { close: () => void }) {
           }}
           name="unitPrice"
         />
-
         <FormControl
           watch={watch}
           label="Discount*"
@@ -146,12 +177,11 @@ function CreatePizzaForm({ close }: { close: () => void }) {
           register={register}
           validation={{
             validate: (val: number) =>
-              val <= getValues().unitPrice ||
+              val <= defaultValues.unitPrice! ||
               "Discount must be equal or less than unit price",
           }}
           name="discount"
         />
-
         {ingredientInputs.map((item, index) => (
           <Input
             type="text"
@@ -160,7 +190,7 @@ function CreatePizzaForm({ close }: { close: () => void }) {
               handleIngredientInputChange(e, index);
             }}
             key={index}
-            className={styles["ingredient-input"]}
+            // className={styles["ingredient-input"]}
             name={`ingredient-${index + 1}`}
           />
         ))}
@@ -177,15 +207,12 @@ function CreatePizzaForm({ close }: { close: () => void }) {
         >
           <HiPlus size={28} />
         </IconButtonLink>
-
-        <div className={styles["form-actions"]}>
-          <LinkButton type="submit">
-            {isCreating ? "Creating..." : "Add pizza"}
-          </LinkButton>
-        </div>
+        <LinkButton type="submit">
+          {isUpdatingPizza ? "Updating..." : "Update"}
+        </LinkButton>
       </Form>
     </>
   );
 }
 
-export default CreatePizzaForm;
+export default UpdatePizzaForm;

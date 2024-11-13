@@ -50,22 +50,26 @@ const BasicStyles = css`
     border-radius: 48px;
   }
 
-  &:hover::before {
+  &:not(:disabled):hover::before {
     transform: translate(5%, 20%);
     width: 110%;
     height: 110%;
   }
 
-  &:hover::after {
+  &:not(:disabled):hover::after {
     border-radius: 8px;
     transform: translate(0, 0);
     width: 100%;
     height: 100%;
   }
 
-  &:active::after {
+  &:not(:disabled):active::after {
     transition: 0s;
     transform: translate(0, 5%);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
   }
 `;
 
@@ -83,16 +87,23 @@ export default function LinkButton({
   children,
   type,
   className,
+  disabled = false,
 }: {
   onClick?: () => void;
   to?: string;
   children: ReactNode;
   type?: "submit" | "reset" | "button";
   className?: string;
+  disabled?: boolean;
 }) {
   if (onClick || type)
     return (
-      <Button className={className} onClick={onClick} type={type}>
+      <Button
+        disabled={disabled}
+        className={className}
+        onClick={onClick}
+        type={type}
+      >
         {children}
       </Button>
     );

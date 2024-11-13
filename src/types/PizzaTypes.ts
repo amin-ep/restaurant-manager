@@ -33,6 +33,14 @@ export interface CreatePizzaPayload extends FieldValues {
   ingredients: string[];
 }
 
+export interface UpdatePizzaPayload extends FieldValues {
+  name?: string;
+  unitPrice?: number;
+  discount?: number;
+  imageUrl?: string | undefined | Blob | MediaSource;
+  ingredients?: string[];
+}
+
 export type OnePizzaResponseData = {
   status: string;
   data: {

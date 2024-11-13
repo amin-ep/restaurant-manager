@@ -1,5 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createPizza, getAllPizzas, deletePizza } from "../services/pizzaApi";
+import {
+  createPizza,
+  getAllPizzas,
+  deletePizza,
+  updatePizzaById,
+} from "../services/pizzaApi";
 import { AxiosResponse } from "axios";
 import { PizzasResponseData } from "../types/PizzaTypes";
 import { toast } from "react-toastify";
@@ -52,6 +57,18 @@ export function usePizza() {
     },
   });
 
+  // Update Pizza
+  const { mutate: updatePizzaMutation, isLoading: isUpdatingPizza } =
+    useMutation({
+      mutationFn: updatePizzaById,
+      mutationKey: ["pizza"],
+      onSuccess() {
+        queryClient.invalidateQueries(["pizza"]);
+      },
+      onError(err: AxiosError<AxiosDataErrorProps>) {
+        toast.error(err.response?.data.message || "Something went wrong!");
+      },
+    });
   return {
     pizzaData,
     isLoadingPizzas,
@@ -59,5 +76,7 @@ export function usePizza() {
     isCreating,
     deletePizzaMutation,
     isDeleting,
+    updatePizzaMutation,
+    isUpdatingPizza,
   };
 }

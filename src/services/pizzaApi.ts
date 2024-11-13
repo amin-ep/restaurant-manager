@@ -1,6 +1,7 @@
 import axios from "axios";
 import { BASE_URL, JWT_TOKEN_KEY } from "../utils/constants";
 import Cookies from "js-cookie";
+import { UpdatePizzaPayload } from "../types/PizzaTypes";
 
 export async function getAllPizzas({
   queryStr,
@@ -66,6 +67,26 @@ export async function getPizza(id: string) {
       "Content-Type": "application/json",
     },
   });
+
+  return response;
+}
+
+export async function updatePizzaById({
+  id,
+  payload,
+}: {
+  id: string;
+  payload: UpdatePizzaPayload;
+}) {
+  const token = Cookies.get(JWT_TOKEN_KEY);
+
+  const response = await axios.patch(`${BASE_URL}/pizza/${id}`, payload, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  console.log(response);
 
   return response;
 }

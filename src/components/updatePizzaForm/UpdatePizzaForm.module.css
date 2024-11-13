@@ -1,0 +1,9 @@
+.form {
+    max-width: 100%;
+    gap: 1rem;
+    margin: 1rem;
+    padding: 1.5rem;
+    width: 22rem;
+    max-height: 30rem;
+    overflow-y: auto;
+}

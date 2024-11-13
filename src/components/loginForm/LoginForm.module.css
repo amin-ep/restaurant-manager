@@ -2,6 +2,7 @@
     width: 100%;
     gap: 1rem;
     padding: 2rem 0;
+    align-items: center;
 }
 
 .logo-wrapper {
