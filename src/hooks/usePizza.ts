@@ -27,6 +27,17 @@ export function usePizza() {
     queryKey: ["pizza", queryString, page],
   });
 
+  queryClient.prefetchQuery({
+    queryFn: () => getAllPizzas({ queryStr: queryString, page: page! + 1 }),
+    queryKey: ["pizza", queryString, page + 1],
+  });
+
+  queryClient.prefetchQuery({
+    queryFn: () =>
+      getAllPizzas({ queryStr: queryString, page: Number(page)! - 1 }),
+    queryKey: ["pizza", queryString, Number(page) - 1],
+  });
+
   const { mutate: createPizzaMutation, isLoading: isCreating } = useMutation({
     mutationKey: ["pizza"],
     mutationFn: createPizza,
@@ -38,7 +49,6 @@ export function usePizza() {
     },
     onError(err: AxiosError<AxiosDataErrorProps>) {
       toast.error(err.response?.data.message || "Something went wrong!");
-      console.log(err);
     },
   });
 

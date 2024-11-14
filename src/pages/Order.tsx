@@ -5,7 +5,7 @@ import { AxiosResponse } from "axios";
 import { OrderResponseData } from "../types/OrderTypes";
 import OrderCartList from "../components/orderCartList/OrderCartList";
 import Spinner from "../ui/Spinner";
-import OrderInformation from "../components/OrderInformation/OrderInformation";
+import OrderInformation from "../components/orderInformation/OrderInformation";
 import { useEffect } from "react";
 
 function Order() {

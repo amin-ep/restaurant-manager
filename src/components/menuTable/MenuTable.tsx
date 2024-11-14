@@ -115,7 +115,6 @@ function MenuTable() {
         <Pagination
           count={pizzaData.data.dataNum}
           totalPages={pizzaData.data.totalPages}
-          pageSize={pizzaData.data.data.docs.length}
         />
       )}
     </div>

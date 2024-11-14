@@ -8,7 +8,7 @@ export async function getAllPizzas({
   page,
 }: {
   queryStr: string;
-  page: string;
+  page: string | number;
 }) {
   const token = Cookies.get(JWT_TOKEN_KEY);
 

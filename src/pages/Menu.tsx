@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import Modal from "../ui/Modal";
 import CreatePizzaForm from "../components/createPizzaForm/CreatePizzaForm";
 import { useState } from "react";
-import MenuTable from "../components/MenuTable/MenuTable";
+import MenuTable from "../components/menuTable/MenuTable";
 
 function Menu() {
   const [modalIsOpen, setModalIsOpen] = useState(false);

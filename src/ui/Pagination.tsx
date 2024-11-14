@@ -50,11 +50,9 @@ const Button = styled.button`
 function Pagination({
   count,
   totalPages,
-  pageSize,
 }: {
   count: number | null;
   totalPages: number;
-  pageSize: number | null;
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -79,7 +77,8 @@ function Pagination({
   return (
     <StyledPagination>
       <p>
-        Showing <span>1</span> to {pageSize} of <span>{count}</span> results
+        <span>{count}</span> results | page <span>{currentPage}</span> of{" "}
+        <span>{totalPages}</span>
       </p>
 
       <PaginationButtonWrapper>

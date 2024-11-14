@@ -1,8 +1,11 @@
 import MainHeading from "../ui/MainHeading";
 import OrderTable from "../components/orderTable/OrderTable";
 import Filter from "../ui/Filter";
+import { useOrder } from "../hooks/useOrder";
+import Pagination from "../ui/Pagination";
 
 export default function Orders() {
+  const { orders } = useOrder();
   return (
     <>
       <MainHeading label="Orders">
@@ -18,6 +21,12 @@ export default function Orders() {
         />
       </MainHeading>
       <OrderTable />
+      {orders && (
+        <Pagination
+          count={orders?.data.dataNum}
+          totalPages={orders?.data.totalPages}
+        />
+      )}
     </>
   );
 }
