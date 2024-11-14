@@ -10,7 +10,7 @@ const BasicStyles = css`
   background-color: transparent;
   border: none;
   position: relative;
-  color: var(--color-gray-0);
+  color: #ffffff;
   cursor: pointer;
   z-index: 1;
   padding: 10px 20px;
