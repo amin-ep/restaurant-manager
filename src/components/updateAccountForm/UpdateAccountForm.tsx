@@ -9,6 +9,7 @@ import { useAccount } from "../../hooks/useAccount";
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import Loading from "../../ui/Loading";
 
 const Control = styled.div`
   display: grid;
@@ -37,11 +38,9 @@ const Error = styled.p`
 `;
 
 function UpdateAccountForm() {
-  const { accountData, updateAccountMutation } = useAccount();
+  const { accountData, updateAccountMutation, isUpdatingAccount } =
+    useAccount();
   const queryClient = useQueryClient();
-  useEffect(() => {
-    queryClient.invalidateQueries(["account"]);
-  }, [queryClient]);
 
   const {
     register,
@@ -53,6 +52,10 @@ function UpdateAccountForm() {
       fullName: accountData?.data?.data?.user?.fullName,
     },
   });
+
+  useEffect(() => {
+    queryClient.removeQueries(["account"]);
+  }, [queryClient]);
 
   const onSubmit = (data: UpdateAccountPayload) => {
     if (data.email === accountData?.data?.data?.user?.email) {
@@ -105,7 +108,10 @@ function UpdateAccountForm() {
         {errors.fullName && <Error>*{errors.fullName.message}</Error>}
       </Control>
       <div className={styles.actions}>
-        <LinkButton type="submit">Update</LinkButton>
+        <LinkButton type="submit">
+          {isUpdatingAccount && <Loading />}
+          Update
+        </LinkButton>
       </div>
     </Form>
   );

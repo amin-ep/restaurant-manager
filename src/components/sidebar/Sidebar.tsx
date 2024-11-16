@@ -17,7 +17,7 @@ const Aside = styled.aside.attrs<{
   width: 300px;
   max-width: 100%;
 
-  z-index: 1000;
+  z-index: 50;
   bottom: ${(props) =>
     props.$sidebarPosition === "absolute" && props.$sidebar === true
       ? "0"

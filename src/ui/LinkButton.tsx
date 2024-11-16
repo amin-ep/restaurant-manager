@@ -17,6 +17,7 @@ const BasicStyles = css`
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.4rem;
   white-space: nowrap;
   user-select: none;
   -webkit-user-select: none;

@@ -11,6 +11,7 @@ import { ChangeEvent, useState } from "react";
 import { usePizza } from "../../hooks/usePizza";
 import IconButtonLink from "../../ui/IconButtonLink";
 import { HiPlus } from "react-icons/hi2";
+import Loading from "../../ui/Loading";
 
 function CreatePizzaForm({ close }: { close: () => void }) {
   const [ingredientInputs, setIngredientInputs] = useState<
@@ -181,7 +182,7 @@ function CreatePizzaForm({ close }: { close: () => void }) {
 
         <div className={styles["form-actions"]}>
           <LinkButton type="submit">
-            {isCreating ? "Creating..." : "Add pizza"}
+            {isCreating && <Loading />}Create
           </LinkButton>
         </div>
       </Form>

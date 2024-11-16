@@ -6,6 +6,7 @@ import styled from "styled-components";
 import styles from "./UpdatePasswordForm.module.css";
 import { useAccount } from "../../hooks/useAccount";
 import { updatePasswordPayload } from "../../types/AccountTypes";
+import Loading from "../../ui/Loading";
 
 const Control = styled.div`
   display: grid;
@@ -124,7 +125,7 @@ function UpdatePasswordForm() {
       </Control>
       <div className={styles.submit}>
         <LinkButton type="submit">
-          {isUpdatingPassword ? "Updating..." : "Update"}
+          {isUpdatingPassword && <Loading />} Update
         </LinkButton>
       </div>
     </Form>

@@ -26,6 +26,7 @@ const StyledButton = styled.button`
   background-color: transparent;
   border: none;
   outline: none;
+  color: var(--color-gray-8);
 
   @media (min-width: 950px) {
     display: none;
@@ -36,7 +37,7 @@ function SidebarLogo({ onClose }: { onClose: () => void }) {
   return (
     <StyledDiv>
       <StyledButton onClick={onClose}>
-        <HiXMark size={25} />
+        <HiXMark size={28} />
       </StyledButton>
       <h1>Pizza Passion</h1>
     </StyledDiv>

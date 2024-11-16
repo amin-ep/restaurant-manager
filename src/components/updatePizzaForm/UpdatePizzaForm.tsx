@@ -11,6 +11,7 @@ import styles from "./UpdatePizzaForm.module.css";
 import { toast } from "react-toastify";
 import { usePizza } from "../../hooks/usePizza";
 import UpdatePizzaFileInput from "./UpdatePizzaFileInput";
+import Loading from "../../ui/Loading";
 
 function UpdatePizzaForm({
   defaultValues,
@@ -190,7 +191,6 @@ function UpdatePizzaForm({
               handleIngredientInputChange(e, index);
             }}
             key={index}
-            // className={styles["ingredient-input"]}
             name={`ingredient-${index + 1}`}
           />
         ))}
@@ -209,7 +209,7 @@ function UpdatePizzaForm({
           <HiPlus size={28} />
         </IconButtonLink>
         <LinkButton type="submit">
-          {isUpdatingPizza ? "Updating..." : "Update"}
+          {isUpdatingPizza && <Loading />} Update
         </LinkButton>
       </Form>
     </>

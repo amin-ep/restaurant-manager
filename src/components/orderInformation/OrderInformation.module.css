@@ -27,7 +27,11 @@ p>span {
 
 .actions {
     padding: 1.2rem 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
     justify-content: space-between;
+    row-gap: 1rem;
+
 }
 
 .status {

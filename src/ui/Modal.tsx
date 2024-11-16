@@ -14,7 +14,7 @@ const Overlay = styled.div`
   left: 0;
   right: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 100;
   transition: all 0.5s;
   animation-duration: 0.8s;
   animation-name: overlayAnimation;
@@ -37,7 +37,7 @@ const StyledModal = styled.div`
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  z-index: 1001;
+  z-index: 101;
   position: fixed;
   transform: translate(-50%, -50%);
   top: 50%;

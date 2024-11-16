@@ -7,6 +7,7 @@ import LinkButton from "../../ui/LinkButton";
 import { LoginPayload } from "../../types/AuthTypes";
 import { useAuth } from "../../contexts/AuthContext";
 import { Container } from "@mui/material";
+import Loading from "../../ui/Loading";
 
 function LoginForm() {
   const {
@@ -17,7 +18,7 @@ function LoginForm() {
     watch,
   } = useForm<LoginPayload>();
 
-  const { login } = useAuth();
+  const { login, isLoading } = useAuth();
 
   const onSubmit = () => {
     const { email, password } = getValues();
@@ -83,6 +84,7 @@ function LoginForm() {
           label="Password*"
         ></FormControl>
         <LinkButton type="submit" className={styles["form-submit"]}>
+          {isLoading && <Loading />}
           Login
         </LinkButton>
       </Form>

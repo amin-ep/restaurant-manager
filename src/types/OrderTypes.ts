@@ -51,6 +51,7 @@ export type OrderResponseData = {
 
 export interface UpdateOrderPayloadOptions {
   status: string;
+  deliveryTime?: Date | string;
 }
 
 export type UpdateOrderResponseData = {
