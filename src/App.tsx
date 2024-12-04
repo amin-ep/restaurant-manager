@@ -1,6 +1,6 @@
 import Layout from "./layout/Layout";
 import GlobalStyles from "./styles/GlobalStyles";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -10,7 +10,6 @@ import { DarkModeProvider } from "./contexts/DarkModeContext";
 import { lazy, Suspense } from "react";
 import PageLoader from "./ui/PageLoader";
 
-const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
 const Menu = lazy(() => import("./pages/Menu"));
 const Orders = lazy(() => import("./pages/Orders"));
@@ -41,11 +40,12 @@ function App() {
         <ReactQueryDevtools initialIsOpen={true} />
         <GlobalStyles />
         <BrowserRouter>
+          {/* <Navigate to="menu" replace /> */}
           <AuthProvider>
             <Suspense fallback={<PageLoader />}>
               <Routes>
                 <Route element={<Layout />}>
-                  <Route path="/" element={<Home />} />
+                  <Route index element={<Navigate to="/menu" />} />
                   <Route path="menu" element={<Menu />} />
                   <Route path="menu/:id" element={<Pizza />} />
                   <Route path="orders" element={<Orders />} />

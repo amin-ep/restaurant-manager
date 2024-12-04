@@ -8,21 +8,23 @@ import { LoginPayload } from "../../types/AuthTypes";
 import { useAuth } from "../../contexts/AuthContext";
 import { Container } from "@mui/material";
 import Loading from "../../ui/Loading";
+import EyeButton from "../../ui/EyeButton";
+import { useState } from "react";
 
 function LoginForm() {
+  const [showPassword, setShowPassword] = useState(false);
   const {
     formState: { errors },
     register,
     handleSubmit,
-    getValues,
     watch,
   } = useForm<LoginPayload>();
 
   const { login, isLoading } = useAuth();
 
-  const onSubmit = () => {
-    const { email, password } = getValues();
-    login({ email: email, password: password });
+  const onSubmit = (data: LoginPayload) => {
+    const { email, password } = data;
+    login({ email: email, password: password, google: false });
   };
 
   return (
@@ -80,9 +82,14 @@ function LoginForm() {
               message: "Password should be 12 characters or less",
             },
           }}
-          type="password"
+          type={showPassword ? "text" : "password"}
           label="Password*"
-        ></FormControl>
+        >
+          <EyeButton
+            isShown={showPassword}
+            handleClick={() => setShowPassword((show) => !show)}
+          />
+        </FormControl>
         <LinkButton type="submit" className={styles["form-submit"]}>
           {isLoading && <Loading />}
           Login

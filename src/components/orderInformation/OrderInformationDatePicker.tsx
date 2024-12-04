@@ -27,9 +27,13 @@ function OrderInformationDatePicker({
           }-${currentTime.getDate()}`
         )}
         sx={{
+          width: "320px",
           background: "var(--color-gray-1)",
           borderRadius: "6px",
-
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          gridColumn: 1,
           "& .MuiButtonBase-root": {
             background: "transparent",
             color: "var(--color-gray-9)",

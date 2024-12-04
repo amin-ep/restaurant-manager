@@ -8,7 +8,7 @@ export default function Orders() {
   const { orders } = useOrder();
   return (
     <>
-      <MainHeading label="Orders">
+      <MainHeading breakPoint={610} label="Orders">
         <Filter
           filter="status"
           options={[
@@ -18,6 +18,7 @@ export default function Orders() {
             { label: "Posted", value: "posted" },
             { label: "Received", value: "received" },
           ]}
+          breakPoint={610}
         />
       </MainHeading>
       <OrderTable />

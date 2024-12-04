@@ -7,6 +7,8 @@ import styles from "./UpdatePasswordForm.module.css";
 import { useAccount } from "../../hooks/useAccount";
 import { updatePasswordPayload } from "../../types/AccountTypes";
 import Loading from "../../ui/Loading";
+import EyeButton from "../../ui/EyeButton";
+import { useState } from "react";
 
 const Control = styled.div`
   display: grid;
@@ -25,6 +27,11 @@ const Control = styled.div`
   }
 `;
 
+const InputCover = styled.div`
+  position: relative;
+  display: grid;
+`;
+
 const Label = styled.label`
   color: var(--color-gray-8);
 `;
@@ -34,6 +41,10 @@ const Error = styled.p`
 `;
 
 function UpdatePasswordForm() {
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const { updatePasswordMutation, isUpdatingPassword } = useAccount();
   const {
     register,
@@ -57,68 +68,89 @@ function UpdatePasswordForm() {
     <Form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <Control>
         <Label htmlFor="current-password">Current Password</Label>
-        <Input
-          placeholder="Current Password"
-          id="current-password"
-          {...register("currentPassword", {
-            required: {
-              value: true,
-              message: "Please fill this input",
-            },
-            minLength: {
-              value: 8,
-              message: "Current Password must be at least 8 chars",
-            },
-            maxLength: {
-              value: 12,
-              message: "Current Password must be 12 chars or less",
-            },
-          })}
-          className={styles.input}
-        />
+        <InputCover>
+          <Input
+            type={showCurrentPassword ? "text" : "password"}
+            placeholder="Current Password"
+            id="current-password"
+            {...register("currentPassword", {
+              required: {
+                value: true,
+                message: "Please fill this input",
+              },
+              minLength: {
+                value: 8,
+                message: "Current Password must be at least 8 chars",
+              },
+              maxLength: {
+                value: 12,
+                message: "Current Password must be 12 chars or less",
+              },
+            })}
+            className={styles.input}
+          />
+          <EyeButton
+            isShown={showCurrentPassword}
+            handleClick={() => setShowCurrentPassword((show) => !show)}
+          />
+        </InputCover>
         {errors.currentPassword && (
           <Error>*{errors.currentPassword.message}</Error>
         )}
       </Control>
       <Control>
         <Label htmlFor="password">Password</Label>
-        <Input
-          placeholder="Password"
-          id="password"
-          {...register("password", {
-            required: {
-              value: true,
-              message: "Please fill this input",
-            },
-            minLength: {
-              value: 8,
-              message: "password must be at least 8 chars",
-            },
-            maxLength: {
-              value: 12,
-              message: "password must be 12 chars or less",
-            },
-          })}
-          className={styles.input}
-        />
+        <InputCover>
+          <Input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            id="password"
+            {...register("password", {
+              required: {
+                value: true,
+                message: "Please fill this input",
+              },
+              minLength: {
+                value: 8,
+                message: "password must be at least 8 chars",
+              },
+              maxLength: {
+                value: 12,
+                message: "password must be 12 chars or less",
+              },
+            })}
+            className={styles.input}
+          />
+          <EyeButton
+            isShown={showPassword}
+            handleClick={() => setShowPassword((show) => !show)}
+          />
+        </InputCover>
         {errors.password && <Error>*{errors.password.message}</Error>}
       </Control>
 
       <Control>
         <Label htmlFor="confirm-password">Confirm Password</Label>
-        <Input
-          placeholder="Confirm Password"
-          id="confirm-password"
-          {...register("confirmPassword", {
-            required: {
-              value: true,
-              message: "Please fill this input",
-            },
-            validate: (val) =>
-              val === getValues().password || "Passwords are not same",
-          })}
-          className={styles.input}
-        />
+        <InputCover>
+          <Input
+            type={showConfirmPassword ? "text" : "password"}
+            placeholder="Confirm Password"
+            id="confirm-password"
+            {...register("confirmPassword", {
+              required: {
+                value: true,
+                message: "Please fill this input",
+              },
+              validate: (val) =>
+                val === getValues().password || "Passwords are not same",
+            })}
+            className={styles.input}
+          />
+          <EyeButton
+            isShown={showConfirmPassword}
+            handleClick={() => setShowConfirmPassword((show) => !show)}
+          />
+        </InputCover>
         {errors.confirmPassword && (
           <Error>*{errors.confirmPassword.message}</Error>
         )}

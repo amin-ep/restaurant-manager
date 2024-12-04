@@ -1,15 +1,15 @@
-import { useForm } from "react-hook-form";
-import Form from "../../ui/Form";
-import LinkButton from "../../ui/LinkButton";
-import Input from "../../ui/Input";
-import styled from "styled-components";
-import styles from "./UpdateAccountForm.module.css";
-import { UpdateAccountPayload } from "../../types/AccountTypes";
-import { useAccount } from "../../hooks/useAccount";
 import { useEffect } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import styled from "styled-components";
+import { useAccount } from "../../hooks/useAccount";
+import { UpdateAccountPayload } from "../../types/AccountTypes";
+import Form from "../../ui/Form";
+import Input from "../../ui/Input";
+import LinkButton from "../../ui/LinkButton";
 import Loading from "../../ui/Loading";
+import Spinner from "../../ui/Spinner";
+import styles from "./UpdateAccountForm.module.css";
 
 const Control = styled.div`
   display: grid;
@@ -38,24 +38,28 @@ const Error = styled.p`
 `;
 
 function UpdateAccountForm() {
-  const { accountData, updateAccountMutation, isUpdatingAccount } =
-    useAccount();
-  const queryClient = useQueryClient();
+  const {
+    updateAccountMutation,
+    isUpdatingAccount,
+    accountData,
+    isLoadingAccount,
+  } = useAccount();
 
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<UpdateAccountPayload>({
-    defaultValues: {
-      email: accountData?.data?.data?.user?.email,
-      fullName: accountData?.data?.data?.user?.fullName,
-    },
-  });
+    reset,
+  } = useForm<UpdateAccountPayload>();
 
   useEffect(() => {
-    queryClient.removeQueries(["account"]);
-  }, [queryClient]);
+    if (accountData) {
+      reset({
+        email: accountData?.data.data.user.email,
+        fullName: accountData?.data.data.user.fullName,
+      });
+    }
+  }, [accountData, reset]);
 
   const onSubmit = (data: UpdateAccountPayload) => {
     if (data.email === accountData?.data?.data?.user?.email) {
@@ -73,47 +77,53 @@ function UpdateAccountForm() {
   };
 
   return (
-    <Form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <Control>
-        <Label htmlFor="email">E-Mail</Label>
-        <Input
-          placeholder="E-Mail"
-          id="email"
-          {...register("email", {
-            required: false,
-            validate: (val) => val?.includes("@") || "Invalid email",
-          })}
-          className={styles.input}
-        />
-        {errors.email && <Error>*{errors.email.message}</Error>}
-      </Control>
-      <Control>
-        <Label htmlFor="fullName">Full Name</Label>
-        <Input
-          className={styles.input}
-          placeholder="Full Name"
-          id="fullName"
-          {...register("fullName", {
-            required: false,
-            minLength: {
-              value: 5,
-              message: "Full Name must be at least 5 chars",
-            },
-            maxLength: {
-              value: 40,
-              message: "Full Name must be 40 chars or less",
-            },
-          })}
-        />
-        {errors.fullName && <Error>*{errors.fullName.message}</Error>}
-      </Control>
-      <div className={styles.actions}>
-        <LinkButton type="submit">
-          {isUpdatingAccount && <Loading />}
-          Update
-        </LinkButton>
-      </div>
-    </Form>
+    <>
+      {isLoadingAccount ? (
+        <Spinner />
+      ) : (
+        <Form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+          <Control>
+            <Label htmlFor="email">E-Mail</Label>
+            <Input
+              placeholder="E-Mail"
+              id="email"
+              {...register("email", {
+                required: false,
+                validate: (val) => val?.includes("@") || "Invalid email",
+              })}
+              className={styles.input}
+            />
+            {errors.email && <Error>*{errors.email.message}</Error>}
+          </Control>
+          <Control>
+            <Label htmlFor="fullName">Full Name</Label>
+            <Input
+              className={styles.input}
+              placeholder="Full Name"
+              id="fullName"
+              {...register("fullName", {
+                required: false,
+                minLength: {
+                  value: 5,
+                  message: "Full Name must be at least 5 chars",
+                },
+                maxLength: {
+                  value: 40,
+                  message: "Full Name must be 40 chars or less",
+                },
+              })}
+            />
+            {errors.fullName && <Error>*{errors.fullName.message}</Error>}
+          </Control>
+          <div className={styles.actions}>
+            <LinkButton type="submit">
+              {isUpdatingAccount && <Loading />}
+              Update
+            </LinkButton>
+          </div>
+        </Form>
+      )}
+    </>
   );
 }
 

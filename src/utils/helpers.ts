@@ -29,3 +29,13 @@ export const calculatePastTime = (date: string): string => {
 
   return format(date, "MMM d, yyyy");
 };
+
+export const formateRatingsAverage = (ratingsAverage: number) => {
+  if (ratingsAverage) {
+    if (Number.isInteger(ratingsAverage)) {
+      return ratingsAverage;
+    } else {
+      return ratingsAverage.toFixed(1);
+    }
+  }
+};

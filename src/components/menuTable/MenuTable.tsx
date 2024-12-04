@@ -11,19 +11,17 @@ import {
 import Pagination from "../../ui/Pagination";
 import Filter from "../../ui/Filter";
 import Spinner from "../../ui/Spinner";
-import { calculateDiscountPercentage } from "../../utils/helpers";
+import {
+  calculateDiscountPercentage,
+  formateRatingsAverage,
+} from "../../utils/helpers";
+import MainHeading from "../../ui/MainHeading";
 
 const Img = styled.img`
   width: 100%;
   height: 45px;
   border-radius: 6px;
   object-fit: cover;
-`;
-
-const Row = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 `;
 
 const StyledSpan = styled.span`
@@ -34,6 +32,7 @@ const StyledSpan = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #252525;
 `;
 
 function MenuTable() {
@@ -41,8 +40,7 @@ function MenuTable() {
 
   return (
     <div>
-      <Row>
-        <h1>Menu</h1>
+      <MainHeading breakPoint={476} label="Menu">
         <Filter
           filter="discount"
           options={[
@@ -50,8 +48,9 @@ function MenuTable() {
             { label: "With Discount", value: "with-discount" },
             { label: "No Discount", value: "no-discount" },
           ]}
+          breakPoint={476}
         />
-      </Row>
+      </MainHeading>
 
       <Table columns="110px 140px 120px 150px 150px 100px 80px">
         <Table.Header>
@@ -85,7 +84,8 @@ function MenuTable() {
                 </Table.BodyCell>
                 <Table.BodyCell>
                   <HiStar color="yellow" size={25} />
-                  {pizza.ratingsAverage ?? "0"}
+                  {formateRatingsAverage(pizza?.ratingsAverage as number) ??
+                    "0"}
                 </Table.BodyCell>
                 <Table.BodyCell>
                   <Menus>

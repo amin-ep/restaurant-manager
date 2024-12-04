@@ -41,7 +41,6 @@ const initialState: IState = {
   year: "",
   month: "",
   day: "",
-
   hour: "",
   minutes: "",
 };
@@ -108,7 +107,13 @@ function OrderInformation({ order }: { order: IOrder | undefined }) {
     if (order?.status === "waiting") {
       if (year && month && day && hour && minutes) {
         const date = new Date(
-          `${year}-${month}-${day}T${hour}:${minutes}:00`
+          Date.UTC(
+            Number(year),
+            Number(month),
+            Number(day),
+            Number(hour),
+            Number(minutes)
+          )
         ).toISOString();
         updateOrderMutation({
           id: order._id,
@@ -139,6 +144,15 @@ function OrderInformation({ order }: { order: IOrder | undefined }) {
 
   return (
     <div className={styles.container}>
+      {order?.text && (
+        <div className={styles.row}>
+          <p className={cls(styles.info)}>
+            <span>Customer Request Text: </span>
+            <br />
+            <p>{order.text}</p>
+          </p>
+        </div>
+      )}
       <div className={styles.row}>
         <p className={cls(styles.info)}>
           <span>Order Date: </span>

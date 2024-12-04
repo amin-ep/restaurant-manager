@@ -6,6 +6,7 @@ const StyledMain = styled.main`
   margin-top: 70px;
   width: 100%;
   transition: 0.5s all;
+  padding-inline: 0.5rem;
 `;
 
 function Main() {

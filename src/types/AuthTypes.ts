@@ -4,6 +4,7 @@ import { IUser } from "./UserTypes";
 export interface LoginPayload extends FieldValues {
   email: string;
   password: string;
+  google: boolean;
 }
 
 export type AuthResponseData = {

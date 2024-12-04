@@ -10,6 +10,7 @@ const Container = styled(MUIContainer)`
   align-items: center;
   text-align: center;
   height: 100vh;
+  color: var(--color-gray-8);
 `;
 
 function ErrorFallback({

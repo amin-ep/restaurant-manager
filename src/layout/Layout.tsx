@@ -35,21 +35,25 @@ const Container = styled.div`
 `;
 
 function Layout() {
-  const [sidebarIsOpen, setSidebarIsOpen] = useState<boolean>(true);
+  const [sidebarIsOpen, setSidebarIsOpen] = useState<boolean>(false);
   const [sidebarPosition, setSidebarPosition] =
     useState<SidebarPositionType>("static");
 
-  useEffect(() => {
-    const handleSidebar = () => {
-      if (window.innerWidth <= 950) {
-        setSidebarIsOpen(false);
-        setSidebarPosition("absolute");
-      } else {
-        setSidebarIsOpen(true);
-        setSidebarPosition("static");
-      }
-    };
+  const handleSidebar = () => {
+    if (window.innerWidth <= 950) {
+      setSidebarIsOpen(false);
+      setSidebarPosition("absolute");
+    } else {
+      setSidebarIsOpen(true);
+      setSidebarPosition("static");
+    }
+  };
 
+  useEffect(() => {
+    handleSidebar();
+  }, []);
+
+  useEffect(() => {
     window.addEventListener("resize", handleSidebar);
 
     return () => window.removeEventListener("resize", handleSidebar);

@@ -30,8 +30,8 @@ p>span {
     display: grid;
     grid-template-columns: repeat(2, auto);
     justify-content: space-between;
-    row-gap: 1rem;
-
+    align-items: center;
+    gap: 1rem;
 }
 
 .status {
@@ -50,8 +50,8 @@ p>span {
     color: var(--color-gray-0);
 }
 
-@media (max-width: 470px) {
+@media (max-width: 1050px) {
     .actions {
-        justify-content: center;
+        grid-template-columns: 1fr;
     }
 }

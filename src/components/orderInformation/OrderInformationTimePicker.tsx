@@ -23,8 +23,15 @@ export default function ResponsiveTimePickers({
           }-${currentTime.getDate()}T${currentTime.getHours()}:${currentTime.getMinutes()}`
         )}
         sx={{
+          width: "320px",
+          maxWidth: "100%",
           background: "var(--color-gray-1)",
           borderRadius: "6px",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          gridColumn: 2,
           "& .MuiTypography-root": {
             color: "var(--color-gray-9)",
           },

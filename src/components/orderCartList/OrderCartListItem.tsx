@@ -3,6 +3,7 @@ import { FILE_URL } from "../../utils/constants";
 import { HiOutlineInformationCircle, HiStar } from "react-icons/hi2";
 import { IPizza } from "../../types/PizzaTypes";
 import IconButtonLink from "../../ui/IconButtonLink";
+import { formateRatingsAverage } from "../../utils/helpers";
 
 function OrderCartListItem({
   pizza,
@@ -14,7 +15,7 @@ function OrderCartListItem({
   return (
     <div className={styles.item}>
       <div className={styles["item-col-1"]}>
-        <span className={styles["item-quantity"]}>#{quantity}</span>
+        <span className={styles["item-quantity"]}>x {quantity}</span>
         <img src={`${FILE_URL}/${pizza.imageUrl}`} alt={pizza.name} />
         <div className={styles["item-details"]}>
           <p className={styles.name}>{pizza.name}</p>
@@ -35,7 +36,7 @@ function OrderCartListItem({
       <div className={styles["item-col-2"]}>
         <span className={styles["ratings-average"]}>
           <HiStar size={20} color="yellow" />
-          {pizza.ratingsAverage ?? 0}
+          {formateRatingsAverage(pizza.ratingsAverage as number) ?? 0}
         </span>
 
         <IconButtonLink title="options" to={`/menu/${pizza._id}`}>

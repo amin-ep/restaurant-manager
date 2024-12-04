@@ -10,6 +10,7 @@ import {
 } from "react-icons/hi2";
 import { useAuth } from "../../contexts/AuthContext";
 import { useDarkMode } from "../../contexts/DarkModeContext";
+import HeaderDarkModeButton from "./HeaderDarkModeButton";
 
 const List = styled.ul`
   display: flex;
@@ -29,7 +30,6 @@ const Items = styled.div`
 
 function HeaderList({ onToggleSidebar }: { onToggleSidebar: () => void }) {
   const { logout } = useAuth();
-  const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   return (
     <List>
@@ -40,7 +40,10 @@ function HeaderList({ onToggleSidebar }: { onToggleSidebar: () => void }) {
         <IconButtonLink title="Account" to="account">
           <HiOutlineUserCircle size={27} />
         </IconButtonLink>
-        <IconButtonLink
+        <IconButtonLink title="Logout" onClick={logout}>
+          <HiArrowRightOnRectangle size={27} />
+        </IconButtonLink>
+        {/* <IconButtonLink
           title={isDarkMode ? "Light mode" : "Dark mode"}
           onClick={toggleDarkMode}
         >
@@ -49,10 +52,8 @@ function HeaderList({ onToggleSidebar }: { onToggleSidebar: () => void }) {
           ) : (
             <HiOutlineMoon size={27} />
           )}
-        </IconButtonLink>
-        <IconButtonLink title="Logout" onClick={logout}>
-          <HiArrowRightOnRectangle size={27} />
-        </IconButtonLink>
+        </IconButtonLink> */}
+        <HeaderDarkModeButton />
       </Items>
     </List>
   );

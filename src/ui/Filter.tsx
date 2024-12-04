@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 
-const StyledFilter = styled.div`
+const StyledFilter = styled.div<{ breakPoint: number }>`
   background-color: transparent;
   border: 1px solid var(--color-gray-2);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
@@ -9,6 +9,11 @@ const StyledFilter = styled.div`
   display: flex;
   gap: 0.4rem;
   border-radius: 6px;
+
+  @media (max-width: ${(props) => props.breakPoint}px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
 
 const FilterButton = styled.button<{ active: "true" | "false" }>`
@@ -42,9 +47,11 @@ const FilterButton = styled.button<{ active: "true" | "false" }>`
 export default function Filter({
   filter,
   options,
+  breakPoint,
 }: {
   filter: string;
   options: { label: string; value: string }[];
+  breakPoint: number;
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentFilter = searchParams.get(filter) || options[0].value;
@@ -59,7 +66,7 @@ export default function Filter({
   };
 
   return (
-    <StyledFilter>
+    <StyledFilter breakPoint={breakPoint}>
       {options.map((option) => (
         <FilterButton
           onClick={() => {

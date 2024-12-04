@@ -1,5 +1,5 @@
 import { Tooltip as BaseTooltip } from "@mui/material";
-import { ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
@@ -18,6 +18,7 @@ const Styles = css`
 
   &:hover {
     background: var(--color-lime);
+    color: #252525;
   }
 
   &:focus,
@@ -39,7 +40,7 @@ const Tooltip = ({
   children,
 }: {
   title: string;
-  children: ReactNode;
+  children: ReactElement;
 }) => {
   return <BaseTooltip title={title}>{children}</BaseTooltip>;
 };
