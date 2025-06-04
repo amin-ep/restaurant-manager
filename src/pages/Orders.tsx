@@ -1,8 +1,8 @@
-import MainHeading from "../ui/MainHeading";
+import MainHeading from "../components/ui/MainHeading";
 import OrderTable from "../components/orderTable/OrderTable";
-import Filter from "../ui/Filter";
+import Filter from "../components/ui/Filter";
 import { useOrder } from "../hooks/useOrder";
-import Pagination from "../ui/Pagination";
+import Pagination from "../components/ui/Pagination";
 
 export default function Orders() {
   const { orders } = useOrder();

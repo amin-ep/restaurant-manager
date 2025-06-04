@@ -1,136 +1,109 @@
 .container {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-areas: "imageWrapper" "statsWrapper" "bottomSheet";
+  gap: 1rem;
+}
+
+.imageWrapper {
+  grid-area: imageWrapper;
+  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.statsWrapper {
+  grid-area: statsWrapper;
+  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.nameWrapper {
+  text-align: center;
+}
+
+.name {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.statsRows {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.value {
+  color: var(--color-gray-900);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.bottomSheet {
+  grid-area: bottomSheet;
+  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.ingredients {
+  width: 100%;
+}
+
+.actions {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 100px);
+  justify-content: center;
+  gap: 1rem;
+}
+
+@media (min-width: 425px) {
+  .bottomSheet {
     display: grid;
-    grid-template-columns: 250px 1fr;
-    height: 250px;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: flex-start;
+  }
 }
 
-.image-wrapper {
-    width: 100%;
-    height: max-content;
-    position: relative;
+@media (min-width: 640px) {
+  .container {
+    grid-template-columns: 300px 1fr;
+    grid-template-areas: "imageWrapper statsWrapper" "bottomSheet bottomSheet";
+  }
+  .bottomSheet {
+    grid-template-columns: 1fr 300px;
+  }
+  .actions {
+    gap: 3rem;
+  }
 }
 
-.image-wrapper img {
-    width: 100%;
-    border-radius: 6px;
-    height: fit-content;
-    object-fit: cover;
+@media (min-width: 768px) {
+  .nameWrapper {
+    text-align: left;
+  }
+
+  .name {
+    font-size: 24px;
+  }
+
+  .value {
+    font-size: 16px;
+  }
 }
 
+@media (min-width: 1024px) {
+  .container {
+    gap: 1.5rem;
+  }
 
-.discount-label {
-    z-index: 10;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-color: transparent;
-    position: absolute;
-    overflow: hidden;
-}
+  .imageWrapper {
+    gap: 0.75rem;
+  }
 
-.discount-label>span {
-    position: absolute;
-    top: 0.75rem;
-    left: -2.5rem;
-    background-color: var(--color-lime);
-    font-weight: 600;
-    padding: 0.5rem 2.5rem;
-    font-size: 15px;
-    border: 2px dashed var(--color-gray-8);
-    transform: rotate(-45deg);
-    outline: 5px solid var(--color-lime);
-    outline-offset: 0px;
-    color: var(--color-gray-8);
-}
-
-
-
-.details {
-    color: var(--color-gray-8);
-    padding: 1rem;
-    display: grid;
-    grid-template-rows: 1fr auto;
-}
-
-.details-action {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.details-action-buttons {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: flex-end;
-}
-
-.details-discounted-price {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 0.2rem;
-}
-
-.details-discounted-price>.unit-price {
-    text-decoration: line-through;
-    font-size: 14px;
-}
-
-.final-price {
-    background-color: var(--color-lime);
-    padding: 0.2rem 0.7rem;
-    border-radius: 999px;
-    font-size: 17px;
-    color: #252525;
-}
-
-
-.details-texts-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.rate {
-    display: flex;
-    align-items: center;
-    gap: 0.2rem;
-    font-size: 22px;
-}
-
-@media (max-width: 700px) {
-    .container {
-        grid-template-columns: auto;
-        height: auto;
-        grid-template-rows: 200px auto;
-    }
-
-    .image-wrapper {
-        height: 200px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-    }
-
-    .image-wrapper img {
-        height: 200px;
-        width: 200px;
-    }
-}
-
-@media (max-width:436px) {
-    .details-action {
-        align-items: baseline;
-    }
-
-    .details-action-buttons {
-        flex-direction: column;
-    }
-}
-
-@media (max-width: 388px) {
-    .image-wrapper img {
-        width: 100%;
-    }
+  .statsWrapper {
+    gap: 0.75rem;
+  }
 }

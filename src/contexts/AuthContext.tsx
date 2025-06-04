@@ -30,14 +30,19 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
   const { mutate: login, isLoading } = useMutation({
     mutationFn: (payload: LoginPayload) => loginUser(payload),
-    mutationKey: ["auth"],
+    mutationKey: ["currentUser"],
     onSuccess(data: AxiosResponse<AuthResponseData>, vars) {
-      toast.success(`Welcome ${vars.email}`);
-      Cookies.set(JWT_TOKEN_KEY, data.data.token, {
-        expires: 90,
-      });
-      setIsLoggedIn(true);
-      navigate("/");
+      const loggedInUser = data.data.data.user;
+      if (loggedInUser.role !== "admin") {
+        toast.error("These page is just for admins");
+      } else {
+        toast.success(`Welcome ${loggedInUser.email}`);
+        Cookies.set(JWT_TOKEN_KEY, data.data.token, {
+          expires: 90,
+        });
+        setIsLoggedIn(true);
+        navigate("/");
+      }
     },
     onError(err: AxiosError<AxiosDataErrorProps>) {
       toast.error(err.response?.data.message || "Something went wrong!");

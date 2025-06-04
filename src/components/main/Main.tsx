@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Container } from "@mui/material";
 
 const StyledMain = styled.main`
-  margin-top: 70px;
+  margin-top: 7rem;
   width: 100%;
   transition: 0.5s all;
   padding-inline: 0.5rem;
@@ -15,7 +15,7 @@ function Main() {
       <Container
         maxWidth="md"
         sx={{
-          background: "var(--color-gray-0)",
+          background: "var(--color-gray-50)",
           marginTop: "1rem",
           marginBottom: "5rem",
           borderRadius: "8px",

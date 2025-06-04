@@ -1,5 +1,5 @@
 import { Container as MUIContainer } from "@mui/material";
-import LinkButton from "../ui/LinkButton";
+import LinkButton from "../components/ui/LinkButton";
 import styled from "styled-components";
 
 const Container = styled(MUIContainer)`

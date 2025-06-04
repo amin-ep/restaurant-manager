@@ -1,21 +1,17 @@
-import Table from "../../ui/Table";
+import { HiStar } from "react-icons/hi2";
+import styled from "styled-components";
 import { usePizza } from "../../hooks/usePizza";
 import { FILE_URL } from "../../utils/constants";
-import styled from "styled-components";
-import Menus from "../../ui/Menus";
-import {
-  HiOutlineTrash,
-  HiOutlineInformationCircle,
-  HiStar,
-} from "react-icons/hi2";
-import Pagination from "../../ui/Pagination";
-import Filter from "../../ui/Filter";
-import Spinner from "../../ui/Spinner";
 import {
   calculateDiscountPercentage,
   formateRatingsAverage,
 } from "../../utils/helpers";
-import MainHeading from "../../ui/MainHeading";
+import Filter from "../ui/Filter";
+import MainHeading from "../ui/MainHeading";
+import Pagination from "../ui/Pagination";
+import Spinner from "../ui/Spinner";
+import Table from "../ui/Table";
+import TableMenus from "./TableMenus";
 
 const Img = styled.img`
   width: 100%;
@@ -25,18 +21,18 @@ const Img = styled.img`
 `;
 
 const StyledSpan = styled.span`
-  background: var(--color-lime);
+  background: var(--color-emerald-500);
   padding: 8px;
   border-radius: 999px;
   width: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #252525;
+  color: #fff;
 `;
 
 function MenuTable() {
-  const { pizzaData, isLoadingPizzas, deletePizzaMutation } = usePizza();
+  const { pizzaData, isLoadingPizzas } = usePizza();
 
   return (
     <div>
@@ -88,23 +84,7 @@ function MenuTable() {
                     "0"}
                 </Table.BodyCell>
                 <Table.BodyCell>
-                  <Menus>
-                    <Menus.Button id={pizza._id} />
-                    <Menus.List id={pizza._id}>
-                      <Menus.Item
-                        icon={<HiOutlineInformationCircle size={30} />}
-                        label="More Info"
-                        to={`/menu/${pizza._id}`}
-                      />
-                      <Menus.Item
-                        icon={<HiOutlineTrash size={30} />}
-                        label="Delete"
-                        onClick={() => {
-                          deletePizzaMutation(pizza._id);
-                        }}
-                      />
-                    </Menus.List>
-                  </Menus>
+                  <TableMenus pizzaId={pizza._id} />
                 </Table.BodyCell>
               </Table.Body>
             ))}
@@ -114,7 +94,7 @@ function MenuTable() {
       {pizzaData && (
         <Pagination
           count={pizzaData.data.dataNum}
-          totalPages={pizzaData.data.totalPages}
+          totalPages={pizzaData?.data.totalPages}
         />
       )}
     </div>

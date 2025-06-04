@@ -1,16 +1,18 @@
-import { useOrder } from "../../hooks/useOrder";
-import Menus from "../../ui/Menus";
-import Table from "../../ui/Table";
-import { FILE_URL } from "../../utils/constants";
-import styled from "styled-components";
+import moment from "moment";
 import { HiOutlineInformationCircle, HiOutlineTrash } from "react-icons/hi2";
+import styled from "styled-components";
+import { useOrder } from "../../hooks/useOrder";
 import { IOrder } from "../../types/OrderTypes";
-import Spinner from "../../ui/Spinner";
-import { calculatePastTime } from "../../utils/helpers";
+import { FILE_URL } from "../../utils/constants";
+import Menus from "../ui/Menus";
+import Spinner from "../ui/Spinner";
+import Table from "../ui/Table";
+
 const StyledImg = styled.img`
   width: 35px;
   height: 35px;
   border-radius: 2px;
+  object-fit: cover;
 `;
 
 const StyledSpan = styled.span`
@@ -58,7 +60,6 @@ function OrderTableBody() {
         <>
           {orders?.data.data.docs.map((order) => (
             <Table.Body key={order._id}>
-              {/* {console.log(typeof )} */}
               <>
                 <Table.BodyCell>
                   {order.cart.cartItems.slice(0, 3).map((cart) => (
@@ -72,9 +73,13 @@ function OrderTableBody() {
                     <StyledSpan>...</StyledSpan>
                   )}
                 </Table.BodyCell>
-                <Table.BodyCell>{order.customer.fullName}</Table.BodyCell>
                 <Table.BodyCell>
-                  {calculatePastTime(order.createdAt)}
+                  {order.customer.firstName + " " + order.customer.lastName}
+                </Table.BodyCell>
+                <Table.BodyCell>
+                  <time>
+                    {moment(order.createdAt, "YYYYMMDD").fromNow(true)}
+                  </time>
                 </Table.BodyCell>
                 <Table.BodyCell>{order.phone}</Table.BodyCell>
                 <Table.BodyCell>

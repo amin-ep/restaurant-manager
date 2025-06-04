@@ -1,4 +1,4 @@
-import Table from "../../ui/Table";
+import Table from "../ui/Table";
 import OrderTableBody from "./OrderTableBody";
 import OrderTableHeader from "./OrderTableHeader";
 

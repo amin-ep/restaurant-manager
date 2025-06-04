@@ -25,7 +25,7 @@ export type PizzasResponseData = {
   totalPages: number;
 };
 
-export interface CreatePizzaPayload extends FieldValues {
+export interface PizzaPayload extends FieldValues {
   name: string;
   unitPrice: number;
   discount?: number;
@@ -44,6 +44,6 @@ export interface UpdatePizzaPayload extends FieldValues {
 export type OnePizzaResponseData = {
   status: string;
   data: {
-    doc: IPizza;
+    document: IPizza;
   };
 };

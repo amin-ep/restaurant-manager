@@ -36,6 +36,7 @@ export async function getOrderById(id: string) {
       "Content-Type": "application/json",
     },
   });
+  console.log(response);
 
   return response;
 }

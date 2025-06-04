@@ -8,29 +8,12 @@ interface Props {
   sidebarPosition: SidebarPositionType;
 }
 
-const AsideAfterStyles = css`
-  &::after {
-    position: absolute;
-    right: 0;
-    z-index: -1;
-    background-color: transparent;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    content: "";
-    top: 0;
-    left: 300px;
-    width: 100vw;
-    bottom: 0;
-    transition: 0.5s all;
-  }
-`;
-
 const AsideShadowStyle = css`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 `;
 
 const Aside = styled.aside<Props>`
-  background-color: var(--color-gray-0);
+  background-color: var(--color-gray-50);
   position: ${(props) =>
     props.sidebarPosition === "absolute" ? "absolute" : "static"};
   display: ${(props) => (props.sidebar === "true" ? "grid" : "none")};
@@ -50,7 +33,6 @@ const Aside = styled.aside<Props>`
   grid-template-columns: auto;
   grid-template-rows: 200px 1fr;
 
-  ${(props) => props.sidebarPosition === "absolute" && AsideAfterStyles}
   ${(props) => props.sidebarPosition === "absolute" && AsideShadowStyle}
 `;
 

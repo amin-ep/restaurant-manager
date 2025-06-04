@@ -14,7 +14,7 @@ export function useOrder() {
   const { data: orders, isLoading: isLoadingOrders } = useQuery<
     AxiosResponse<OrdersResponseData>
   >({
-    queryKey: ["order", queryString],
+    queryKey: ["orders", queryString],
     queryFn: () => getOrders(queryString),
   });
 
@@ -24,7 +24,7 @@ export function useOrder() {
       mutationKey: ["order"],
       mutationFn: updateOrderById,
       onSuccess() {
-        queryClient.invalidateQueries(["order"]);
+        queryClient.invalidateQueries(["orders"]);
         toast.success("Order updated successfully");
       },
       onError(err: AxiosError<AxiosDataErrorProps>) {
@@ -37,7 +37,7 @@ export function useOrder() {
     mutationFn: deleteOrderById,
     onSuccess() {
       toast.success("Order deleted successfully");
-      queryClient.invalidateQueries(["order"]);
+      queryClient.invalidateQueries(["orders"]);
     },
     onError(err: AxiosError<AxiosDataErrorProps>) {
       toast.error(err.response?.data.message || "Something went wrong!");

@@ -21,12 +21,10 @@ const StyledDiv = styled.div<{ mode: "dark" | "light" }>`
   position: relative;
   border-radius: 6px;
   transition: 0.5s all;
-  /* border: 1px solid var(--color-gray-2);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); */
 
   &::after {
     width: 40px;
-    background-color: var(--color-green-1);
+    background-color: var(--color-emerald-500);
     position: absolute;
     transition: 0.5s all;
     top: 5px;
@@ -49,7 +47,7 @@ const StyledButton = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-gray-8);
+  color: var(--color-gray-900);
   cursor: pointer;
   z-index: 30;
   background-color: transparent;

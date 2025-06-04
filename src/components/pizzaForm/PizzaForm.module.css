@@ -1,0 +1,22 @@
+.header h1 {
+  font-size: 24px;
+}
+
+.form {
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .header h1 {
+    font-size: 26px;
+  }
+}
+
+@media (min-width: 768px) {
+  .header h1 {
+    font-size: 28px;
+  }
+  .form {
+    gap: 1rem;
+  }
+}

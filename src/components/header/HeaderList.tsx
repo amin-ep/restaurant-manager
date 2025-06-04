@@ -1,16 +1,15 @@
 import styled from "styled-components";
-import IconButtonLink from "../../ui/IconButtonLink";
+import IconButtonLink from "../ui/IconButtonLink";
 
 import {
   HiArrowRightOnRectangle,
   HiBars3,
   HiOutlineUserCircle,
-  HiOutlineMoon,
-  HiOutlineSun,
 } from "react-icons/hi2";
 import { useAuth } from "../../contexts/AuthContext";
-import { useDarkMode } from "../../contexts/DarkModeContext";
 import HeaderDarkModeButton from "./HeaderDarkModeButton";
+import { useState } from "react";
+import Alert from "../ui/Alert";
 
 const List = styled.ul`
   display: flex;
@@ -31,31 +30,34 @@ const Items = styled.div`
 function HeaderList({ onToggleSidebar }: { onToggleSidebar: () => void }) {
   const { logout } = useAuth();
 
+  const [alert, setAlert] = useState(false);
+
   return (
-    <List>
-      <IconButtonLink title="list" onClick={onToggleSidebar}>
-        <HiBars3 size={27} />
-      </IconButtonLink>
-      <Items>
-        <IconButtonLink title="Account" to="account">
-          <HiOutlineUserCircle size={27} />
+    <>
+      <List>
+        <IconButtonLink title="list" onClick={onToggleSidebar}>
+          <HiBars3 size={27} />
         </IconButtonLink>
-        <IconButtonLink title="Logout" onClick={logout}>
-          <HiArrowRightOnRectangle size={27} />
-        </IconButtonLink>
-        {/* <IconButtonLink
-          title={isDarkMode ? "Light mode" : "Dark mode"}
-          onClick={toggleDarkMode}
-        >
-          {isDarkMode ? (
-            <HiOutlineSun size={27} />
-          ) : (
-            <HiOutlineMoon size={27} />
-          )}
-        </IconButtonLink> */}
-        <HeaderDarkModeButton />
-      </Items>
-    </List>
+        <Items>
+          <IconButtonLink title="Account" to="account">
+            <HiOutlineUserCircle size={27} />
+          </IconButtonLink>
+          <IconButtonLink title="Logout" onClick={() => setAlert(true)}>
+            <HiArrowRightOnRectangle size={27} />
+          </IconButtonLink>
+          <HeaderDarkModeButton />
+        </Items>
+      </List>
+      {alert && (
+        <Alert
+          action={logout}
+          actionTextContent="Logout"
+          close={() => setAlert(false)}
+          heading="Logout Warning"
+          message="Are you sure you wanna logout?"
+        />
+      )}
+    </>
   );
 }
 

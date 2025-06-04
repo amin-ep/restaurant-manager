@@ -1,30 +1,25 @@
-import LinkButton from "../ui/LinkButton";
-import { Outlet } from "react-router-dom";
-import Modal from "../ui/Modal";
-import CreatePizzaForm from "../components/createPizzaForm/CreatePizzaForm";
 import { useState } from "react";
+import { Outlet } from "react-router-dom";
+import PizzaForm from "../components/pizzaForm/PizzaForm";
 import MenuTable from "../components/menuTable/MenuTable";
+import LinkButton from "../components/ui/LinkButton";
+import styled from "styled-components";
+
+const Button = styled(LinkButton)`
+  margin: 1rem 0;
+`;
 
 function Menu() {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  const handleCloseModal = () => setModalIsOpen(false);
+  const [createPizzaIsOpen, setCreatePizzaIsOpen] = useState(false);
+  const toggleCreatePizza = () => setCreatePizzaIsOpen((state) => !state);
 
   return (
     <>
       <MenuTable />
-      <LinkButton
-        onClick={() => {
-          setModalIsOpen(true);
-        }}
-      >
-        Create New Pizza
-      </LinkButton>
-      {modalIsOpen && (
-        <Modal onClose={handleCloseModal}>
-          <CreatePizzaForm close={handleCloseModal} />
-        </Modal>
-      )}
+      <PizzaForm isOpen={createPizzaIsOpen} />
+      <Button onClick={toggleCreatePizza}>
+        {createPizzaIsOpen ? "Close" : "Open"} Add Pizza Form
+      </Button>
       <Outlet />
     </>
   );

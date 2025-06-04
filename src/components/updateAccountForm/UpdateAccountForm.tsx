@@ -1,49 +1,47 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import styled from "styled-components";
-import { useAccount } from "../../hooks/useAccount";
+import { updateAccount } from "../../services/accountApi";
 import { UpdateAccountPayload } from "../../types/AccountTypes";
-import Form from "../../ui/Form";
-import Input from "../../ui/Input";
-import LinkButton from "../../ui/LinkButton";
-import Loading from "../../ui/Loading";
-import Spinner from "../../ui/Spinner";
+import AccountControl from "../accountControl/AccountControl";
+import ErrorText from "../ui/ErrorText";
+import Form from "../ui/Form";
+import Input from "../ui/Input";
+import Label from "../ui/Label";
+import LinkButton from "../ui/LinkButton";
+import Loading from "../ui/Loading";
+import Spinner from "../ui/Spinner";
 import styles from "./UpdateAccountForm.module.css";
-
-const Control = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-  padding: 1rem 0;
-  justify-content: flex-start;
-  width: 100%;
-  border-bottom: 1px solid var(--color-gray-2);
-
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-  }
-`;
-
-const Label = styled.label`
-  color: var(--color-gray-8);
-  width: 7rem;
-`;
-
-const Error = styled.p`
-  color: #eb2020;
-`;
+import { AxiosError } from "axios";
+import { AxiosDataErrorProps } from "../../types/AxiosTypes";
+import { useAccount } from "../../hooks/useAccount";
 
 function UpdateAccountForm() {
-  const {
-    updateAccountMutation,
-    isUpdatingAccount,
-    accountData,
-    isLoadingAccount,
-  } = useAccount();
+  const { accountData, isLoadingAccount } = useAccount();
+
+  const queryClient = useQueryClient();
+
+  const { mutate: updateAccountMutation, isLoading: isUpdatingAccount } =
+    useMutation({
+      mutationKey: ["account"],
+      mutationFn: updateAccount,
+      onSuccess(data) {
+        if (data.status === 200) {
+          queryClient.invalidateQueries(["account"]).then(() => {
+            toast.success("Account updated successfully");
+          });
+        } else {
+          const errorResponse = data as AxiosError<AxiosDataErrorProps>;
+          toast.error(
+            errorResponse.response?.data.message || "Something went wrong!"
+          );
+        }
+      },
+      onError(err: AxiosError<AxiosDataErrorProps>) {
+        toast.error(err.response?.data.message || "Something went wrong!");
+      },
+    });
 
   const {
     register,
@@ -54,22 +52,23 @@ function UpdateAccountForm() {
 
   useEffect(() => {
     if (accountData) {
+      const data = accountData.data.data.document;
       reset({
-        email: accountData?.data.data.user.email,
-        fullName: accountData?.data.data.user.fullName,
+        firstName: data?.firstName,
+        lastName: data?.lastName,
       });
     }
   }, [accountData, reset]);
 
   const onSubmit = (data: UpdateAccountPayload) => {
-    if (data.email === accountData?.data?.data?.user?.email) {
-      data.email = undefined;
+    if (data.firstName === accountData?.data?.data?.document?.firstName) {
+      data.firstName = undefined;
     }
-    if (data.fullName === accountData?.data?.data?.user?.fullName) {
-      data.fullName = undefined;
+    if (data.lastName === accountData?.data?.data?.document?.lastName) {
+      data.lastName = undefined;
     }
-
-    if (!data.email && !data.fullName) {
+    console.log(data);
+    if (!data.lastName && !data.firstName) {
       toast.error("Please change some values");
     } else {
       updateAccountMutation(data);
@@ -82,41 +81,56 @@ function UpdateAccountForm() {
         <Spinner />
       ) : (
         <Form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-          <Control>
-            <Label htmlFor="email">E-Mail</Label>
-            <Input
-              placeholder="E-Mail"
-              id="email"
-              {...register("email", {
-                required: false,
-                validate: (val) => val?.includes("@") || "Invalid email",
-              })}
-              className={styles.input}
-            />
-            {errors.email && <Error>*{errors.email.message}</Error>}
-          </Control>
-          <Control>
-            <Label htmlFor="fullName">Full Name</Label>
+          <AccountControl>
+            <Label htmlFor="firstName">First Name</Label>
             <Input
               className={styles.input}
-              placeholder="Full Name"
-              id="fullName"
-              {...register("fullName", {
+              placeholder="First Name"
+              id="firstName"
+              {...register("firstName", {
                 required: false,
                 minLength: {
                   value: 5,
-                  message: "Full Name must be at least 5 chars",
+                  message: "First Name must be at least 5 chars",
                 },
                 maxLength: {
                   value: 40,
-                  message: "Full Name must be 40 chars or less",
+                  message: "First Name must be 40 chars or less",
                 },
               })}
             />
-            {errors.fullName && <Error>*{errors.fullName.message}</Error>}
-          </Control>
+            {errors.firstName && (
+              <ErrorText>{errors.firstName.message}</ErrorText>
+            )}
+          </AccountControl>
+          <AccountControl>
+            <Label htmlFor="lastName">Last Name</Label>
+            <Input
+              className={styles.input}
+              placeholder="Last Name"
+              id="lastName"
+              {...register("lastName", {
+                required: false,
+                minLength: {
+                  value: 5,
+                  message: "Last Name must be at least 5 chars",
+                },
+                maxLength: {
+                  value: 40,
+                  message: "Last Name must be 40 chars or less",
+                },
+              })}
+            />
+            {errors.lastName && (
+              <ErrorText>{errors.lastName.message}</ErrorText>
+            )}
+          </AccountControl>
           <div className={styles.actions}>
-            <LinkButton type="submit">
+            <LinkButton
+              className={styles.submit}
+              disabled={isUpdatingAccount}
+              type="submit"
+            >
               {isUpdatingAccount && <Loading />}
               Update
             </LinkButton>

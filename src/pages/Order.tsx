@@ -1,12 +1,24 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
-import { getOrderById } from "../services/orderApi";
 import { AxiosResponse } from "axios";
-import { OrderResponseData } from "../types/OrderTypes";
-import OrderCartList from "../components/orderCartList/OrderCartList";
-import Spinner from "../ui/Spinner";
-import OrderInformation from "../components/orderInformation/OrderInformation";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import Spinner from "../components/ui/Spinner";
+import { getOrderById } from "../services/orderApi";
+import { OrderResponseData } from "../types/OrderTypes";
+import OrderHeader from "../components/orderHeader/OrderHeader";
+import styled from "styled-components";
+import OrderCustomer from "../components/orderCustomer/OrderCustomer";
+import OrderInformation from "../components/orderInformation/OrderInformation";
+
+const Grid = styled.article`
+  display: grid;
+  grid-template-columns: auto;
+  gap: 0.75rem;
+
+  @media (min-width: 425px) {
+    grid-template-columns: auto 1fr;
+  }
+`;
 
 function Order() {
   const queryClient = useQueryClient();
@@ -31,10 +43,15 @@ function Order() {
       {isLoading ? (
         <Spinner />
       ) : (
-        <>
-          <OrderCartList items={order?.data.data.doc.cart.cartItems} />
-          <OrderInformation order={order?.data.data.doc} />
-        </>
+        order && (
+          <>
+            <OrderHeader />
+            <Grid>
+              <OrderCustomer customer={order?.data.data.document.customer} />
+              <OrderInformation order={order.data.data.document} />
+            </Grid>
+          </>
+        )
       )}
     </div>
   );

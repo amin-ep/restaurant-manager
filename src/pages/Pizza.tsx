@@ -1,23 +1,60 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { AxiosResponse } from "axios";
-import { OnePizzaResponseData } from "../types/PizzaTypes";
-import { getPizza } from "../services/pizzaApi";
-import styles from "./Pizza.module.css";
-import { FILE_URL } from "../utils/constants";
-import LinkButton from "../ui/LinkButton";
-import { usePizza } from "../hooks/usePizza";
-import { HiStar } from "react-icons/hi2";
-import Spinner from "../ui/Spinner";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { AxiosError, AxiosResponse } from "axios";
+import moment from "moment";
 import { useEffect, useState } from "react";
-import Modal from "../ui/Modal";
-import UpdatePizzaForm from "../components/updatePizzaForm/UpdatePizzaForm";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import styled from "styled-components";
+import Alert from "../components/ui/Alert";
+import LinkButton from "../components/ui/LinkButton";
+import Spinner from "../components/ui/Spinner";
+import { deletePizza, getPizza } from "../services/pizzaApi";
+import { AxiosDataErrorProps } from "../types/AxiosTypes";
+import { OnePizzaResponseData } from "../types/PizzaTypes";
+import { FILE_URL } from "../utils/constants";
 import { calculateDiscountPercentage } from "../utils/helpers";
+import NotFound from "./NotFound";
+import styles from "./Pizza.module.css";
+
+const StyledSpan = styled.span`
+  font-size: 12px;
+  color: var(--color-gray-700);
+  font-weight: 400;
+
+  @media (min-width: 768px) {
+    font-size: 14px;
+  }
+`;
+
+const StyledImg = styled.img`
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 8px;
+
+  @media (min-width: 640px) {
+    aspect-ratio: none;
+    height: 100%;
+  }
+`;
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+`;
 
 function Pizza() {
+  const [alert, setAlert] = useState(false);
   const { id } = useParams();
   const queryClient = useQueryClient();
-  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     queryClient.removeQueries({
@@ -25,96 +62,117 @@ function Pizza() {
     });
   }, [queryClient]);
 
-  const { data, isLoading: isLoadingPizza } = useQuery<
-    AxiosResponse<OnePizzaResponseData>
-  >({
+  const {
+    data,
+    isLoading: isLoadingPizza,
+    isError,
+  } = useQuery<AxiosResponse<OnePizzaResponseData>>({
     queryFn: () => getPizza(id!),
     queryKey: ["pizza"],
   });
 
-  const { deletePizzaMutation } = usePizza();
   const navigate = useNavigate();
 
-  const pizza = data?.data.data.doc;
+  // Delete Pizza
+  const { mutate: deletePizzaMutation, isLoading: isDeleting } = useMutation({
+    mutationKey: ["pizzas"],
+    mutationFn: deletePizza,
+    onSuccess() {
+      queryClient
+        .invalidateQueries({
+          queryKey: ["pizzas"],
+        })
+        .then(() => {
+          toast.success("Item deleted successfully");
+          navigate("/menu");
+        });
+    },
+    onError(err: AxiosError<AxiosDataErrorProps>) {
+      toast.error(err.response?.data.message || "Something went wrong!");
+    },
+  });
 
-  const handleCloseModal = () => setModalIsOpen(false);
+  const pizza = data?.data.data.document;
+
+  if (isError) {
+    return <NotFound />;
+  }
 
   return (
     <>
       {isLoadingPizza && <Spinner />}
       {pizza && !isLoadingPizza && (
-        <div className={styles.container}>
-          <div className={styles["image-wrapper"]}>
-            {pizza.discount > 0 && (
-              <div className={styles["discount-label"]}>
-                <span>
-                  {calculateDiscountPercentage(
-                    pizza.unitPrice,
-                    pizza.discount
-                  ) +
-                    " " +
-                    "free"}
-                </span>
-              </div>
-            )}
-            <img src={`${FILE_URL}/${pizza?.imageUrl}`} alt={pizza.name} />
+        <section className={styles.container}>
+          <div className={styles.imageWrapper}>
+            <StyledSpan>
+              Added At:{" "}
+              <time>{moment(pizza.createdAt, "YYYYMMDD").fromNow(true)}</time>
+            </StyledSpan>
+
+            <StyledImg src={`${FILE_URL}/${pizza.imageUrl}`} alt={pizza.name} />
           </div>
-          <div className={styles.details}>
-            <div className={styles["details-texts"]}>
-              <div className={styles["details-texts-header"]}>
-                <h1>{pizza.name}</h1>
-                <span className={styles.rate}>
-                  <HiStar size={30} color="yellow" />
-                  {pizza.ratingsAverage ? pizza.ratingsAverage : 0}
-                </span>
-              </div>
-              <p>Ingredients: {pizza.ingredients.join(", ")}</p>
+
+          <article className={styles.statsWrapper}>
+            <div className={styles.nameWrapper}>
+              <h2 className={styles.name}>{pizza.name}</h2>
             </div>
-            <div className={styles["details-action"]}>
-              {pizza.discount > 0 ? (
-                <div className={styles["details-discounted-price"]}>
-                  <p className={styles["final-price"]}>${pizza.finalPrice}</p>
-                  <p className={styles["unit-price"]}>${pizza.unitPrice}</p>
-                </div>
-              ) : (
-                <div className={styles["details-price"]}>
-                  <p className={styles["final-price"]}>${pizza.finalPrice}</p>
-                </div>
-              )}
-              <div className={styles["details-action-buttons"]}>
-                <LinkButton type="button" onClick={() => setModalIsOpen(true)}>
-                  Update
-                </LinkButton>
-                <LinkButton
-                  onClick={() => {
-                    deletePizzaMutation(pizza._id);
-                    navigate(-1);
-                  }}
-                  type="button"
-                >
-                  Delete
-                </LinkButton>
-              </div>
-              {modalIsOpen && (
-                <Modal onClose={handleCloseModal}>
-                  <UpdatePizzaForm
-                    close={handleCloseModal}
-                    id={id!}
-                    defaultValues={{
-                      name: pizza.name,
-                      discount: pizza.discount,
-                      ingredients: pizza.ingredients,
-                      unitPrice: pizza.unitPrice,
-                      imageUrl: pizza.imageUrl,
-                    }}
-                  />
-                </Modal>
-              )}
+
+            <div className={styles.statsRows}>
+              <StatsRow title="Unit Price" value={`$${pizza.unitPrice}`} />
+              <StatsRow title="Final Price" value={`$${pizza.finalPrice}`} />
+              <StatsRow title="Discounted Price" value={pizza.discount} />
+              <StatsRow
+                title="Discount Percentage"
+                value={calculateDiscountPercentage(
+                  pizza.unitPrice,
+                  pizza.discount
+                )}
+              />
+
+              <StatsRow title="Ratings Average" value={4.5} />
+              <StatsRow title="Ratings Counts" value={127} />
+            </div>
+          </article>
+
+          <div className={styles.bottomSheet}>
+            <div className={styles.ingredients}>
+              <StyledSpan>Ingredients</StyledSpan>
+              <p className={styles.value}>{pizza.ingredients.join(", ")}</p>
+            </div>
+
+            <div className={styles.actions}>
+              <LinkButton to="edit">Update</LinkButton>
+              <LinkButton
+                onClick={() => {
+                  setAlert(true);
+                }}
+              >
+                Delete
+              </LinkButton>
             </div>
           </div>
-        </div>
+        </section>
+      )}
+      {alert && (
+        <Alert
+          action={() => deletePizzaMutation(id!)}
+          actionTextContent="Delete"
+          close={() => setAlert(false)}
+          heading={`Delete "${pizza?.name}"`}
+          message="Are you sure you wanna delete this item?this would delete all the data of this pizza."
+          isActionPending={isDeleting}
+        />
       )}
     </>
+  );
+}
+
+function StatsRow({ title, value }: { title: string; value: string | number }) {
+  return (
+    <Row>
+      <StyledSpan>{title}</StyledSpan>
+      <p className={styles.value}>{value}</p>
+    </Row>
   );
 }
 

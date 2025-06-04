@@ -2,14 +2,11 @@ import styled from "styled-components";
 import HeaderList from "./HeaderList";
 import { SidebarPositionType } from "../../layout/Layout";
 
-const StyledHeader = styled.header.attrs<{
-  $sidebar: boolean;
-  $sidebarPosition: SidebarPositionType;
-}>((props) => ({
-  $sidebar: props.$sidebar,
-  $sidebarPosition: props.$sidebarPosition,
-}))`
-  background: transparent;
+const StyledHeader = styled.header<{
+  sidebar: "true" | "false";
+  sidebarPosition: SidebarPositionType;
+}>`
+  background: var(--color-gray-50);
   top: 0;
   right: 0;
   display: grid;
@@ -18,7 +15,14 @@ const StyledHeader = styled.header.attrs<{
   grid-template-rows: 70px;
   gap: 0.5rem;
   padding-inline: 1rem;
-  transition: all 0.5s;
+
+  position: fixed;
+  left: 0;
+  z-index: 10;
+
+  @media (min-width: 1024px) {
+    left: ${(props) => (props.sidebar === "false" ? "0" : "300px")};
+  }
 `;
 
 function Header({
@@ -31,7 +35,10 @@ function Header({
   sidebarPosition: SidebarPositionType;
 }) {
   return (
-    <StyledHeader $sidebarPosition={sidebarPosition} $sidebar={sidebar}>
+    <StyledHeader
+      sidebarPosition={sidebarPosition}
+      sidebar={sidebar === true ? "true" : "false"}
+    >
       <HeaderList onToggleSidebar={onToggleSidebar} />
     </StyledHeader>
   );

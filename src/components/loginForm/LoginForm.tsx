@@ -1,42 +1,39 @@
-import Form from "../../ui/Form";
-import FormControl from "../../ui/FormControl";
+import { Container } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { useAuth } from "../../contexts/AuthContext";
+import { LoginPayload } from "../../types/AuthTypes";
+import Form from "../ui/Form";
+import FormControl from "../ui/FormControl";
+import LinkButton from "../ui/LinkButton";
+import Loading from "../ui/Loading";
 import styles from "./LoginForm.module.css";
 import LoginHeader from "./LoginHeader";
-import LinkButton from "../../ui/LinkButton";
-import { LoginPayload } from "../../types/AuthTypes";
-import { useAuth } from "../../contexts/AuthContext";
-import { Container } from "@mui/material";
-import Loading from "../../ui/Loading";
-import EyeButton from "../../ui/EyeButton";
-import { useState } from "react";
 
 function LoginForm() {
-  const [showPassword, setShowPassword] = useState(false);
   const {
     formState: { errors },
     register,
     handleSubmit,
-    watch,
   } = useForm<LoginPayload>();
 
   const { login, isLoading } = useAuth();
 
   const onSubmit = (data: LoginPayload) => {
     const { email, password } = data;
-    login({ email: email, password: password, google: false });
+    login({ email: email, password: password });
   };
 
   return (
     <Container
       maxWidth="xs"
       sx={{
-        background: "var(--color-gray-0)",
+        background: "var(--color-gray-50)",
         margin: "6rem auto",
         display: "flex",
         alignItems: "center",
-        padding: "1rem 2.5rem",
         position: "relative",
+        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+        opacity: 0.9,
       }}
     >
       <span className={`${styles.border} ${styles["border-top"]}`}></span>
@@ -46,29 +43,28 @@ function LoginForm() {
       <Form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <LoginHeader />
         <FormControl<LoginPayload>
-          watch={watch}
           errorMessage={errors.email?.message}
           inputId="email"
           name="email"
           register={register}
-          validation={{
+          registerOptions={{
             required: {
               value: true,
               message: "Please tell us your email!",
             },
-            validate: (val) =>
-              val.includes("@") || "Please input a valid email",
+            validate: (val: string) =>
+              /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val) ||
+              "Please input a valid email",
           }}
-          type="text"
+          type="email"
           label="Email*"
         />
         <FormControl<LoginPayload>
-          watch={watch}
           errorMessage={errors.password?.message}
           inputId="password"
           name="password"
           register={register}
-          validation={{
+          registerOptions={{
             required: {
               value: true,
               message: "Please write your password!",
@@ -82,15 +78,14 @@ function LoginForm() {
               message: "Password should be 12 characters or less",
             },
           }}
-          type={showPassword ? "text" : "password"}
+          type="password"
           label="Password*"
+        />
+        <LinkButton
+          disabled={isLoading}
+          type="submit"
+          className={styles["form-submit"]}
         >
-          <EyeButton
-            isShown={showPassword}
-            handleClick={() => setShowPassword((show) => !show)}
-          />
-        </FormControl>
-        <LinkButton type="submit" className={styles["form-submit"]}>
           {isLoading && <Loading />}
           Login
         </LinkButton>

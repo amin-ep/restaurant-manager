@@ -1,4 +1,4 @@
-import { ICustomer } from "./CustomerTypes";
+import { OrderCustomer } from "./CustomerTypes";
 import { IPizza } from "./PizzaTypes";
 
 export type Address = { postalCode: string; street: string; text: string };
@@ -10,25 +10,23 @@ export interface OrderCartItem {
 }
 
 export interface IOrder {
-  address: {
-    street: string;
-    postalCode: string;
-    text: string;
+  _id: string;
+  address: Address;
+  statusHistory: {
+    status: string;
+    changedAt: Date;
   };
-  canceled: boolean;
   cart: {
     cartItems: OrderCartItem[];
+    totalQuantity: number;
     totalPrice: number;
-    _id: string;
   };
-  createdAt: string;
-  customer: ICustomer;
-  deliveryTime: string | null | Date;
+  customer: OrderCustomer;
   phone: string;
-  status: "waiting" | "accepted" | "posted" | "received";
-  text: string;
-  updatedAt: string;
-  _id: string;
+  status: string;
+  createdAt: Date;
+  description?: string;
+  deliveryTime?: Date;
 }
 
 export type OrdersResponseData = {
@@ -45,7 +43,7 @@ export type OrdersResponseData = {
 export type OrderResponseData = {
   status: string;
   data: {
-    doc: IOrder;
+    document: IOrder;
   };
 };
 

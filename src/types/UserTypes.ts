@@ -1,17 +1,12 @@
-export interface IUser {
-  fullName: string;
+export type IUser = {
   email: string;
-  phone: null | string;
+  firstName: string;
+  lastName: string;
   password: string;
-  role: "admin" | "customer";
-  address?:
-    | {
-        street: string;
-        postalCode: string;
-        text: string;
-      }
-    | undefined;
-  createdAt: Date;
+  phone?: string;
+  role: "admin";
   updatedAt: Date;
   __v: number;
-}
+  _id: string;
+  createdAt: Date;
+};

@@ -1,7 +1,8 @@
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { BASE_URL, JWT_TOKEN_KEY } from "../utils/constants";
 import Cookies from "js-cookie";
-import { UpdatePizzaPayload } from "../types/PizzaTypes";
+import { IPizza, UpdatePizzaPayload } from "../types/PizzaTypes";
+import { AxiosDataErrorProps, ICreateDataResponse } from "../types/AxiosTypes";
 
 export async function getAllPizzas({
   queryStr,
@@ -15,9 +16,9 @@ export async function getAllPizzas({
   let queryString: string;
 
   if (queryStr === "with-discount") {
-    queryString = "discount[gt]=0";
+    queryString = "discount_gt=0";
   } else if (queryStr === "no-discount") {
-    queryString = "discount[eq]=0";
+    queryString = "discount=0";
   } else {
     queryString = "";
   }
@@ -36,16 +37,23 @@ export async function getAllPizzas({
 }
 
 export async function createPizza(payload: FormData) {
-  const token = Cookies.get(JWT_TOKEN_KEY);
+  try {
+    const token = Cookies.get(JWT_TOKEN_KEY);
+    console.log(Object.fromEntries(payload));
 
-  const response = await axios.post(`${BASE_URL}/pizza`, payload, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "multipart/form-data",
-    },
-  });
+    const response: AxiosResponse<ICreateDataResponse<IPizza>> =
+      await axios.post(`${BASE_URL}/pizza`, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-  return response;
+    return response;
+  } catch (err) {
+    const error = err as AxiosError<AxiosDataErrorProps>;
+    return error;
+  }
 }
 
 export async function deletePizza(id: string) {

@@ -1,30 +1,33 @@
 import { FieldValues } from "react-hook-form";
-
-export type IUser = {
-  createdAt: string;
-  email: string;
-  fullName: string;
-  password: string;
-  phone: null | string;
-  role: "admin";
-  updatedAt: string;
-  __v: number;
-  _id: string;
-};
+import { IUser } from "./UserTypes";
 
 export type AccountResponse = {
   status: string;
   data: {
-    user: IUser;
+    document: IUser;
   };
 };
 
 export interface UpdateAccountPayload extends FieldValues {
-  email?: string | undefined;
-  fullName?: string;
+  firstName?: string;
+  lastName?: string;
 }
 
 export type updatePasswordPayload = {
   currentPassword: string;
   password: string;
 };
+
+export type GetMeResponse = {
+  status: string;
+  data: {
+    document: IUser;
+  };
+};
+
+export interface IUpdateAccountResponse {
+  status: string;
+  data: {
+    user: IUser;
+  };
+}

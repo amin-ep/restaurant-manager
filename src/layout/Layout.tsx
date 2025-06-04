@@ -3,6 +3,7 @@ import Sidebar from "../components/sidebar/Sidebar";
 import Main from "../components/main/Main";
 import Header from "../components/header/Header";
 import { useEffect, useState } from "react";
+import { useMediaQuery } from "@mui/material";
 
 export type SidebarPositionType = "absolute" | "static";
 
@@ -39,25 +40,17 @@ function Layout() {
   const [sidebarPosition, setSidebarPosition] =
     useState<SidebarPositionType>("static");
 
-  const handleSidebar = () => {
-    if (window.innerWidth <= 950) {
+  const isLgWindow = useMediaQuery("(min-width: 1024px)");
+
+  useEffect(() => {
+    if (!isLgWindow) {
       setSidebarIsOpen(false);
       setSidebarPosition("absolute");
     } else {
       setSidebarIsOpen(true);
       setSidebarPosition("static");
     }
-  };
-
-  useEffect(() => {
-    handleSidebar();
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("resize", handleSidebar);
-
-    return () => window.removeEventListener("resize", handleSidebar);
-  }, [sidebarIsOpen]);
+  }, [isLgWindow]);
 
   return (
     <StyledDiv $sidebarPosition={sidebarPosition} $sidebar={sidebarIsOpen}>

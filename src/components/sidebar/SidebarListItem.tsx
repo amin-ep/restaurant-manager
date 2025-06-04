@@ -1,31 +1,54 @@
 import styled from "styled-components";
 import { NavLink as BaseNavLink } from "react-router-dom";
 import { ReactNode } from "react";
-import styles from "./SidebarListitem.module.css";
+
+const StyledLi = styled.li`
+  width: 100%;
+  padding: 0;
+`;
 
 const NavLink = styled(BaseNavLink)`
   background-color: transparent;
   text-decoration: none;
   width: 100%;
-  font-size: 18px;
+  font-size: 12px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.85rem;
-  padding: 0.7rem 2.5rem;
-  color: var(--color-gray-9);
-  height: 60px;
-  transition: 0.5s all;
-  border-right: 4px solid transparent;
+  gap: 0.75rem;
+  padding: 1rem 2.5rem;
+  color: var(--color-gray-950);
+  transition: 0.2s all;
+  border-radius: 8px;
+
   &:hover {
-    color: var(--color-green-1);
+    color: var(--color-emerald-500);
     gap: 1.5rem;
+    background: var(--color-gray-100);
   }
 
   &.active {
-    background: var(--color-gray-1);
-    border-right: 4px solid var(--color-green-1);
-    color: var(--color-green-2);
+    gap: 1.5rem;
+    color: var(--color-emerald-500);
+  }
+
+  &.active:hover {
+    background: unset;
+  }
+
+  & > span {
+    font-size: 16px;
+  }
+
+  @media (min-width: 640px) {
+    font-size: 14px;
+
+    & > span {
+      font-size: 18px;
+    }
+  }
+  @media (min-width: 1024) {
+    font-size: 16px;
   }
 `;
 
@@ -39,12 +62,12 @@ function SidebarListItem({
   icon: ReactNode;
 }) {
   return (
-    <li className={styles.item}>
+    <StyledLi>
       <NavLink to={to}>
         <span>{icon!}</span>
         {children}
       </NavLink>
-    </li>
+    </StyledLi>
   );
 }
 

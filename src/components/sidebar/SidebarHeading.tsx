@@ -13,7 +13,7 @@ const StyledDiv = styled.div`
   position: relative;
 
   & > h1 {
-    color: var(--color-green-1);
+    color: var(--color-emerald-500);
     font-size: 30px;
     text-transform: uppercase;
   }
@@ -26,9 +26,9 @@ const StyledButton = styled.button`
   background-color: transparent;
   border: none;
   outline: none;
-  color: var(--color-gray-8);
+  color: var(--color-gray-800);
 
-  @media (min-width: 950px) {
+  @media (min-width: 1024px) {
     display: none;
   }
 `;
