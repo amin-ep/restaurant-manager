@@ -11,7 +11,7 @@ import HeaderDarkModeButton from "./HeaderDarkModeButton";
 import { useState } from "react";
 import Alert from "../ui/Alert";
 
-const List = styled.ul`
+const Nav = styled.nav`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -34,20 +34,20 @@ function HeaderList({ onToggleSidebar }: { onToggleSidebar: () => void }) {
 
   return (
     <>
-      <List>
-        <IconButtonLink title="list" onClick={onToggleSidebar}>
+      <Nav>
+        <IconButtonLink onClick={onToggleSidebar}>
           <HiBars3 size={27} />
         </IconButtonLink>
         <Items>
-          <IconButtonLink title="Account" to="account">
+          <IconButtonLink to="account">
             <HiOutlineUserCircle size={27} />
           </IconButtonLink>
-          <IconButtonLink title="Logout" onClick={() => setAlert(true)}>
+          <IconButtonLink onClick={() => setAlert(true)}>
             <HiArrowRightOnRectangle size={27} />
           </IconButtonLink>
           <HeaderDarkModeButton />
         </Items>
-      </List>
+      </Nav>
       {alert && (
         <Alert
           action={logout}

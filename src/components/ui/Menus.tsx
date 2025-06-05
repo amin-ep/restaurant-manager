@@ -81,7 +81,6 @@ function MenuButton({ id }: { id: string }) {
       onClick={() => {
         open(id);
       }}
-      title="Options"
     >
       <HiOutlineEllipsisVertical size={26} />
     </IconButtonLink>

@@ -1,5 +1,4 @@
-import { Tooltip as BaseTooltip } from "@mui/material";
-import { ReactElement, ReactNode } from "react";
+import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
@@ -34,47 +33,25 @@ const StyledButton = styled.button`
   ${Styles}
 `;
 
-const Tooltip = ({
-  title,
-  children,
-}: {
-  title: string;
-  children: ReactElement;
-}) => {
-  return <BaseTooltip title={title}>{children}</BaseTooltip>;
-};
-
 function HeaderListItem({
-  title,
   onClick,
   to,
   children,
 }: {
-  title: string;
   onClick?: () => void;
   to?: string;
   children: ReactNode;
 }) {
   if (onClick) {
     return (
-      <li style={{ listStyle: "none" }}>
-        <Tooltip title={title}>
-          <StyledButton onClick={onClick} type="button">
-            {children}
-          </StyledButton>
-        </Tooltip>
-      </li>
+      <StyledButton onClick={onClick} type="button">
+        {children}
+      </StyledButton>
     );
   }
 
   if (to) {
-    return (
-      <li style={{ listStyle: "none" }}>
-        <Tooltip title={title}>
-          <StyledLink to={to}>{children}</StyledLink>
-        </Tooltip>
-      </li>
-    );
+    return <StyledLink to={to}>{children}</StyledLink>;
   }
 }
 
