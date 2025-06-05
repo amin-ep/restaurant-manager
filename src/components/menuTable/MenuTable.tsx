@@ -84,7 +84,7 @@ function MenuTable() {
                     "0"}
                 </Table.BodyCell>
                 <Table.BodyCell>
-                  <TableMenus pizzaId={pizza._id} />
+                  <TableMenus pizzaName={pizza.name} pizzaId={pizza._id} />
                 </Table.BodyCell>
               </Table.Body>
             ))}

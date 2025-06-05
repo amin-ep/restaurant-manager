@@ -14,8 +14,8 @@ const Overlay = styled.div`
   right: 0;
   width: 100%;
   z-index: 100;
-  transition: all 0.5s;
-  animation-duration: 0.8s;
+  transition: all 0.3s;
+  animation-duration: 0.3s;
   animation-name: overlayAnimation;
   animation-fill-mode: forwards;
 
@@ -25,7 +25,7 @@ const Overlay = styled.div`
     }
 
     to {
-      backdrop-filter: blur(2px);
+      backdrop-filter: blur(6px);
     }
   }
 `;
