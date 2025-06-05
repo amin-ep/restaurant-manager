@@ -5,6 +5,7 @@ import { OnePizzaResponseData } from "../types/PizzaTypes";
 import { AxiosResponse } from "axios";
 import PizzaForm from "../components/pizzaForm/PizzaForm";
 import Spinner from "../components/ui/Spinner";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 
 function EditPizza() {
   const { pizzaId } = useParams();
@@ -18,7 +19,7 @@ function EditPizza() {
     queryKey: ["pizza"],
   });
 
-  console.log(data);
+  useDocumentTitle(`Edit "${data?.data.data.document.name}"`);
 
   if (isLoadingPizza) {
     return <Spinner />;

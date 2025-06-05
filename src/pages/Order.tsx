@@ -9,6 +9,7 @@ import OrderHeader from "../components/orderHeader/OrderHeader";
 import styled from "styled-components";
 import OrderCustomer from "../components/orderCustomer/OrderCustomer";
 import OrderInformation from "../components/orderInformation/OrderInformation";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 
 const Grid = styled.article`
   display: grid;
@@ -37,6 +38,8 @@ function Order() {
       initialData() {},
     }
   );
+
+  useDocumentTitle(`${order?.data.data.document.customer.firstName}'s Order`);
 
   return (
     <div>

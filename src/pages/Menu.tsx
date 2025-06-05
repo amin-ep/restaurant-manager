@@ -4,12 +4,15 @@ import PizzaForm from "../components/pizzaForm/PizzaForm";
 import MenuTable from "../components/menuTable/MenuTable";
 import LinkButton from "../components/ui/LinkButton";
 import styled from "styled-components";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 
 const Button = styled(LinkButton)`
   margin: 1rem 0;
 `;
 
 function Menu() {
+  useDocumentTitle("Menu");
+
   const [createPizzaIsOpen, setCreatePizzaIsOpen] = useState(false);
   const toggleCreatePizza = () => setCreatePizzaIsOpen((state) => !state);
 

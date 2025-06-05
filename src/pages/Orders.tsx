@@ -3,8 +3,11 @@ import OrderTable from "../components/orderTable/OrderTable";
 import Filter from "../components/ui/Filter";
 import { useOrder } from "../hooks/useOrder";
 import Pagination from "../components/ui/Pagination";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 
 export default function Orders() {
+  useDocumentTitle("Orders");
+
   const { orders } = useOrder();
   return (
     <>

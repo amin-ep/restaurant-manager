@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import UpdateAccountForm from "../components/updateAccountForm/UpdateAccountForm";
 import UpdatePasswordForm from "../components/updatePasswordForm/UpdatePasswordForm";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 
 const StyledH1 = styled.h1`
   font-size: 30px;
@@ -11,6 +12,7 @@ const StyledH1 = styled.h1`
 `;
 
 function Account() {
+  useDocumentTitle("Account");
   return (
     <div>
       <StyledH1 style={{ marginBottom: "1rem" }}>Update Your Account</StyledH1>

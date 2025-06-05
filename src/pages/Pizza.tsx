@@ -15,6 +15,7 @@ import { FILE_URL } from "../utils/constants";
 import { calculateDiscountPercentage } from "../utils/helpers";
 import NotFound from "./NotFound";
 import styles from "./Pizza.module.css";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 
 const StyledSpan = styled.span`
   font-size: 12px;
@@ -70,6 +71,7 @@ function Pizza() {
     queryFn: () => getPizza(id!),
     queryKey: ["pizza"],
   });
+  useDocumentTitle(`Pizza "${data?.data.data.document.name}"`);
 
   const navigate = useNavigate();
 

@@ -1,6 +1,7 @@
 import { Container as MUIContainer } from "@mui/material";
 import LinkButton from "../components/ui/LinkButton";
 import styled from "styled-components";
+import useDocumentTitle from "../hooks/useDocumentTitle";
 
 const Container = styled(MUIContainer)`
   display: grid;
@@ -78,6 +79,8 @@ const Actions = styled.div`
 `;
 
 function NotFound() {
+  useDocumentTitle("Not found");
+
   return (
     <Container maxWidth="sm">
       <NumberWrapper>

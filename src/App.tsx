@@ -10,6 +10,7 @@ import { DarkModeProvider } from "./contexts/DarkModeContext";
 import Layout from "./layout/Layout";
 import GlobalStyles from "./styles/GlobalStyles";
 import EditPizza from "./pages/EditPizza";
+import Customers from "./pages/Customers";
 
 const Login = lazy(() => import("./pages/Login"));
 const Menu = lazy(() => import("./pages/Menu"));
@@ -53,6 +54,7 @@ function App() {
                   <Route path="orders/:id" element={<Order />} />
                   <Route path="account" element={<Account />} />
                   <Route path="menu/:pizzaId/edit" element={<EditPizza />} />
+                  <Route path="customers" element={<Customers />} />
                 </Route>
                 <Route path="login" element={<Login />} />
                 <Route path="*" element={<NotFound />} />
