@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { SlArrowDown } from "react-icons/sl";
 import { useState } from "react";
 import StatHeading from "./StatHeading";
+import { OrderStatus as StatusTypes } from "../../types/OrderTypes";
 
 const Container = styled.div`
   grid-area: orderStatus;
@@ -21,7 +22,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const Button = styled.button`
+const Button = styled.button<{ status: StatusTypes }>`
   all: unset;
   display: flex;
   justify-content: space-between;
@@ -29,12 +30,12 @@ const Button = styled.button`
   font-size: 12px;
   width: 100%;
 
-  background: var(--color-emerald-50);
+  background: ${(props) => "var(--color-status-" + props.status + ")"};
 
   border-radius: 12px;
 
   & > span {
-    background: var(--color-emerald-50);
+    background: ${(props) => "var(--color-status-" + props.status + ")"};
     padding: 0.5rem;
     border-radius: 12px;
   }
@@ -57,15 +58,19 @@ const Button = styled.button`
   }
 `;
 
-function OrderStatus({ status }: { status: string }) {
+function OrderStatus({ status }: { status: StatusTypes }) {
   const [openDropdown, setOpenDropdown] = useState(false);
 
   const onMouseEnter = () => {
-    setOpenDropdown(true);
+    if (status !== "waiting") {
+      setOpenDropdown(true);
+    }
   };
 
   const onMouseLeave = () => {
-    setOpenDropdown(false);
+    if (status !== "waiting") {
+      setOpenDropdown(false);
+    }
   };
 
   return (
@@ -76,16 +81,19 @@ function OrderStatus({ status }: { status: string }) {
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
           type="button"
+          status={status}
         >
           <span>{status}</span>
-          <span
-            style={{
-              transform: openDropdown ? "rotate(180deg)" : "",
-              transition: "0.3s all",
-            }}
-          >
-            <SlArrowDown />
-          </span>
+          {status !== "waiting" && (
+            <span
+              style={{
+                transform: openDropdown ? "rotate(180deg)" : "",
+                transition: "0.3s all",
+              }}
+            >
+              <SlArrowDown />
+            </span>
+          )}
         </Button>
       </ButtonContainer>
     </Container>

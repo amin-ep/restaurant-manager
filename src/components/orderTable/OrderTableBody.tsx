@@ -25,6 +25,7 @@ const StyledSpan = styled.span`
   justify-content: center;
   align-content: center;
   padding: 0;
+  vertical-align: middle;
 `;
 
 const Status = styled.span<{ status: IOrder["status"] }>`
@@ -42,7 +43,7 @@ const Status = styled.span<{ status: IOrder["status"] }>`
       : props.status === "received"
       ? "#757575"
       : ""};
-  color: var(--color-gray-0);
+  color: #121212;
   border-radius: 999px;
   width: 100%;
 `;

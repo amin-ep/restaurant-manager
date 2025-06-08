@@ -3,10 +3,11 @@ import styled from "styled-components";
 import { Container } from "@mui/material";
 
 const StyledMain = styled.main`
-  margin-top: 7rem;
+  margin-top: 4rem;
   width: 100%;
   transition: 0.5s all;
   padding-inline: 0.5rem;
+  padding-top: 1rem;
 `;
 
 function Main() {

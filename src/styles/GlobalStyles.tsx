@@ -39,7 +39,14 @@ const GlobalStyles = createGlobalStyle`
   --color-emerald-900: #064e3b;
   --color-emerald-950: #022c22;
   
-  --color-error: #ff0000;     
+  --color-error: #ff0000;   
+  
+  --color-status-waiting: #fef3c7;
+  --color-status-accepted: var(--color-emerald-300);
+  --color-status-posted: #bfdbfe;
+  --color-status-received: #c7f9cc;
+  --color-status-cancelled: #fca5a5;
+  --color-status-rejected: #fecaca;
 
 }
 
@@ -71,6 +78,13 @@ const GlobalStyles = createGlobalStyle`
 
 
     --color-error: #ff3333;
+
+  --color-status-waiting: #78350f;
+  --color-status-accepted: var(--color-emerald-600);
+  --color-status-posted: #1e3a8a;
+  --color-status-received: #065f46;
+  --color-status-cancelled: #7f1d1d;
+  --color-status-rejected: #991b1b;
 
 }
 

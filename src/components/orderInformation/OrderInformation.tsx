@@ -43,9 +43,21 @@ function OrderInformation({ order }: { order: IOrder }) {
   return (
     <Container>
       <OrderStatus status={order.status} />
-      <DeliveryTime />
-      <OrderMeta orderTime={order.createdAt} description={order.description} />
-      <CartItems items={order.cart.cartItems} />
+      <DeliveryTime
+        orderId={order._id}
+        deliveryTime={order.deliveryTime}
+        status={order.status}
+      />
+      <OrderMeta
+        adminNotes={order.adminNotes}
+        orderTime={order.createdAt}
+        description={order.description}
+        id={order._id}
+      />
+      <CartItems
+        items={order.cart.cartItems}
+        totalPrice={order.cart.totalPrice}
+      />
     </Container>
   );
 }

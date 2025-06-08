@@ -1,8 +1,15 @@
 import styled from "styled-components";
 import CustomerNotes from "./CustomerNotes";
 import OrderTime from "./OrderTime";
+import AdminNotes from "./AdminNotes";
+import { IOrder } from "../../types/OrderTypes";
 
-type Props = { description?: string; orderTime: Date };
+type Props = {
+  description?: string;
+  orderTime: Date;
+  id: string;
+  adminNotes: IOrder["adminNotes"];
+};
 
 const Container = styled.div`
   grid-area: orderMeta;
@@ -19,10 +26,11 @@ const Container = styled.div`
   }
 `;
 
-function OrderMeta({ description, orderTime }: Props) {
+function OrderMeta({ description, orderTime, adminNotes, id }: Props) {
   return (
     <Container>
       {description && <CustomerNotes description={description} />}
+      <AdminNotes orderId={id} adminNotes={adminNotes} />
       <OrderTime time={orderTime} />
     </Container>
   );

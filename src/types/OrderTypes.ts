@@ -1,3 +1,4 @@
+import { FieldValues } from "react-hook-form";
 import { OrderCustomer } from "./CustomerTypes";
 import { IPizza } from "./PizzaTypes";
 
@@ -9,11 +10,20 @@ export interface OrderCartItem {
   _id: string;
 }
 
+export enum OrderStatus {
+  WAITING = "waiting",
+  ACCEPTED = "accepted",
+  POSTED = "posted",
+  RECEIVED = "received",
+  CANCELLED = "cancelled",
+  REJECTED = "rejected",
+}
+
 export interface IOrder {
   _id: string;
   address: Address;
   statusHistory: {
-    status: string;
+    status: OrderStatus;
     changedAt: Date;
   };
   cart: {
@@ -23,10 +33,14 @@ export interface IOrder {
   };
   customer: OrderCustomer;
   phone: string;
-  status: string;
+  status: OrderStatus;
   createdAt: Date;
   description?: string;
   deliveryTime?: Date;
+  adminNotes?: {
+    text: string;
+    lastUpdate: Date;
+  };
 }
 
 export type OrdersResponseData = {
@@ -58,3 +72,7 @@ export type UpdateOrderResponseData = {
     doc: IOrder;
   };
 };
+
+export interface IAdminNotesPayload extends FieldValues {
+  text: string;
+}

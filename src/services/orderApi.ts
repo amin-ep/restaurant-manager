@@ -36,7 +36,42 @@ export async function getOrderById(id: string) {
       "Content-Type": "application/json",
     },
   });
-  console.log(response);
+
+  return response;
+}
+
+export async function acceptOrder(id: string, deliveryTime: Date) {
+  const token = Cookies.get(JWT_TOKEN_KEY);
+  const payload = {
+    deliveryTime,
+    status: "accepted",
+  };
+
+  const response = await axios.patch(`${BASE_URL}/order/${id}`, payload, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  return response;
+}
+
+export async function setAdminNote(text: string, id: string) {
+  const token = Cookies.get(JWT_TOKEN_KEY);
+
+  const payload = {
+    adminNotes: {
+      text,
+    },
+  };
+
+  const response = await axios.patch(`${BASE_URL}/order/${id}`, payload, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
 
   return response;
 }

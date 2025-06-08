@@ -30,10 +30,11 @@ const NavLink = styled(BaseNavLink)`
   &.active {
     gap: 1.5rem;
     color: var(--color-emerald-500);
+    background: var(--color-emerald-50);
   }
 
   &.active:hover {
-    background: unset;
+    background: var(--color-emerald-50);
   }
 
   & > span {

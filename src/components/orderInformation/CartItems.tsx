@@ -5,7 +5,7 @@ import { calculateDiscountPercentage } from "../../utils/helpers";
 import styles from "./CartItems.module.css";
 import StatHeading from "./StatHeading";
 
-type Props = { items: OrderCartItem[] };
+type Props = { items: OrderCartItem[]; totalPrice: number };
 
 const Container = styled.div`
   grid-area: cartItems;
@@ -18,6 +18,23 @@ const Menu = styled.menu`
   margin: 0;
 
   gap: 0.75rem;
+
+  overflow-y: auto;
+  max-height: 310px;
+
+  @media (min-width: 640px) {
+    max-height: 340px;
+  }
+
+  @media (min-width: 768px) {
+    max-height: 415px;
+  }
+`;
+
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const Image = styled.img`
@@ -31,7 +48,7 @@ const Image = styled.img`
   }
 `;
 
-const Header = styled.header`
+const StyledDiv = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -59,14 +76,29 @@ const StyledLi = styled.li`
   }
 `;
 
-function CartItems({ items }: Props) {
+const Price = styled.p`
+  font-size: 12px;
+
+  @media (min-width: 640px) {
+    font-size: 14px;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
+`;
+
+function CartItems({ items, totalPrice }: Props) {
   return (
     <Container>
-      <StatHeading>Cart Items</StatHeading>
+      <Header>
+        <StatHeading>Cart Items</StatHeading>
+        <Price>${totalPrice}</Price>
+      </Header>
       <Menu>
         {items.map((item) => (
           <StyledLi key={item._id}>
-            <Header>
+            <StyledDiv>
               <Image
                 src={`${FILE_URL}/${item.pizza.imageUrl}`}
                 alt={item.pizza.name}
@@ -80,7 +112,7 @@ function CartItems({ items }: Props) {
                   {item.pizza.ingredients.join(", ")}
                 </p>
               </div>
-            </Header>
+            </StyledDiv>
             <div className={styles.priceDetails}>
               <PriceDetail
                 title="Unit Price"
